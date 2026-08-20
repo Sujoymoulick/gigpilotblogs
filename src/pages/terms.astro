@@ -1,0 +1,394 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const pageTitle = 'Terms and Conditions | GigPilot AI';
+const pageDescription =
+	'Review the Terms and Conditions for accessing and using GigPilot AI, including our rate calculators, prompt tools, guides, and educational materials.';
+
+const breadcrumbs = [
+	{ name: 'Terms and Conditions', item: '/terms' },
+];
+
+const lastUpdated = 'August 20, 2026';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={pageTitle}
+			description={pageDescription}
+			breadcrumbs={breadcrumbs}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="legal-main">
+			<Breadcrumbs items={breadcrumbs} />
+
+			<div class="legal-header">
+				<div class="legal-badge">Legal Agreement</div>
+				<h1 class="legal-title">Terms &amp; Conditions</h1>
+				<p class="legal-meta">
+					Effective Date: <strong>August 20, 2026</strong> &bull; Last Updated: <strong>{lastUpdated}</strong>
+				</p>
+				<p class="legal-lead">
+					Please review these Terms and Conditions ("Terms", "Agreement") carefully before using the <strong>GigPilot AI</strong> website (<a href="https://gigpilotai.com">https://gigpilotai.com</a>), our interactive rate and quote calculators, prompt editors, and educational guides.
+				</p>
+			</div>
+
+			<div class="legal-layout">
+				<!-- Quick Jump Navigation -->
+				<aside class="legal-sidebar" aria-label="Table of Contents">
+					<div class="toc-card">
+						<h2 class="toc-title">Table of Contents</h2>
+						<ul class="toc-list">
+							<li><a href="#acceptance">1. Acceptance of Terms</a></li>
+							<li><a href="#services">2. Description of Services &amp; Tools</a></li>
+							<li><a href="#intellectual-property">3. Intellectual Property Rights</a></li>
+							<li><a href="#user-conduct">4. Acceptable Use &amp; Conduct</a></li>
+							<li><a href="#disclaimers">5. Financial &amp; Legal Disclaimers</a></li>
+							<li><a href="#ai-prompts">6. AI Prompts &amp; Code Snippets</a></li>
+							<li><a href="#third-parties">7. Third-Party Links &amp; Platforms</a></li>
+							<li><a href="#limitation">8. Limitation of Liability</a></li>
+							<li><a href="#indemnification">9. Indemnification</a></li>
+							<li><a href="#modifications">10. Modifications &amp; Updates</a></li>
+							<li><a href="#governing-law">11. Governing Law</a></li>
+							<li><a href="#contact">12. Contact Information</a></li>
+						</ul>
+					</div>
+				</aside>
+
+				<!-- Main Legal Content -->
+				<article class="legal-content">
+					<section id="acceptance" class="legal-section">
+						<h2>1. Acceptance of Terms</h2>
+						<p>
+							By accessing, browsing, or utilizing any portion of <strong>GigPilot AI</strong> (collectively referred to as "the Site", "we", "us", or "our"), you confirm that you have read, understood, and agree to be bound by these Terms and Conditions, as well as our <a href="/privacy">Privacy Policy</a>.
+						</p>
+						<p>
+							If you do not agree to all terms and conditions stated herein, you must immediately discontinue use of the Site and our interactive utilities. These Terms apply to all visitors, users, freelancers, and clients who access or use our services.
+						</p>
+					</section>
+
+					<section id="services" class="legal-section">
+						<h2>2. Description of Services &amp; Tools</h2>
+						<p>
+							GigPilot AI provides free web-based utilities, calculators, algorithmic templates, and editorial content designed to assist independent professionals, freelancers, developers, and solopreneurs. Our core offerings include:
+						</p>
+						<ul>
+							<li><strong>Freelance Rate Calculator:</strong> Client-side tools to estimate hourly, daily, and annual billable requirements.</li>
+							<li><strong>Project Quote Calculator:</strong> Scope estimation tools with revision contingency and tax allocation models.</li>
+							<li><strong>Interactive Prompt Generators &amp; Checklists:</strong> Curated AI prompt templates and sprint delivery checklists.</li>
+							<li><strong>Knowledge Hub:</strong> Independent editorial analysis, marketplace roadmaps (Upwork, Fiverr), and technology tutorials.</li>
+						</ul>
+						<p>
+							We reserve the right to modify, suspend, or discontinue any tool, calculator, or feature at any time without prior notice or liability.
+						</p>
+					</section>
+
+					<section id="intellectual-property" class="legal-section">
+						<h2>3. Intellectual Property Rights</h2>
+						<p>
+							Unless otherwise stated, all materials on GigPilot AI—including articles, guides, proprietary calculation formulas, software scripts, visual graphics, trademarks, logos, and UI designs—are the exclusive intellectual property of GigPilot AI and are protected by applicable copyright, trademark, and intellectual property laws.
+						</p>
+						<div class="callout callout-info">
+							<strong>Permitted Use of Calculators &amp; Code Snippets:</strong>
+							<p>
+								You are granted a non-exclusive, revocable, non-transferable license to use our free calculators for your personal and commercial client pricing calculations. Openly provided code snippets (e.g., Astro components, Next.js templates, prompt formulas) may be adapted for your personal and commercial freelance projects without requiring attribution, provided you do not re-publish or resell our proprietary articles or database content as a competing service.
+							</p>
+						</div>
+					</section>
+
+					<section id="user-conduct" class="legal-section">
+						<h2>4. Acceptable Use &amp; User Conduct</h2>
+						<p>
+							When using GigPilot AI, you agree not to:
+						</p>
+						<ul>
+							<li>Use automated scripts, scrapers, bots, or spiders to systematically harvest content, calculations, or articles without explicit written permission.</li>
+							<li>Attempt to interfere with, disrupt, or compromise the integrity, security, or performance of our servers, hosting infrastructure, or network.</li>
+							<li>Reverse-engineer, decompile, or disassemble any proprietary software algorithms or interactive scripts on the Site.</li>
+							<li>Use our tools or content for any illegal, fraudulent, harassing, or unauthorized purpose.</li>
+						</ul>
+					</section>
+
+					<section id="disclaimers" class="legal-section">
+						<h2>5. Financial, Tax, &amp; Professional Disclaimers</h2>
+						<div class="callout callout-warning">
+							<strong>Important Educational Disclaimer:</strong>
+							<p>
+								All calculations, quotes, tax estimates, and rate recommendations produced by GigPilot AI utilities are for <strong>informational and educational purposes only</strong>. GigPilot AI is not a registered financial advisory firm, accounting practice, or legal service.
+							</p>
+						</div>
+						<p>
+							While we strive for mathematical rigor, real-world freelance earnings, tax obligations, and business expenses vary significantly across jurisdictions, individual circumstances, and changing market dynamics. You should always consult a licensed Certified Public Accountant (CPA), certified financial planner, or qualified legal attorney before finalizing commercial contracts or submitting tax filings.
+						</p>
+					</section>
+
+					<section id="ai-prompts" class="legal-section">
+						<h2>6. AI Prompts, Generated Outputs &amp; Code Snippets</h2>
+						<p>
+							GigPilot AI provides example prompts and guidance on building with generative artificial intelligence models (such as Claude, ChatGPT, Gemini, and DeepSeek). You acknowledge and agree that:
+						</p>
+						<ul>
+							<li>Artificial intelligence outputs are probabilistic and may occasionally contain inaccuracies, bugs, or hallucinations.</li>
+							<li>You are solely responsible for reviewing, testing, verifying, and validating any code or content generated through AI tools before utilizing it in production or client deliverables.</li>
+							<li>GigPilot AI assumes no liability for client disputes, system downtime, security vulnerabilities, or copyright claims resulting from the deployment of AI-generated assets.</li>
+						</ul>
+					</section>
+
+					<section id="third-parties" class="legal-section">
+						<h2>7. Third-Party Links, Platforms &amp; Affiliate Disclosure</h2>
+						<p>
+							Our website contains references and outbound links to third-party services, including freelance marketplaces (e.g., Upwork, Fiverr), cloud hosting providers (e.g., Cloudflare, Vercel), and developer frameworks. We do not control or endorse the content, policies, or practices of third-party platforms.
+						</p>
+						<p>
+							Some articles may include transparent affiliate or referral links. If you register or purchase a product through an affiliate link, GigPilot AI may earn a commission at no additional cost to you. This support helps fund our independent testing lab and ensures our calculators remain 100% free for everyone.
+						</p>
+					</section>
+
+					<section id="limitation" class="legal-section">
+						<h2>8. Limitation of Liability</h2>
+						<p>
+							To the fullest extent permitted by applicable law, GigPilot AI, its founders, authors, and contributors shall not be liable for any direct, indirect, incidental, consequential, special, or exemplary damages—including but not limited to loss of profits, loss of clients, business interruption, data loss, or tax penalties—arising from your use of or inability to use the Site or any of its tools.
+						</p>
+						<p>
+							The services and tools on GigPilot AI are provided on an <strong>"as is" and "as available" basis</strong>, without warranties of any kind, whether express, statutory, or implied.
+						</p>
+					</section>
+
+					<section id="indemnification" class="legal-section">
+						<h2>9. Indemnification</h2>
+						<p>
+							You agree to defend, indemnify, and hold harmless GigPilot AI and its affiliates from and against any claims, liabilities, damages, losses, costs, or expenses (including reasonable legal fees) arising out of your violation of these Terms, your use of our tools, or your infringement of any third-party rights.
+						</p>
+					</section>
+
+					<section id="modifications" class="legal-section">
+						<h2>10. Modifications &amp; Updates to Terms</h2>
+						<p>
+							We reserve the right to revise or update these Terms and Conditions at our sole discretion. Any changes will become effective immediately upon posting to this page with an updated "Last Updated" timestamp. Your continued use of the Site following the posting of revised Terms constitutes your acceptance of the amendments.
+						</p>
+					</section>
+
+					<section id="governing-law" class="legal-section">
+						<h2>11. Governing Law &amp; Jurisdiction</h2>
+						<p>
+							These Terms and any disputes relating to your use of GigPilot AI shall be governed by and construed in accordance with the laws of the applicable jurisdiction, without regard to its conflict of law provisions.
+						</p>
+					</section>
+
+					<section id="contact" class="legal-section">
+						<h2>12. Contact Information &amp; Legal Inquiries</h2>
+						<p>
+							If you have any questions, legal notices, or feedback regarding these Terms and Conditions, please contact us:
+						</p>
+						<div class="contact-box">
+							<p><strong>GigPilot AI Legal &amp; Editorial Operations</strong></p>
+							<p>Email: <a href="mailto:support@gigpilotai.com">support@gigpilotai.com</a></p>
+							<p>Contact Form: <a href="/contact">https://gigpilotai.com/contact</a></p>
+						</div>
+					</section>
+				</article>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.legal-main {
+		width: 100%;
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: 2.5rem 1.5rem 5rem;
+	}
+
+	.legal-header {
+		max-width: 800px;
+		margin-bottom: 3rem;
+	}
+
+	.legal-badge {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 0.25rem 0.75rem;
+		background: rgba(37, 99, 235, 0.08);
+		color: var(--accent);
+		border-radius: 9999px;
+		margin-bottom: 1rem;
+	}
+
+	.legal-title {
+		font-size: 2.8rem;
+		font-weight: 800;
+		color: rgb(var(--black));
+		line-height: 1.15;
+		margin-bottom: 0.75rem;
+		letter-spacing: -0.02em;
+	}
+
+	.legal-meta {
+		font-size: 0.95rem;
+		color: rgb(var(--gray));
+		margin-bottom: 1.25rem;
+	}
+
+	.legal-lead {
+		font-size: 1.15rem;
+		line-height: 1.65;
+		color: var(--text);
+	}
+
+	.legal-layout {
+		display: grid;
+		grid-template-columns: 260px 1fr;
+		gap: 3rem;
+		align-items: flex-start;
+	}
+
+	/* Sidebar TOC */
+	.legal-sidebar {
+		position: sticky;
+		top: 80px;
+	}
+
+	.toc-card {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 1.25rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+	}
+
+	.toc-title {
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(var(--gray));
+		margin: 0 0 0.85rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.toc-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.toc-list a {
+		font-size: 0.88rem;
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		display: block;
+		padding: 0.2rem 0;
+		transition: color 0.15s ease;
+		line-height: 1.4;
+	}
+
+	.toc-list a:hover {
+		color: var(--accent);
+	}
+
+	/* Content */
+	.legal-content {
+		color: var(--text);
+		font-size: 1.05rem;
+		line-height: 1.75;
+	}
+
+	.legal-section {
+		margin-bottom: 3rem;
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid var(--border);
+		scroll-margin-top: 90px;
+	}
+
+	.legal-section:last-child {
+		border-bottom: none;
+	}
+
+	.legal-section h2 {
+		font-size: 1.65rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 1rem;
+		letter-spacing: -0.01em;
+	}
+
+	.legal-section p {
+		margin-bottom: 1.25rem;
+	}
+
+	.legal-section ul {
+		margin: 0 0 1.5rem 1.5rem;
+		padding: 0;
+	}
+
+	.legal-section li {
+		margin-bottom: 0.6rem;
+	}
+
+	/* Callouts */
+	.callout {
+		border-radius: 10px;
+		padding: 1.25rem 1.5rem;
+		margin: 1.5rem 0;
+	}
+
+	.callout p {
+		margin: 0.5rem 0 0;
+		font-size: 0.95rem;
+		line-height: 1.6;
+	}
+
+	.callout-info {
+		background: rgba(37, 99, 235, 0.06);
+		border-left: 4px solid var(--accent);
+	}
+
+	.callout-warning {
+		background: rgba(245, 158, 11, 0.08);
+		border-left: 4px solid #f59e0b;
+	}
+
+	.contact-box {
+		background: var(--bg-code);
+		border: 1px solid var(--border);
+		border-radius: 10px;
+		padding: 1.25rem 1.5rem;
+		margin-top: 1rem;
+	}
+
+	.contact-box p {
+		margin: 0.25rem 0;
+		font-size: 0.95rem;
+	}
+
+	@media (max-width: 860px) {
+		.legal-layout {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.legal-sidebar {
+			position: static;
+		}
+
+		.legal-title {
+			font-size: 2.2rem;
+		}
+	}
+</style>

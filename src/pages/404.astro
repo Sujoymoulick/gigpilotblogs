@@ -1,0 +1,614 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const pageTitle = '404: Page Not Found | GigPilot AI';
+const pageDescription =
+	'The page you are looking for does not exist or has been moved. Explore our free freelance calculators, project quote tools, and AI guides.';
+
+const breadcrumbs = [
+	{ name: '404 Not Found', item: '/404' },
+];
+
+const popularTools = [
+	{
+		title: 'Freelance Rate Calculator',
+		desc: 'Calculate hourly, daily, and annual billable rates based on real expenses and target profits.',
+		href: '/',
+		icon: 'calculator',
+		tag: 'Interactive Tool',
+	},
+	{
+		title: 'Project Quote Calculator',
+		desc: 'Generate fixed-price proposals with scope creep revision buffers and fee breakdowns.',
+		href: '/tools/freelance-rate-calculator',
+		icon: 'document',
+		tag: 'Pricing Utility',
+	},
+	{
+		title: 'Knowledge Hub & Blog',
+		desc: 'Step-by-step guides covering freelancing, marketplaces, AI tools, and remote workflows.',
+		href: '/blog',
+		icon: 'book',
+		tag: 'Guides & Tutorials',
+	},
+	{
+		title: 'About GigPilot AI',
+		desc: 'Learn about our editorial mission, testing standards, and zero-tracking privacy approach.',
+		href: '/about',
+		icon: 'info',
+		tag: 'Our Mission',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={pageTitle}
+			description={pageDescription}
+			breadcrumbs={breadcrumbs}
+			noindex={true}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="error-main">
+			<Breadcrumbs items={breadcrumbs} />
+
+			<section class="error-hero">
+				<div class="status-pill">
+					<span class="status-code">404</span>
+					<span class="status-divider"></span>
+					<span class="status-label">Page Not Found</span>
+				</div>
+
+				<h1 class="error-title">Looks Like You've Drifted Off Course</h1>
+				<p class="error-subtitle">
+					The page or guide you requested doesn't exist, may have moved to a new destination, or had its URL updated.
+				</p>
+
+				<div class="search-box">
+					<label for="site-search" class="sr-only">Search guides and tools</label>
+					<div class="search-input-wrapper">
+						<svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<circle cx="11" cy="11" r="8"></circle>
+							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						</svg>
+						<input
+							type="search"
+							id="site-search"
+							placeholder="Search guides, tools, platforms (e.g. rate calculator, Upwork, Astro)..."
+							autocomplete="off"
+						/>
+					</div>
+					<div id="search-suggestions" class="search-results-dropdown" style="display: none;"></div>
+				</div>
+
+				<div class="hero-actions">
+					<a href="/" class="btn btn-primary">
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+							<polyline points="9 22 9 12 15 12 15 22"></polyline>
+						</svg>
+						Back to Homepage
+					</a>
+					<a href="/tools/freelance-rate-calculator" class="btn btn-secondary">
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<rect x="4" y="2" width="16" height="20" rx="2"></rect>
+							<line x1="8" y1="6" x2="16" y2="6"></line>
+							<line x1="16" y1="14" x2="16" y2="18"></line>
+							<path d="M16 10h.01"></path>
+							<path d="M12 10h.01"></path>
+							<path d="M8 10h.01"></path>
+							<path d="M12 14h.01"></path>
+							<path d="M8 14h.01"></path>
+							<path d="M12 18h.01"></path>
+							<path d="M8 18h.01"></path>
+						</svg>
+						Explore Free Tools
+					</a>
+					<a href="/contact" class="btn btn-outline">
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+						</svg>
+						Report Broken Link
+					</a>
+				</div>
+			</section>
+
+			<section class="suggestions-section">
+				<div class="section-header">
+					<h2 class="section-title">Popular Destinations &amp; Tools</h2>
+					<p class="section-subtitle">Jump straight to our most visited calculators and career roadmaps.</p>
+				</div>
+
+				<div class="cards-grid">
+					{popularTools.map((tool) => (
+						<a href={tool.href} class="nav-card">
+							<div class="card-badge">{tool.tag}</div>
+							<h3 class="card-title">{tool.title}</h3>
+							<p class="card-desc">{tool.desc}</p>
+							<span class="card-arrow">
+								Visit page &rarr;
+							</span>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<section class="help-banner">
+				<div class="help-inner">
+					<div class="help-text">
+						<h3>Looking for something specific?</h3>
+						<p>Check out our complete index of articles or reach out to our team directly.</p>
+					</div>
+					<div class="help-links">
+						<a href="/blog" class="link-btn">Browse All Guides &rarr;</a>
+						<a href="/contact" class="link-btn-subtle">Contact Support &rarr;</a>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+
+		<script is:inline>
+			(function () {
+				const searchInput = document.getElementById('site-search');
+				const dropdown = document.getElementById('search-suggestions');
+
+				const searchableItems = [
+					{ title: 'Freelance Rate Calculator', url: '/', category: 'Tool' },
+					{ title: 'Project Quote Calculator', url: '/tools/freelance-rate-calculator', category: 'Tool' },
+					{ title: 'How to Become a Freelancer in 2026', url: '/blog/how-to-become-a-freelancer/', category: 'Guide' },
+					{ title: 'Best Freelancing Sites in 2026', url: '/blog/best-freelancing-sites/', category: 'Guide' },
+					{ title: 'Upwork for Freelancers Complete Guide', url: '/blog/upwork-for-freelancers/', category: 'Guide' },
+					{ title: 'What is Freelancing? Beginner Guide', url: '/blog/what-is-freelancing/', category: 'Guide' },
+					{ title: 'Build Portfolio with Next.js & Vercel', url: '/blog/build-portfolio-website-nextjs-vercel/', category: 'Tutorial' },
+					{ title: 'Build SEO Friendly Astro Website with Cloudflare', url: '/blog/build-seo-friendly-astrojs-website-cloudflare/', category: 'Tutorial' },
+					{ title: 'Freelance Writing Career Roadmap', url: '/blog/freelance-writing/', category: 'Career' },
+					{ title: 'Video Editing Freelance Guide', url: '/blog/video-editing-freelance/', category: 'Career' },
+					{ title: 'Data Entry Jobs Work From Home', url: '/blog/data-entry-jobs-work-from-home/', category: 'Career' },
+					{ title: 'Digital Marketing Freelancing', url: '/blog/digital-marketing-freelancer/', category: 'Career' },
+					{ title: 'Freelancing Work in India', url: '/blog/freelancing-work-in-india/', category: 'Marketplace' },
+					{ title: 'About GigPilot AI', url: '/about', category: 'General' },
+					{ title: 'Contact Us', url: '/contact', category: 'Support' },
+					{ title: 'Privacy Policy', url: '/privacy', category: 'Legal' },
+					{ title: 'Terms and Conditions', url: '/terms', category: 'Legal' },
+				];
+
+				if (searchInput && dropdown) {
+					searchInput.addEventListener('input', (e) => {
+						const query = e.target.value.toLowerCase().trim();
+						if (!query || query.length < 2) {
+							dropdown.style.display = 'none';
+							dropdown.innerHTML = '';
+							return;
+						}
+
+						const matches = searchableItems.filter((item) =>
+							item.title.toLowerCase().includes(query) ||
+							item.category.toLowerCase().includes(query)
+						).slice(0, 6);
+
+						if (matches.length === 0) {
+							dropdown.innerHTML = `<div class="search-empty">No results found for "${query}". Try searching "rates", "Upwork", or "Astro".</div>`;
+							dropdown.style.display = 'block';
+							return;
+						}
+
+						dropdown.innerHTML = matches.map((item) => `
+							<a href="${item.url}" class="search-result-item">
+								<span class="result-title">${item.title}</span>
+								<span class="result-badge">${item.category}</span>
+							</a>
+						`).join('');
+
+						dropdown.style.display = 'block';
+					});
+
+					document.addEventListener('click', (e) => {
+						if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+							dropdown.style.display = 'none';
+						}
+					});
+				}
+			})();
+		</script>
+	</body>
+</html>
+
+<style>
+	.error-main {
+		width: 100%;
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 2.5rem 1.5rem 4rem;
+	}
+
+	.error-hero {
+		text-align: center;
+		padding: 3rem 1rem 3.5rem;
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.status-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.4rem 1.1rem;
+		background: rgba(37, 99, 235, 0.08);
+		border: 1px solid rgba(37, 99, 235, 0.25);
+		border-radius: 9999px;
+		margin-bottom: 1.5rem;
+	}
+
+	.status-code {
+		font-weight: 800;
+		font-size: 1.1rem;
+		color: var(--accent);
+		letter-spacing: 0.05em;
+	}
+
+	.status-divider {
+		width: 1px;
+		height: 14px;
+		background: rgba(37, 99, 235, 0.3);
+	}
+
+	.status-label {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.error-title {
+		font-size: 2.6rem;
+		font-weight: 800;
+		line-height: 1.2;
+		color: rgb(var(--black));
+		margin-bottom: 1rem;
+		letter-spacing: -0.02em;
+	}
+
+	.error-subtitle {
+		font-size: 1.15rem;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+		margin-bottom: 2rem;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Search bar */
+	.search-box {
+		position: relative;
+		max-width: 580px;
+		margin: 0 auto 2.5rem;
+		text-align: left;
+	}
+
+	.search-input-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-icon {
+		position: absolute;
+		left: 1rem;
+		color: rgb(var(--gray));
+		pointer-events: none;
+	}
+
+	.search-input-wrapper input {
+		width: 100%;
+		padding: 0.9rem 1rem 0.9rem 2.8rem;
+		font-size: 1rem;
+		border: 1.5px solid var(--border);
+		border-radius: 12px;
+		background: var(--bg);
+		color: var(--text);
+		outline: none;
+		transition: border-color 0.2s, box-shadow 0.2s;
+	}
+
+	.search-input-wrapper input:focus {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+	}
+
+	.search-results-dropdown {
+		position: absolute;
+		top: calc(100% + 6px);
+		left: 0;
+		right: 0;
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+		z-index: 50;
+		overflow: hidden;
+	}
+
+	:global(.search-result-item) {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.85rem 1.25rem;
+		border-bottom: 1px solid var(--border);
+		text-decoration: none;
+		color: var(--text);
+		transition: background 0.15s;
+	}
+
+	:global(.search-result-item:last-child) {
+		border-bottom: none;
+	}
+
+	:global(.search-result-item:hover) {
+		background: rgba(37, 99, 235, 0.06);
+	}
+
+	:global(.result-title) {
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+
+	:global(.result-badge) {
+		font-size: 0.75rem;
+		padding: 0.2rem 0.6rem;
+		background: rgba(37, 99, 235, 0.1);
+		color: var(--accent);
+		border-radius: 9999px;
+		font-weight: 600;
+	}
+
+	:global(.search-empty) {
+		padding: 1.25rem;
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		text-align: center;
+	}
+
+	/* Hero actions */
+	.hero-actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.35rem;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.15s ease;
+		cursor: pointer;
+	}
+
+	.btn-primary {
+		background: var(--accent);
+		color: #ffffff;
+		border: 1px solid var(--accent);
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-dark);
+		border-color: var(--accent-dark);
+		transform: translateY(-1px);
+	}
+
+	.btn-secondary {
+		background: rgba(37, 99, 235, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(37, 99, 235, 0.2);
+	}
+
+	.btn-secondary:hover {
+		background: rgba(37, 99, 235, 0.15);
+		transform: translateY(-1px);
+	}
+
+	.btn-outline {
+		background: transparent;
+		color: rgb(var(--gray-dark));
+		border: 1px solid var(--border);
+	}
+
+	.btn-outline:hover {
+		border-color: rgb(var(--gray));
+		color: var(--accent);
+	}
+
+	/* Suggestions section */
+	.suggestions-section {
+		margin-top: 3.5rem;
+		padding-top: 3rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.section-header {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	.section-title {
+		font-size: 1.75rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin-bottom: 0.5rem;
+	}
+
+	.section-subtitle {
+		color: rgb(var(--gray));
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.cards-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.nav-card {
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem;
+		background: var(--bg);
+		border: 1.5px solid var(--border);
+		border-radius: 12px;
+		text-decoration: none;
+		color: var(--text);
+		transition: all 0.2s ease;
+		position: relative;
+	}
+
+	.nav-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+	}
+
+	.card-badge {
+		align-self: flex-start;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 0.2rem 0.6rem;
+		background: rgba(37, 99, 235, 0.08);
+		color: var(--accent);
+		border-radius: 6px;
+		margin-bottom: 0.85rem;
+	}
+
+	.card-title {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 0.5rem;
+		line-height: 1.3;
+	}
+
+	.card-desc {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		line-height: 1.5;
+		margin-bottom: 1.25rem;
+		flex-grow: 1;
+	}
+
+	.card-arrow {
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		transition: gap 0.15s ease;
+	}
+
+	.nav-card:hover .card-arrow {
+		gap: 0.5rem;
+	}
+
+	/* Help banner */
+	.help-banner {
+		margin-top: 3.5rem;
+		background: rgba(37, 99, 235, 0.04);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 2rem;
+	}
+
+	.help-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.help-text h3 {
+		font-size: 1.2rem;
+		font-weight: 700;
+		margin: 0 0 0.35rem;
+		color: rgb(var(--black));
+	}
+
+	.help-text p {
+		margin: 0;
+		font-size: 0.95rem;
+		color: rgb(var(--gray));
+	}
+
+	.help-links {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.link-btn {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.link-btn:hover {
+		text-decoration: underline;
+	}
+
+	.link-btn-subtle {
+		font-size: 0.95rem;
+		font-weight: 500;
+		color: rgb(var(--gray));
+		text-decoration: none;
+	}
+
+	.link-btn-subtle:hover {
+		color: rgb(var(--gray-dark));
+		text-decoration: underline;
+	}
+
+	@media (max-width: 640px) {
+		.error-title {
+			font-size: 2rem;
+		}
+
+		.error-hero {
+			padding: 2rem 0.5rem;
+		}
+
+		.hero-actions {
+			flex-direction: column;
+			width: 100%;
+		}
+
+		.hero-actions .btn {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.help-inner {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>

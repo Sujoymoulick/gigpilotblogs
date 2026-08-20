@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
@@ -20,24 +21,33 @@ const categories = [
 	'Platforms',
 	'Work From Home',
 	'Freelance Skills',
+	'Build with AI',
 	'Career',
 ];
+
+const pageTitle = 'Freelancing & AI Guides | GigPilot AI Knowledge Hub';
+const pageDescription =
+	'Explore in-depth freelancing tutorials, platform strategies, and AI tools for independent professionals. Learn how to land clients and scale your income.';
+
+const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead
-			title="Freelancing Guides & Insights | GigPilot AI"
-			description="Practical guides covering freelancing, freelance jobs, online work, platforms, skills, and AI productivity."
+			title={pageTitle}
+			description={pageDescription}
+			breadcrumbs={breadcrumbs}
 		/>
 	</head>
 	<body>
 		<Header />
 		<main>
+			<Breadcrumbs items={breadcrumbs} />
 			<header class="blog-header">
 				<span class="badge">Knowledge Hub</span>
-				<h1>Freelancing Guides & Insights</h1>
+				<h1>Freelancing Guides &amp; Insights</h1>
 				<p class="subtitle">
 					Practical guides covering freelancing, freelance jobs, online work, platforms, skills, and AI productivity to help you succeed independently.
 				</p>
@@ -69,7 +79,7 @@ const categories = [
 										width={800}
 										height={450}
 										src={featuredPost.data.heroImage}
-										alt={featuredPost.data.title}
+										alt={`${featuredPost.data.title} - featured article`}
 										class="featured-img"
 									/>
 								)}
@@ -107,7 +117,7 @@ const categories = [
 												width={600}
 												height={340}
 												src={post.data.heroImage}
-												alt={post.data.title}
+												alt={`${post.data.title} - guide thumbnail`}
 												class="post-img"
 											/>
 										)}

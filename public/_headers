@@ -1,0 +1,9 @@
+# Block indexing on Cloudflare preview/staging subdomains
+https://*.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+https://*.workers.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+https://gigpilotblogs.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive

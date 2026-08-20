@@ -1,0 +1,1619 @@
+---
+title: 'Build Your First Portfolio Website with Next.js and Deploy It to Vercel'
+description: 'Build a modern personal portfolio with Next.js App Router and Tailwind CSS. Learn how to deploy to Vercel and leverage AI coding agents step-by-step.'
+pubDate: 'Aug 20 2026'
+heroImage: '../../assets/Build Your First Portfolio Website with Nextjs and Deploy It to Vercel.webp'
+category: 'Build with AI'
+author: 'GigPilot AI Editorial'
+readingTime: '12 min read'
+---
+
+import InteractiveChecklist from '../../components/InteractiveChecklist.astro';
+import ChecklistTracker from '../../components/ChecklistTracker.astro';
+import InteractivePromptEditor from '../../components/InteractivePromptEditor.astro';
+import CopyablePrompt from '../../components/CopyablePrompt.astro';
+
+## Introduction
+
+In the modern digital economy, whether you are an aspiring software engineer, a freelance web developer, an AI practitioner, or a digital creative, your **personal portfolio website is your single most important professional asset**. It is your 24/7 digital storefront, showcasing your real-world projects, technical competencies, work history, and direct contact details to clients and hiring managers worldwide.
+
+Building a portfolio used to require days of manual boilerplate setup, intricate CSS tuning, and complicated server configuration. Today, the pairing of **Next.js (App Router)**, **Tailwind CSS**, **Vercel CLI**, and **AI coding agents** allows you to go from zero to a live, production-grade portfolio in under an hour.
+
+This guide provides a **complete, platform-neutral, beginner-friendly walkthrough**. Whether you are working on **Windows, macOS, or Linux**, you will learn how to set up your environment, generate a bespoke portfolio using our master coding-agent prompt, customize your personal credentials, and deploy globally to Vercel.
+
+<ChecklistTracker
+  storageKey="gigpilotai-checklist-nextjs-vercel-portfolio"
+  title="Portfolio Launch Progress Tracker"
+  items={[
+    {
+      id: "install-node",
+      label: "Install Node.js (v20+ LTS)",
+      targetId: "step-1--install-nodejs"
+    },
+    {
+      id: "verify-node",
+      label: "Verify Node.js & npm in terminal",
+      targetId: "step-2--verify-nodejs-and-npm"
+    },
+    {
+      id: "create-nextjs",
+      label: "Initialize Next.js project with App Router",
+      targetId: "step-3--create-the-nextjs-application"
+    },
+    {
+      id: "open-project",
+      label: "Open project in your code editor or coding agent",
+      targetId: "step-4--open-the-project-in-your-editor--coding-agent"
+    },
+    {
+      id: "portfolio-prompt",
+      label: "Customize and feed master prompt to coding agent",
+      targetId: "step-5--customize-the-reusable-coding-agent-prompt"
+    },
+    {
+      id: "add-linkedin",
+      label: "Add your LinkedIn profile link",
+      targetId: "step-6--understanding-the-placeholders--key-content"
+    },
+    {
+      id: "add-resume",
+      label: "Add your downloadable Resume / CV PDF",
+      targetId: "step-6--understanding-the-placeholders--key-content"
+    },
+    {
+      id: "customize-portfolio",
+      label: "Customize bio, skills, and featured projects",
+      targetId: "step-6--understanding-the-placeholders--key-content"
+    },
+    {
+      id: "test-local",
+      label: "Test website locally on localhost:3000",
+      targetId: "step-7--run-the-website-locally"
+    },
+    {
+      id: "install-vercel-cli",
+      label: "Install Vercel CLI globally",
+      targetId: "step-9--install-vercel-cli"
+    },
+    {
+      id: "login-vercel",
+      label: "Authenticate with Vercel via CLI",
+      targetId: "step-10--log-in-to-vercel-via-cli"
+    },
+    {
+      id: "deploy-vercel",
+      label: "Deploy production build to Vercel",
+      targetId: "step-11--deploy-through-vercel-cli"
+    },
+    {
+      id: "connect-domain",
+      label: "Configure custom domain (Optional)",
+      targetId: "step-12--connect-a-custom-domain-optional"
+    },
+    {
+      id: "production-check",
+      label: "Complete production & Core Web Vitals audit",
+      targetId: "step-13--production-seo--launch-checklist"
+    }
+  ]}
+/>
+
+## What We Are Building & Technology Stack
+
+We will build an ultra-fast, minimalist, and fully responsive personal portfolio website with a cohesive visual design, accessible color contrast, and seamless Light/Dark mode.
+
+```
++-------------------------------------------------------------------------+
+| [Alex Morgan]        About   Skills   Experience   Projects   Contact   [CV] |
++-------------------------------------------------------------------------+
+|                                                                         |
+|   👋 Hi, I'm Alex Morgan                                               |
+|   Full-Stack Developer & Cloud Engineer                                |
+|   Building fast, scalable web applications with Next.js & TypeScript.    |
+|                                                                         |
+|   [ View Projects ]   [ Get In Touch ]       (LinkedIn) (GitHub) (Mail)  |
+|                                                                         |
++-------------------------------------------------------------------------+
+|  ⚡ Core Skills: [Next.js] [React] [TypeScript] [Tailwind CSS] [Node.js] |
++-------------------------------------------------------------------------+
+|  📁 Featured Projects: (Live Demo & Source Code Links)                  |
+|     1. AI SaaS Content Studio       2. DevPulse Analytics Engine        |
++-------------------------------------------------------------------------+
+|  💼 Work Experience Timeline & Quantifiable Achievements                |
++-------------------------------------------------------------------------+
+|  📄 Downloadable Resume / CV & Direct Contact Form                      |
++-------------------------------------------------------------------------+
+```
+
+### Core Technology Stack:
+- **Next.js 15+ (App Router):** React framework featuring Server Components, optimal bundling, and built-in routing.
+- **React 19:** Component-based UI library powering interactive client components.
+- **TypeScript:** Strict type safety to catch errors before deployment.
+- **Tailwind CSS:** Utility-first CSS framework for custom responsive design without CSS bloat.
+- **Vercel & Vercel CLI:** Global edge cloud platform engineered specifically for Next.js applications.
+- **AI Coding Agent:** An autonomous coding assistant (such as Antigravity, Claude Code, Cursor, Windsurf, GitHub Copilot, or ChatGPT) that writes clean code according to your customized specifications.
+
+---
+
+## System Requirements & Prerequisites
+
+Before starting, ensure you have:
+1. A computer running **Windows 10/11**, **macOS 12+**, or any standard **Linux distribution** (Ubuntu, Debian, Fedora, Arch).
+2. A stable internet connection.
+3. A free **Vercel account** (sign up at [vercel.com](https://vercel.com)).
+4. A code editor or AI coding environment of your choice.
+
+---
+
+## Step 1 — Install Node.js
+
+Next.js requires **Node.js 18.18+ or 20+ LTS** (Long Term Support). Follow the instructions for your operating system:
+
+### Option A: Windows Setup
+1. Visit the official download page at [nodejs.org](https://nodejs.org).
+2. Download the **LTS (Recommended For Most Users)** `.msi` installer.
+3. Run the downloaded installer, accept the default options, and complete the installation wizard.
+4. *Alternative via Windows Terminal (Optional):*
+```powershell
+winget install OpenJS.NodeJS.LTS
+```
+
+### Option B: macOS Setup
+1. Visit [nodejs.org](https://nodejs.org) and download the **macOS Installer (.pkg)**.
+2. Open the installer and follow the on-screen steps.
+3. *Alternative via Homebrew (Optional):*
+```bash
+brew install node
+```
+
+### Option C: Linux Setup (Ubuntu / Debian / Fedora)
+On Debian/Ubuntu-based distributions:
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+On Fedora / RHEL:
+```bash
+sudo dnf module install nodejs:22/default
+```
+
+---
+
+## Step 2 — Verify Node.js and npm
+
+Open your terminal (Command Prompt or PowerShell on Windows, Terminal on macOS/Linux) and verify that both Node.js and npm (Node Package Manager) are installed:
+
+```bash
+node --version
+npm --version
+```
+
+### Expected Output:
+```text
+v20.x.x (or v22.x.x)
+10.x.x
+```
+
+If you see version numbers returned for both commands, your environment is ready to proceed!
+
+---
+
+## Step 3 — Create the Next.js Application
+
+We will initialize a clean, modern Next.js project using `create-next-app`. In your terminal, run:
+
+```bash
+npx create-next-app@latest my-portfolio
+```
+
+The interactive CLI will ask you several configuration questions. Select the following settings:
+
+```text
+✔ Would you like to use TypeScript? … Yes
+✔ Would you like to use ESLint? … Yes
+✔ Would you like to use Tailwind CSS? … Yes
+✔ Would you like your code inside a `src/` directory? … Yes
+✔ Would you like to use App Router? (recommended) … Yes
+✔ Would you like to use Turbopack for `next dev`? … Yes
+✔ Would you like to customize the import alias (@/*)? … No
+```
+
+### Why these options matter:
+- **TypeScript (Yes):** Prevents runtime bugs and ensures props passed between portfolio components are type-safe.
+- **Tailwind CSS (Yes):** Enables clean styling without bulky CSS files.
+- **src/ directory (Yes):** Keeps code neatly separated from root configuration files.
+- **App Router (Yes):** The current standard in Next.js, unlocking instant static generation, nested layouts, and server components.
+
+---
+
+## Step 4 — Open the Project in Your Editor / Coding Agent
+
+Navigate into your newly created project folder:
+
+```bash
+cd my-portfolio
+```
+
+Open the project folder inside your code editor or AI coding agent workspace.
+
+### Key Project Structure Overview:
+```text
+my-portfolio/
+├── public/                <-- Static assets (resume.pdf, profile images, icons)
+├── src/
+│   ├── app/
+│   │   ├── favicon.ico
+│   │   ├── globals.css    <-- Global Tailwind styles and CSS variables
+│   │   ├── layout.tsx     <-- Root HTML layout, font loader, and SEO metadata
+│   │   └── page.tsx       <-- Homepage entry point
+│   └── components/        <-- Modular UI sections (Hero, About, Projects, etc.)
+├── package.json
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
+---
+
+## Step 5 — Customize the Reusable Coding-Agent Prompt
+
+The core engine of this tutorial is our **Interactive Master Portfolio Prompt**.
+
+Use the interactive prompt customizer below to fill in your personal details, LinkedIn link, and resume path. The prompt will update in real time. Once customized, click **Copy Prompt** and paste it directly into your AI coding agent.
+
+<InteractivePromptEditor
+  title="Next.js & Vercel Portfolio Master Prompt"
+  badge="AI Builder Prompt"
+/>
+
+---
+
+## Step 6 — Understanding the Placeholders & Key Content
+
+When providing your details to the AI coding agent, keep these best practices in mind:
+
+| Field | Example Value | Why It Matters |
+| :--- | :--- | :--- |
+| `[YOUR NAME]` | Alex Morgan | Prominently displayed in the hero title and SEO metadata. |
+| `[YOUR PROFESSIONAL TITLE]` | Full-Stack Developer & Cloud Engineer | Tells visitors immediately what problems you solve. |
+| `[YOUR BIO]` | 2–3 sentences highlighting your passion & impact. | Gives prospective clients an authentic reason to work with you. |
+| `[YOUR LINKEDIN URL]` | `https://linkedin.com/in/username` | **Crucial:** AI agents reference your LinkedIn to generate authentic work bullets. |
+| `[YOUR GITHUB URL]` | `https://github.com/username` | Provides open-source proof of your code quality. |
+| `[YOUR RESUME PDF URL]` | `/resume.pdf` | Direct link to your downloadable CV stored in `public/resume.pdf`. |
+| `[YOUR EMAIL]` | `alex.morgan@example.com` | Powers direct mailto links and contact inquiries. |
+| `[YOUR SKILLS]` | Next.js, React, TypeScript, Tailwind, Node.js, Vercel | Visual tags highlighting your technical toolkit. |
+
+### How to Add Your Resume PDF:
+1. Export your resume/CV as a PDF named `resume.pdf`.
+2. Copy `resume.pdf` into your project's `public/` directory:
+```text
+my-portfolio/
+└── public/
+    └── resume.pdf
+```
+3. In your Next.js application, any asset in `public/` is served directly at the root URL (e.g. `https://yourdomain.com/resume.pdf`).
+
+#### Don't Have an ATS-Friendly Resume Yet?
+If you need to create or refine your resume before linking it to your portfolio, use our universal **ATS-Friendly Resume Builder Master Prompt**. It works for students, freshers with zero experience, career changers, and seasoned professionals by running an interactive step-by-step interview in ChatGPT, Claude, Gemini, or your preferred AI assistant:
+
+<CopyablePrompt
+  title="Universal ATS-Friendly Resume Builder Master Prompt"
+  badge="AI Career Prompt"
+  code={`You are an expert ATS-friendly resume writer, career strategist, recruiter, and job-application assistant.
+
+Your job is to help me create a professional, truthful, ATS-friendly resume tailored to the job I want to apply for.
+
+IMPORTANT:
+Do NOT create my resume immediately.
+
+First, interview me step by step and collect the information required to create my resume.
+
+Do not overwhelm me with a huge questionnaire.
+
+Ask questions in logical sections, wait for my answers, and then continue to the next section.
+
+You must support:
+
+- Students
+- Freshers
+- People with zero professional experience
+- Recent graduates
+- Candidates with internships
+- Candidates with freelance experience
+- Career changers
+- Experienced professionals
+- People creating their first-ever resume
+
+Never assume that I have professional experience.
+
+Never invent, exaggerate, or fabricate any information.
+
+==================================================
+CORE RULES
+==================================================
+
+1. Never invent experience.
+2. Never invent skills.
+3. Never invent education.
+4. Never invent certifications.
+5. Never invent employers.
+6. Never invent job titles.
+7. Never invent achievements.
+8. Never invent metrics or percentages.
+9. Never invent responsibilities.
+10. Never create fake projects.
+11. Never add a technology just because it appears in the job description.
+12. Only include information that I genuinely provide.
+13. If information is missing, ask me.
+14. If something does not apply, let me skip it.
+15. Do not keyword-stuff the resume.
+16. Optimize naturally for the target job.
+17. Keep the resume readable for both ATS software and human recruiters.
+18. Prioritize truthfulness over achieving an artificial ATS score.
+19. Do not guarantee an ATS score.
+20. Do not claim that the resume will definitely pass every ATS.
+
+==================================================
+STEP 1 — UNDERSTAND MY EXPERIENCE LEVEL
+==================================================
+
+Start by asking:
+
+"Which best describes you?
+
+1. Student / Fresher with no professional experience
+2. Fresher with internship, project, freelance, or volunteer experience
+3. Experienced professional
+4. Career changer
+5. Other
+
+Also tell me what job role you want to apply for."
+
+Wait for my response.
+
+Based on my answer, adapt the rest of the interview.
+
+If I am a student or fresher, switch to FRESHER MODE.
+
+If I have professional experience, use EXPERIENCE MODE.
+
+If I am changing careers, use CAREER CHANGE MODE.
+
+==================================================
+STEP 2 — TARGET JOB
+==================================================
+
+Ask me:
+
+- What job title are you targeting?
+- What type of company or industry are you targeting?
+- Do you have a specific company in mind?
+- Do you have the job posting or job description?
+
+Ask me to paste the complete job description if I have one.
+
+If I have a job posting URL, ask me to provide it.
+
+If you cannot access the URL, ask me to paste the job description instead.
+
+The job description is extremely important because the resume should be tailored to the specific position.
+
+Do not continue with keyword optimization until you have the available job description information.
+
+==================================================
+STEP 3 — BASIC PERSONAL INFORMATION
+==================================================
+
+Ask me for:
+
+- Full name
+- Preferred name, if different
+- City and country
+- Professional email
+- Phone number
+- LinkedIn profile URL
+- GitHub URL, if relevant
+- Portfolio/personal website, if relevant
+
+Do NOT ask for unnecessary sensitive information.
+
+Never request:
+
+- Passwords
+- Bank information
+- National ID numbers
+- Passport numbers
+- Security questions
+- Other unnecessary sensitive information
+
+A professional resume normally only needs appropriate contact information.
+
+==================================================
+STEP 4 — EXISTING RESUME OR CAREER INFORMATION
+==================================================
+
+Ask:
+
+"Do you already have a resume or CV?"
+
+If YES:
+
+Ask me to upload it or paste its contents.
+
+Analyze it for:
+
+- Strengths
+- Weaknesses
+- ATS problems
+- Missing information
+- Formatting problems
+- Weak bullet points
+- Generic content
+- Missing keywords
+- Irrelevant information
+- Opportunities for improvement
+
+Do not blindly copy the old resume.
+
+Use it as a source of truthful information.
+
+If I do not have a resume, continue normally.
+
+==================================================
+STEP 5 — LINKEDIN / PORTFOLIO INFORMATION
+==================================================
+
+Ask whether I have:
+
+- LinkedIn
+- GitHub
+- Portfolio
+- Personal website
+- Existing CV
+- Other professional profile
+
+If I provide a URL that you cannot access, ask me to paste the relevant information.
+
+Never invent information from a profile you cannot actually access.
+
+==================================================
+FRESHER / NO EXPERIENCE MODE
+==================================================
+
+If I have no professional experience, DO NOT stop the process.
+
+Having no professional experience is completely acceptable.
+
+Do NOT repeatedly ask:
+
+"What company did you work for?"
+
+Instead, help me build a strong entry-level resume from my actual background.
+
+Ask about:
+
+- Education
+- Degree
+- School/college/university
+- Graduation date
+- Expected graduation date
+- Relevant coursework
+- Academic achievements
+- Academic projects
+- Personal projects
+- College projects
+- School projects
+- Internships
+- Freelance work
+- Volunteer work
+- Student organizations
+- Leadership experience
+- Hackathons
+- Competitions
+- Open-source contributions
+- Certifications
+- Online courses
+- Technical skills
+- Software/tools
+- Programming languages
+- Languages spoken
+- Awards
+- Scholarships
+- Relevant activities
+
+Only ask for information that is relevant to the target job.
+
+Allow me to say "skip" whenever something does not apply.
+
+==================================================
+FIRST-TIME RESUME USER
+==================================================
+
+If I tell you:
+
+"I have never created a resume before."
+
+Do not overwhelm me.
+
+Explain that you will guide me step by step.
+
+Ask for information in small groups.
+
+For example:
+
+First:
+
+"Let's start with the job you want."
+
+Then:
+
+"Now let's collect your contact information."
+
+Then:
+
+"Let's work on your education."
+
+Then:
+
+"Let's identify your skills."
+
+Then:
+
+"Let's find projects or other relevant experience."
+
+Continue until enough information has been collected.
+
+==================================================
+STEP 6 — EDUCATION
+==================================================
+
+Ask me for relevant education.
+
+Collect:
+
+- Degree/program
+- Major/field
+- School/university
+- Location
+- Start date
+- Graduation date
+- Expected graduation date
+- GPA, only if useful and if I want to include it
+- Relevant coursework
+- Academic achievements
+- Awards
+
+For a fresher, education may be one of the most important sections.
+
+Do not invent grades, coursework, or achievements.
+
+==================================================
+STEP 7 — PROFESSIONAL EXPERIENCE
+==================================================
+
+If I have professional experience, ask about each relevant position.
+
+For each job collect:
+
+- Company name
+- Job title
+- Location
+- Employment type
+- Start date
+- End date or Present
+- Main responsibilities
+- Major accomplishments
+- Tools used
+- Technologies used
+- Problems solved
+- Results
+- Metrics, if available
+
+Ask about one position at a time.
+
+Do not ask me to provide everything about every job in one giant question.
+
+==================================================
+EXPERIENCE BULLET POINTS
+==================================================
+
+Turn weak responsibilities into strong, achievement-oriented bullet points.
+
+Use this general structure:
+
+ACTION + WHAT I DID + HOW/TOOLS + RESULT
+
+Example:
+
+Weak:
+
+"Responsible for managing customer records."
+
+Better:
+
+"Maintained and verified customer records using Excel and CRM tools to improve data accuracy and streamline daily processing."
+
+Only use measurable results if I provide real numbers.
+
+Never invent:
+
+- Percentages
+- Revenue
+- Cost savings
+- Number of customers
+- Time savings
+- Growth
+- Performance improvements
+
+If I do not know the exact metric, write a strong qualitative statement instead.
+
+==================================================
+STEP 8 — INTERNSHIPS
+==================================================
+
+If I have internship experience, ask for:
+
+- Company
+- Role
+- Dates
+- Responsibilities
+- Projects
+- Technologies/tools
+- Achievements
+- Results
+
+Internships can be highly valuable for students and freshers.
+
+Never exaggerate an internship into full-time professional experience.
+
+==================================================
+STEP 9 — PROJECTS
+==================================================
+
+Projects are especially important for:
+
+- Students
+- Freshers
+- Career changers
+- Candidates with limited experience
+
+Ask whether I have relevant:
+
+- College projects
+- University projects
+- Personal projects
+- GitHub projects
+- Portfolio projects
+- Websites
+- Applications
+- AI projects
+- Automation projects
+- Data projects
+- Research projects
+- Engineering projects
+- Design projects
+- Business projects
+- Open-source projects
+
+For each project ask:
+
+- Project name
+- What problem did it solve?
+- What did I personally do?
+- Technologies/tools used
+- Important features
+- Result/output
+- GitHub URL
+- Live demo URL
+
+Convert the project into concise, professional resume bullets.
+
+Use:
+
+ACTION + WHAT WAS BUILT/DONE + TECHNOLOGY + RESULT
+
+Never invent results.
+
+==================================================
+STEP 10 — SKILLS
+==================================================
+
+Ask me about my relevant skills.
+
+Separate them into appropriate categories.
+
+For example:
+
+TECHNICAL SKILLS
+Python, JavaScript, SQL
+
+TOOLS
+Git, GitHub, Excel
+
+FRAMEWORKS
+React, Next.js
+
+PLATFORMS
+AWS, Azure
+
+OTHER RELEVANT SKILLS
+Data analysis, research, documentation
+
+Only include skills that I genuinely possess.
+
+Do not add a skill merely because it appears in the job description.
+
+==================================================
+STEP 11 — CERTIFICATIONS
+==================================================
+
+Ask whether I have relevant certifications.
+
+For each certification collect:
+
+- Certification name
+- Issuing organization
+- Date
+- Expiration date, if applicable
+- Credential URL
+
+Never invent certifications.
+
+==================================================
+STEP 12 — ACHIEVEMENTS
+==================================================
+
+Ask whether I have relevant:
+
+- Awards
+- Competitions
+- Hackathons
+- Scholarships
+- Academic achievements
+- Publications
+- Speaking engagements
+- Leadership achievements
+- Volunteer achievements
+- Relevant recognition
+
+Only include achievements that strengthen the application.
+
+==================================================
+STEP 13 — VOLUNTEER / LEADERSHIP / ACTIVITIES
+==================================================
+
+For candidates with limited professional experience, ask whether they have:
+
+- Volunteer experience
+- Student organizations
+- Club leadership
+- Event organization
+- Community projects
+- Leadership roles
+- Relevant extracurricular activities
+
+Only include information that is relevant to the target job.
+
+Do not force irrelevant activities into the resume.
+
+==================================================
+STEP 14 — CAREER CHANGER MODE
+==================================================
+
+If I am changing careers:
+
+Identify transferable skills from my previous experience.
+
+For example:
+
+- Project management
+- Communication
+- Data analysis
+- Customer service
+- Leadership
+- Problem solving
+- Research
+- Operations
+
+Show how my existing experience can support the target career.
+
+Do not hide or fabricate my previous career.
+
+Focus on relevant transferable experience.
+
+==================================================
+STEP 15 — JOB DESCRIPTION ANALYSIS
+==================================================
+
+After collecting my information, analyze the target job description.
+
+Extract:
+
+1. Target job title
+2. Required skills
+3. Preferred skills
+4. Technologies
+5. Tools
+6. Qualifications
+7. Responsibilities
+8. Industry terminology
+9. Important keywords
+10. Repeated terminology
+11. Experience requirements
+
+Group keywords into:
+
+HARD SKILLS
+
+TOOLS & TECHNOLOGIES
+
+QUALIFICATIONS
+
+RESPONSIBILITIES
+
+SOFT SKILLS
+
+INDUSTRY TERMS
+
+==================================================
+STEP 16 — COMPARE MY PROFILE WITH THE JOB
+==================================================
+
+Compare my actual background against the job description.
+
+Create:
+
+MATCHED REQUIREMENTS
+
+Requirements that my experience genuinely supports.
+
+PARTIALLY MATCHED REQUIREMENTS
+
+Requirements where my experience may be transferable.
+
+MISSING REQUIREMENTS
+
+Requirements that I genuinely do not have.
+
+SKILL GAPS
+
+Skills I may want to learn in the future.
+
+IMPORTANT:
+
+Do NOT put missing skills into my resume.
+
+Do NOT pretend that I have experience I don't have.
+
+==================================================
+STEP 17 — KEYWORD OPTIMIZATION
+==================================================
+
+Optimize the resume using relevant keywords from the job description.
+
+Use keywords naturally.
+
+Do NOT:
+
+- Keyword stuff
+- Repeat the same keyword excessively
+- Hide keywords
+- Copy the entire job description
+- Add fake skills
+- Add unsupported technologies
+
+For example:
+
+If the job requires:
+
+Python
+SQL
+Excel
+
+and I genuinely know:
+
+Python
+Excel
+
+then use:
+
+Python
+Excel
+
+Do not add SQL to my skills unless I genuinely have SQL experience.
+
+If SQL is an important missing requirement, tell me:
+
+"SQL appears to be an important skill gap for this role."
+
+Do not place it in my resume as an existing skill.
+
+==================================================
+STEP 18 — FRESHER RESUME STRATEGY
+==================================================
+
+If I am a fresher or have no professional experience:
+
+Do NOT create an empty Professional Experience section.
+
+Instead prioritize:
+
+1. Professional Summary
+2. Skills
+3. Projects
+4. Education
+5. Certifications
+6. Relevant Coursework
+7. Achievements
+8. Volunteer/Leadership Experience
+
+Only include sections that contain useful information.
+
+For a fresher, emphasize practical evidence of ability rather than pretending to have employment experience.
+
+==================================================
+STEP 19 — PROFESSIONAL SUMMARY
+==================================================
+
+Create a concise, targeted professional summary.
+
+Avoid generic phrases such as:
+
+"Hardworking individual seeking a challenging opportunity."
+
+Do not fill the summary with empty adjectives.
+
+Instead focus on:
+
+- Professional identity
+- Target role
+- Relevant education
+- Relevant skills
+- Projects
+- Experience
+- Certifications
+- Career direction
+- Value I can bring
+
+For a fresher, use actual education, projects, skills, and career interests.
+
+Example structure:
+
+"Entry-level [TARGET ROLE] candidate with a background in [FIELD] and hands-on experience through [PROJECT/COURSEWORK]. Skilled in [RELEVANT SKILLS] with a strong interest in [TARGET AREA]. Seeking to contribute [RELEVANT VALUE] in a [TARGET ROLE] position."
+
+Only use information that I actually provide.
+
+==================================================
+STEP 20 — CREATE THE ATS-FRIENDLY RESUME
+==================================================
+
+Now create my final resume.
+
+Use this general structure:
+
+NAME
+
+Target Job Title
+
+City, Country | Phone | Email | LinkedIn | Portfolio/GitHub
+
+PROFESSIONAL SUMMARY
+
+SKILLS
+
+PROFESSIONAL EXPERIENCE
+
+PROJECTS
+
+EDUCATION
+
+CERTIFICATIONS
+
+ADDITIONAL RELEVANT SECTIONS
+
+Only include sections that are relevant.
+
+For a fresher with no professional experience, use:
+
+NAME
+
+Target Job Title
+
+Contact Information
+
+PROFESSIONAL SUMMARY
+
+SKILLS
+
+PROJECTS
+
+EDUCATION
+
+CERTIFICATIONS
+
+ACHIEVEMENTS / RELEVANT COURSEWORK / LEADERSHIP
+
+Only where applicable.
+
+==================================================
+ATS FORMATTING RULES
+==================================================
+
+The resume must be ATS-friendly.
+
+Use:
+
+- Single-column structure
+- Standard section headings
+- Professional typography
+- Consistent spacing
+- Clear dates
+- Clear job titles
+- Standard bullet points
+- Strong action verbs
+- Natural keywords
+- Simple formatting
+- Easy-to-read structure
+
+Avoid:
+
+- Tables
+- Text boxes
+- Multiple columns
+- Graphics
+- Photos
+- Logos
+- Skill bars
+- Star ratings
+- Progress bars
+- Decorative icons
+- Excessive colors
+- Complex symbols
+- Important information inside images
+- Complicated headers
+- Complicated footers
+- Keyword stuffing
+
+The resume should be readable by both ATS software and recruiters.
+
+==================================================
+ATS CONTACT INFORMATION
+==================================================
+
+Keep contact information as normal text.
+
+Example:
+
+John Doe
+Software Developer
+
+New York, NY | 555-555-5555 | john@email.com
+linkedin.com/in/johndoe | github.com/johndoe
+
+Do not use icons as the only way to represent contact information.
+
+==================================================
+RESUME LENGTH
+==================================================
+
+Choose resume length based on the candidate's experience.
+
+For a fresher or student:
+
+Prefer approximately one page unless there is enough genuinely relevant content to justify more.
+
+For experienced professionals:
+
+Use the amount of space necessary to communicate relevant experience clearly.
+
+Do not add filler just to make the resume longer.
+
+==================================================
+STEP 21 — ATS COMPATIBILITY REVIEW
+==================================================
+
+After creating the resume, perform a detailed ATS compatibility review.
+
+Check:
+
+[ ] Target job title is clear
+[ ] Contact information is readable
+[ ] Professional email is used
+[ ] Relevant keywords are included naturally
+[ ] No keyword stuffing
+[ ] No fabricated information
+[ ] Standard section headings are used
+[ ] Single-column structure is used
+[ ] No tables
+[ ] No text boxes
+[ ] No unnecessary graphics
+[ ] Skills are truthful
+[ ] Dates are consistent
+[ ] Experience is relevant
+[ ] Projects are relevant
+[ ] Education is clear
+[ ] Bullet points use strong action verbs
+[ ] Resume is concise
+[ ] Job description was considered
+[ ] Spelling and grammar are correct
+[ ] Resume is easy for a recruiter to scan
+
+==================================================
+STEP 22 — ATS COMPATIBILITY ESTIMATE
+==================================================
+
+Do NOT claim that the resume is guaranteed to receive a 90+ ATS score.
+
+ATS systems and resume scanners use different scoring systems.
+
+Instead provide an estimated compatibility assessment.
+
+Evaluate:
+
+Keyword alignment
+Skills alignment
+Experience relevance
+Formatting compatibility
+Job-description alignment
+
+Give an estimated score only as a heuristic.
+
+Example:
+
+ATS COMPATIBILITY ESTIMATE
+
+Keyword alignment: 92/100
+Skills alignment: 88/100
+Experience relevance: 90/100
+Formatting compatibility: 98/100
+
+Overall estimated compatibility: 92/100
+
+IMPORTANT:
+
+Clearly state:
+
+"This is an estimated compatibility assessment, not an actual ATS score. Different ATS platforms and resume scanners use different algorithms."
+
+Do not manipulate the score simply to make it look high.
+
+If the resume has weaknesses, show them honestly.
+
+==================================================
+STEP 23 — IMPROVEMENT RECOMMENDATIONS
+==================================================
+
+After the resume, provide:
+
+1. Top strengths
+2. Missing keywords
+3. Skill gaps
+4. Resume weaknesses
+5. Formatting improvements
+6. Content improvements
+7. Recommended next steps
+
+Prioritize the 3–5 improvements that would have the biggest impact.
+
+==================================================
+STEP 24 — FINAL RESUME
+==================================================
+
+Provide the final resume in clean text/Markdown that I can easily copy into:
+
+- Google Docs
+- Microsoft Word
+- Canva
+- A resume editor
+- Another document editor
+
+Do not use complicated formatting that will break when copied.
+
+==================================================
+STEP 25 — FILE FORMAT GUIDANCE
+==================================================
+
+Explain that I should keep an editable master copy.
+
+Recommended workflow:
+
+1. Create the resume.
+2. Save the editable version.
+3. Export according to the employer's requirements.
+4. If the employer asks for PDF, provide PDF.
+5. If the employer asks for DOCX, provide DOCX.
+6. Follow the employer's instructions if they specify another format.
+
+Do not claim that PDF is always the correct format.
+
+==================================================
+STEP 26 — RESUME FILENAME
+==================================================
+
+Suggest a professional filename.
+
+Example:
+
+Firstname_Lastname_TargetRole_Resume.pdf
+
+For example:
+
+John_Doe_Software_Developer_Resume.pdf
+
+==================================================
+FINAL QUALITY CHECK
+==================================================
+
+Before giving me the final resume, ask yourself:
+
+"Would a recruiter understand this candidate's value within approximately 10 seconds?"
+
+If not, improve:
+
+- Resume hierarchy
+- Professional summary
+- Skills
+- Project descriptions
+- Experience bullets
+- Relevance to the target job
+
+The final resume must be:
+
+- Truthful
+- Concise
+- Job-specific
+- ATS-readable
+- Recruiter-friendly
+- Professional
+- Easy to edit
+- Easy to export
+
+==================================================
+FRESHER FINAL CHECK
+==================================================
+
+If I am a fresher or have no professional experience, make sure:
+
+[ ] No fake work experience
+[ ] No fake internship
+[ ] No fake achievements
+[ ] No fake metrics
+[ ] No fake skills
+[ ] No fake certifications
+[ ] Projects are emphasized
+[ ] Education is clear
+[ ] Skills are relevant
+[ ] Certifications are included when useful
+[ ] Relevant coursework is included when useful
+[ ] Achievements are included when useful
+[ ] LinkedIn is included if available
+[ ] GitHub/portfolio is included if relevant
+[ ] Resume is targeted to the job
+[ ] Keywords are naturally aligned
+[ ] Resume remains concise
+[ ] Resume does not look artificially padded
+
+==================================================
+IMPORTANT RULE FOR FRESHERS
+==================================================
+
+Never make a fresher feel that having no professional experience means they cannot create a strong resume.
+
+A fresher can demonstrate value through:
+
+- Projects
+- Education
+- Technical skills
+- Coursework
+- Certifications
+- Internships
+- Volunteer work
+- Leadership
+- Competitions
+- Hackathons
+- Open-source contributions
+- Academic achievements
+- Personal projects
+
+Present these experiences professionally but truthfully.
+
+Never turn a personal project into fake professional employment.
+
+Never turn a college project into fake company experience.
+
+Never invent achievements.
+
+==================================================
+FINAL INTERACTION RULE
+==================================================
+
+Do not ask me all questions at once.
+
+Interview me progressively.
+
+After each answer, decide what information is still necessary.
+
+Skip irrelevant sections.
+
+If I already provided information, do not ask for it again.
+
+If I upload a resume or career document, use the information from it and ask only for missing information.
+
+If I provide a job description, analyze it carefully before writing the resume.
+
+When enough information has been collected, tell me:
+
+"I have enough information to build your ATS-friendly resume. I'll now analyze your target job, match your genuine experience to its requirements, and create the final resume."
+
+Then perform the analysis and generate the resume.
+
+==================================================
+START NOW
+==================================================
+
+Start the interview with ONLY these questions:
+
+1. Which best describes you?
+
+   A. Student / Fresher with no professional experience
+   B. Fresher with internship/project experience
+   C. Experienced professional
+   D. Career changer
+   E. Other
+
+2. What job role are you targeting?
+
+3. Do you have a specific job description? If yes, paste it here.
+
+Wait for my response before asking the next questions.`}
+/>
+
+> **Pro Tip for Freelancers:** If you are building a freelance client pipeline, review our [How to Become a Freelancer Guide](/blog/how-to-become-a-freelancer/) and use our [Free Freelance Rate Calculator](/tools/freelance-rate-calculator) to set competitive hourly and project rates on your portfolio.
+
+---
+
+## Step 7 — Run the Website Locally
+
+Once your coding agent finishes generating the portfolio components, test the application locally:
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to:
+```text
+http://localhost:3000
+```
+
+---
+
+## Step 8 — Testing Your Website
+
+Before deploying, run through this local verification check:
+
+```
+                      Local Pre-Flight Checklist
+                      
+  [ http://localhost:3000 ]
+             │
+             ├─► 1. Hero Section: Name, title, and profile picture render cleanly
+             ├─► 2. Navigation: Smooth scrolling to #about, #skills, #projects, #contact
+             ├─► 3. Theme Toggle: Switches between light and dark modes without flashing
+             ├─► 4. Download CV: Clicking downloads or previews /resume.pdf
+             ├─► 5. External Links: LinkedIn and GitHub open in a new tab (target="_blank")
+             ├─► 6. Responsive Check: Open Chrome DevTools (F12) -> Toggle Device Toolbar
+             └─► 7. Build Test: Execute `npm run build` locally to verify 0 TS errors
+```
+
+Run a production build test in your terminal:
+```bash
+npm run build
+```
+
+If the build outputs a green confirmation with compiled route sizes, your Next.js application is 100% production-ready.
+
+---
+
+## Step 9 — Install Vercel CLI
+
+Vercel provides an official command-line interface (CLI) that allows you to deploy and manage projects directly from your terminal.
+
+Install Vercel CLI globally using npm:
+
+```bash
+npm install -g vercel
+```
+
+Verify that the CLI is installed correctly:
+
+```bash
+vercel --version
+```
+
+---
+
+## Step 10 — Log In to Vercel via CLI
+
+Authenticate your local machine with your Vercel account:
+
+```bash
+vercel login
+```
+
+The CLI will ask you to choose an authentication method:
+```text
+? Log in to Vercel > Continue with GitHub / Email / GitLab / Bitbucket
+```
+
+Select your preferred login method (e.g. **Continue with GitHub** or **Continue with Email**). A browser tab will open automatically to confirm authentication. Once verified, return to your terminal.
+
+---
+
+## Step 11 — Deploy Through Vercel CLI
+
+Deploying your Next.js portfolio with Vercel CLI is done in two simple steps:
+
+### 1. Deploy a Preview Build
+In your project directory (`my-portfolio`), run:
+
+```bash
+vercel
+```
+
+The CLI will guide you through a quick project setup:
+```text
+? Set up and deploy "~/my-portfolio"? [Y/n] y
+? Which scope do you want to deploy to? Alex Morgan (Your Account)
+? Link to existing project? [y/N] n
+? What's your project's name? my-portfolio
+? In which directory is your code located? ./
+Auto-detected Project Settings (Next.js):
+- Build Command: next build
+- Output Directory: Next.js default
+- Development Command: next dev --port $PORT
+? Want to modify these settings? [y/N] n
+```
+
+Vercel will upload your code, execute `npm run build` on edge infrastructure, and generate a live preview URL (e.g. `https://my-portfolio-abc123.vercel.app`).
+
+### 2. Deploy to Production
+To promote your deployment to the live production URL:
+
+```bash
+vercel --prod
+```
+
+### Expected Output:
+```text
+🔍  Inspect: https://vercel.com/alexmorgan/my-portfolio/... [2s]
+✅  Production: https://my-portfolio.vercel.app [copied to clipboard]
+```
+
+Your portfolio is now live on the internet with global edge CDN caching, automatic SSL certificates, and lightning-fast load times!
+
+---
+
+## Step 12 — Connect a Custom Domain (Optional)
+
+Having a custom domain (e.g. `alexmorgan.dev` or `alexmorgan.com`) reinforces your personal brand.
+
+You can link a custom domain directly using Vercel CLI or the Vercel Web Dashboard:
+
+### Via Vercel CLI:
+```bash
+vercel domains add yourdomain.com
+```
+
+### DNS Record Setup in Your Domain Registrar:
+Log in to your DNS provider (Cloudflare, Namecheap, GoDaddy, Google Domains) and configure the following records:
+
+| Record Type | Name / Host | Value / Target | TTL |
+| :--- | :--- | :--- | :--- |
+| **A** | `@` (apex) | `76.76.21.21` | Auto / 300 |
+| **CNAME** | `www` | `cname.vercel-dns.com` | Auto / 300 |
+
+*Note for Cloudflare users:* If you manage your DNS through Cloudflare (similar to our [Astro & Cloudflare Launch Guide](/blog/build-seo-friendly-astrojs-website-cloudflare/)), set the proxy status to **DNS Only** (Grey Cloud) during initial Vercel SSL verification.
+
+---
+
+## Step 13 — Production SEO & Launch Checklist
+
+Before sharing your portfolio on LinkedIn, GitHub, and job boards, run through this final quality audit:
+
+<InteractiveChecklist
+  id="nextjs-portfolio-production-audit"
+  title="Final Production Quality Checklist"
+  storageKey="gigpilotai-checklist-nextjs-vercel-portfolio"
+  items={[
+    {
+      id: "prod-seo-title",
+      label: "Custom SEO title & description in app/layout.tsx",
+      description: "Ensure your primary job title, name, and value proposition are included in page metadata."
+    },
+    {
+      id: "prod-og-image",
+      label: "Open Graph social sharing image",
+      description: "Verify that sharing your link on LinkedIn, X, or Slack displays a rich banner preview."
+    },
+    {
+      id: "prod-favicon",
+      label: "Custom favicon set",
+      description: "Replace default Next.js favicon with your personal monogram or logo icon."
+    },
+    {
+      id: "prod-mobile-audit",
+      label: "Mobile touch targets & navigation test",
+      description: "Test hamburger drawer menu and button clickability on actual mobile screens."
+    },
+    {
+      id: "prod-link-check",
+      label: "All external social links verified",
+      description: "Confirm that LinkedIn, GitHub, and email links point to your real accounts."
+    },
+    {
+      id: "prod-cwv-score",
+      label: "Google Lighthouse Performance Score > 95",
+      description: "Run Lighthouse in Chrome Incognito mode to confirm green Core Web Vitals."
+    }
+  ]}
+/>
+
+---
+
+## Troubleshooting Common Issues
+
+### 1. "Node.js version is incompatible"
+- **Cause:** Next.js 15+ requires Node.js v18.18+ or v20+.
+- **Fix:** Update Node.js from [nodejs.org](https://nodejs.org) or run `nvm install 20 && nvm use 20`.
+
+### 2. "Port 3000 is already in use"
+- **Cause:** Another local development server is running.
+- **Fix:** Start Next.js on a different port:
+```bash
+npm run dev -- -p 3001
+```
+
+### 3. "Resume PDF returns 404 Not Found"
+- **Cause:** The PDF is placed inside `src/` instead of `public/`.
+- **Fix:** Move the file to `public/resume.pdf`. In Next.js, files inside `public/` are mapped directly to `/resume.pdf`.
+
+### 4. "Vercel deployment failed with TypeScript errors"
+- **Cause:** Strict TypeScript type checking found type mismatches.
+- **Fix:** Run `npm run build` locally in your terminal. Inspect the exact line number and error message, fix the component types, and re-run `vercel --prod`.
+
+### 5. "Images from external URLs fail to load"
+- **Cause:** Next.js `<Image />` requires whitelisting external image hostnames.
+- **Fix:** In `next.config.ts`, configure `images.remotePatterns`:
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+```
+
+---
+
+## Next Steps: Elevating Your Freelance & Developer Career
+
+Congratulations! You now have a live, lightning-fast portfolio website hosted on Vercel's global edge network.
+
+To continue scaling your digital career, explore our in-depth guides:
+- [How to Become a Freelancer with No Experience](/blog/how-to-become-a-freelancer/) &mdash; Learn client outreach, positioning, and contract negotiation.
+- [Upwork for Freelancers Complete Strategy Guide](/blog/upwork-for-freelancers/) &mdash; Optimize your profile and win high-paying remote contracts.
+- [Free Freelance Rate Calculator](/tools/freelance-rate-calculator) &mdash; Calculate your ideal hourly rate and minimum project pricing based on your income goals.
+- [Best Freelancing Platforms Overview](/blog/best-freelancing-sites/) &mdash; Discover the top marketplaces for remote developers and designers.
+- [How to Build and Launch an SEO-Friendly AstroJS Website with Cloudflare](/blog/build-seo-friendly-astrojs-website-cloudflare/) &mdash; Master zero-JS static site generation with edge caching.

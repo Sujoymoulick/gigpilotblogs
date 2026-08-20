@@ -1,0 +1,1339 @@
+---
+interface Props {
+	title?: string;
+	badge?: string;
+}
+
+const {
+	title = 'Next.js & Vercel Portfolio Master Prompt',
+	badge = 'Reusable Agent Prompt',
+} = Astro.props;
+
+const defaultTemplate = `You are an expert full-stack web developer and UI/UX designer.
+
+Build a modern, high-performance, accessible, and fully responsive personal portfolio website using Next.js (App Router), React, TypeScript, and Tailwind CSS.
+
+---
+
+### Professional Background & Personal Information
+
+- Name: [YOUR NAME]
+- Professional Title: [YOUR PROFESSIONAL TITLE]
+- Short Bio: [YOUR BIO]
+- Primary Email: [YOUR EMAIL]
+- LinkedIn Profile URL: [YOUR LINKEDIN URL]
+- GitHub Profile URL: [YOUR GITHUB URL]
+- Resume/CV PDF Link: [YOUR RESUME PDF URL]
+- Profile Picture: [YOUR PROFILE IMAGE]
+- Core Skills: [YOUR SKILLS]
+- Professional Experience: [YOUR EXPERIENCE]
+- Featured Projects: [YOUR PROJECTS]
+
+---
+
+### CRITICAL INSTRUCTION ON PROFESSIONAL BACKGROUND:
+Please add your LinkedIn URL and provide your resume/CV PDF or a URL to the PDF for the full details of your professional background. Use the information in the LinkedIn profile and resume to populate detailed work achievements, quantifiable metrics, education credentials, and technical competencies.
+
+---
+
+### Technical Requirements:
+1. Framework: Next.js (App Router with src/app directory structure)
+2. Language: TypeScript (strict mode enabled)
+3. Styling: Tailwind CSS with clean utility classes and custom color tokens
+4. Icons: Lucide-react or clean inline SVG icons
+5. Dark / Light Mode: Seamless theme switching with next-themes or local storage
+6. Performance: 100% Lighthouse score target, optimal Core Web Vitals (LCP < 2.0s, CLS 0)
+7. Accessibility: Semantic HTML5 elements (<header>, <nav>, <main>, <section>, <footer>), WCAG AA contrast, keyboard navigability, and ARIA attributes
+
+---
+
+### Sections & Page Architecture:
+1. Navigation Bar:
+   - Sticky/fixed header with brand logo/name
+   - Smooth-scroll links to sections (#about, #skills, #experience, #projects, #contact)
+   - Dark/light mode theme toggle button
+   - "Download CV" CTA button linking to [YOUR RESUME PDF URL]
+   - Mobile hamburger menu drawer with smooth toggle animation
+
+2. Hero Section:
+   - Engaging greeting and headline with [YOUR NAME]
+   - Professional subtitle: [YOUR PROFESSIONAL TITLE]
+   - High-impact bio: [YOUR BIO]
+   - Profile avatar with subtle gradient border / glow: [YOUR PROFILE IMAGE]
+   - Primary action buttons: "Explore Projects" & "Get in Touch"
+   - Social icon links: LinkedIn ([YOUR LINKEDIN URL]), GitHub ([YOUR GITHUB URL]), and Email ([YOUR EMAIL])
+
+3. About Me Section:
+   - Compelling narrative on problem-solving philosophy, engineering approach, and career goals
+   - Highlight key stats (years of experience, completed projects, open-source contributions)
+   - Direct link to view full credentials on LinkedIn ([YOUR LINKEDIN URL])
+
+4. Skills & Tech Stack:
+   - Categorized badges:
+     * Frontend (e.g., Next.js, React, TypeScript, Tailwind CSS, HTML5/CSS3)
+     * Backend & Database (e.g., Node.js, REST APIs, PostgreSQL, Supabase)
+     * DevOps & Tools (e.g., Vercel, Git, GitHub Actions, Docker, Figma)
+   - Interactive hover states and clean visual groupings
+
+5. Work Experience Timeline:
+   - Chronological card timeline with company name, job title, dates, and location
+   - Bullet points detailing key accomplishments and technical contributions
+   - Tag badges for technologies utilized in each role
+
+6. Featured Projects:
+   - Responsive grid of interactive project cards
+   - Project title, concise overview, and key features
+   - Tech stack tags for each project
+   - "Live Demo" external link and "Source Code" GitHub link
+   - Hover zoom animation and responsive screenshot aspect ratios
+
+7. Education & Certifications:
+   - Degree, institution, honors, and year
+   - Relevant professional certifications and licenses
+
+8. Downloadable Resume / CV Section:
+   - Dedicated card highlighting full resume availability
+   - Direct download button linking to [YOUR RESUME PDF URL]
+   - "View on LinkedIn" secondary button linking to [YOUR LINKEDIN URL]
+
+9. Contact Section:
+   - Functional contact form (Name, Email, Subject, Message) with client-side validation
+   - Direct email mailto link: [YOUR EMAIL]
+   - Social links: LinkedIn ([YOUR LINKEDIN URL]) and GitHub ([YOUR GITHUB URL])
+
+10. Footer:
+    - Copyright notice © 2026 [YOUR NAME]. Built with Next.js & Tailwind CSS. Hosted on Vercel.
+    - Quick navigation links and back-to-top button.
+
+---
+
+### Code Quality & Deployment:
+- Organize components neatly under src/components/ (Header, Hero, About, Skills, Experience, Projects, Contact, Footer, ThemeToggle).
+- Place static assets (resume.pdf, profile.jpg, project screenshots) in public/.
+- Configure app/layout.tsx with metadata (SEO title, description, Open Graph, Twitter card, favicon).
+- Ensure zero TypeScript errors and zero build warnings on 'npm run build'.
+- Provide clear instructions to run 'npm run dev' locally and deploy using 'vercel'.`;
+---
+
+<div class="prompt-editor-container" id="interactive-prompt-builder">
+	<!-- Top Bar -->
+	<div class="prompt-editor-header">
+		<div class="header-left">
+			<span class="prompt-editor-badge">{badge}</span>
+			<h3 class="prompt-editor-title">{title}</h3>
+		</div>
+		<div class="header-actions">
+			<button
+				type="button"
+				class="btn-editor-action btn-copy-customized"
+				id="btn-copy-prompt-main"
+				aria-label="Copy customized prompt to clipboard"
+			>
+				<svg class="action-svg-icon" viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+					<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+				</svg>
+				<span class="btn-text">Copy Prompt</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- Instructions Notice -->
+	<div class="prompt-editor-notice">
+		<div class="notice-icon" aria-hidden="true">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<line x1="12" y1="16" x2="12" y2="12"></line>
+				<line x1="12" y1="8" x2="12.01" y2="8"></line>
+			</svg>
+		</div>
+		<div class="notice-text">
+			<strong>How to use this prompt:</strong> Fill in your personal details in the quick fields below, or directly edit the prompt in the text area. The prompt will automatically replace placeholders in real time. Click <strong>Copy Prompt</strong> when ready and paste it into your coding agent!
+		</div>
+	</div>
+
+	<!-- Tab Controls -->
+	<div class="prompt-tab-bar" role="tablist" aria-label="Prompt Editor Modes">
+		<button
+			type="button"
+			role="tab"
+			aria-selected="true"
+			aria-controls="tab-customizer"
+			id="tab-btn-customizer"
+			class="tab-btn active"
+		>
+			<svg class="tab-svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<line x1="4" y1="21" x2="4" y2="14"></line>
+				<line x1="4" y1="10" x2="4" y2="3"></line>
+				<line x1="12" y1="21" x2="12" y2="12"></line>
+				<line x1="12" y1="8" x2="12" y2="3"></line>
+				<line x1="20" y1="21" x2="20" y2="16"></line>
+				<line x1="20" y1="12" x2="20" y2="3"></line>
+				<line x1="1" y1="14" x2="7" y2="14"></line>
+				<line x1="9" y1="8" x2="15" y2="8"></line>
+				<line x1="17" y1="16" x2="23" y2="16"></line>
+			</svg>
+			<span>Quick Customizer Fields</span>
+		</button>
+		<button
+			type="button"
+			role="tab"
+			aria-selected="false"
+			aria-controls="tab-editor"
+			id="tab-btn-editor"
+			class="tab-btn"
+		>
+			<svg class="tab-svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+				<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+			</svg>
+			<span>Full Prompt Editor</span>
+		</button>
+	</div>
+
+	<!-- TAB 1: Customizer Form -->
+	<div class="tab-panel active" id="tab-customizer" role="tabpanel" aria-labelledby="tab-btn-customizer">
+		<div class="form-grid">
+			<div class="form-field">
+				<label for="input-name">
+					<span>Your Full Name</span>
+					<span class="placeholder-tag">[YOUR NAME]</span>
+				</label>
+				<input
+					type="text"
+					id="input-name"
+					name="fullName"
+					autocomplete="name"
+					placeholder="e.g. Alex Morgan…"
+					value="Alex Morgan"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for="input-title">
+					<span>Professional Title</span>
+					<span class="placeholder-tag">[YOUR PROFESSIONAL TITLE]</span>
+				</label>
+				<input
+					type="text"
+					id="input-title"
+					name="jobTitle"
+					autocomplete="organization-title"
+					placeholder="e.g. Full-Stack Developer & Cloud Engineer…"
+					value="Full-Stack Developer & Cloud Engineer"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field full-width">
+				<label for="input-bio">
+					<span>Short Bio / Tagline</span>
+					<span class="placeholder-tag">[YOUR BIO]</span>
+				</label>
+				<input
+					type="text"
+					id="input-bio"
+					name="bio"
+					autocomplete="off"
+					placeholder="e.g. Crafting fast, responsive web applications with Next.js and TypeScript…"
+					value="Crafting fast, responsive web applications with Next.js, React, and TypeScript."
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for="input-email">
+					<span>Primary Email</span>
+					<span class="placeholder-tag">[YOUR EMAIL]</span>
+				</label>
+				<input
+					type="email"
+					id="input-email"
+					name="email"
+					autocomplete="email"
+					spellcheck="false"
+					placeholder="e.g. alex.morgan.dev@example.com…"
+					value="alex.morgan.dev@example.com"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for="input-linkedin">
+					<span>LinkedIn URL</span>
+					<span class="placeholder-tag highlight">[YOUR LINKEDIN URL]</span>
+				</label>
+				<input
+					type="url"
+					id="input-linkedin"
+					name="linkedin"
+					autocomplete="url"
+					spellcheck="false"
+					placeholder="e.g. https://linkedin.com/in/alexmorgan…"
+					value="https://linkedin.com/in/alexmorgan-dev"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for="input-github">
+					<span>GitHub URL</span>
+					<span class="placeholder-tag">[YOUR GITHUB URL]</span>
+				</label>
+				<input
+					type="url"
+					id="input-github"
+					name="github"
+					autocomplete="url"
+					spellcheck="false"
+					placeholder="e.g. https://github.com/alexmorgan…"
+					value="https://github.com/alexmorgandev"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field">
+				<label for="input-resume">
+					<span>Resume/CV PDF URL or Path</span>
+					<span class="placeholder-tag highlight">[YOUR RESUME PDF URL]</span>
+				</label>
+				<input
+					type="text"
+					id="input-resume"
+					name="resumePath"
+					autocomplete="off"
+					spellcheck="false"
+					placeholder="e.g. /resume.pdf or https://drive.google.com/…"
+					value="/resume.pdf"
+					class="form-input"
+				/>
+			</div>
+
+			<div class="form-field full-width">
+				<label for="input-skills">
+					<span>Core Skills</span>
+					<span class="placeholder-tag">[YOUR SKILLS]</span>
+				</label>
+				<input
+					type="text"
+					id="input-skills"
+					name="skills"
+					autocomplete="off"
+					placeholder="e.g. Next.js, React, TypeScript, Tailwind CSS, Node.js, REST APIs, Vercel, Git…"
+					value="Next.js 15, React 19, TypeScript, Tailwind CSS, Node.js, REST APIs, Vercel, Git"
+					class="form-input"
+				/>
+			</div>
+		</div>
+
+		<!-- Live Preview of Customized Prompt -->
+		<div class="preview-wrapper">
+			<div class="preview-header">
+				<span class="preview-label">Live Generated Prompt Preview:</span>
+				<span class="preview-hint" aria-live="polite">Updates automatically as you type</span>
+			</div>
+			<div class="prompt-preview-box">
+				<pre><code id="live-prompt-preview">{defaultTemplate}</code></pre>
+			</div>
+		</div>
+	</div>
+
+	<!-- TAB 2: Direct Textarea Editor -->
+	<div class="tab-panel" id="tab-editor" role="tabpanel" aria-labelledby="tab-btn-editor">
+		<div class="textarea-wrapper">
+			<label for="prompt-raw-textarea" class="sr-only">Edit Full Prompt Text</label>
+			<textarea
+				id="prompt-raw-textarea"
+				class="prompt-raw-textarea"
+				rows="18"
+				spellcheck="false"
+				aria-label="Direct prompt code editor"
+			>{defaultTemplate}</textarea>
+		</div>
+	</div>
+
+	<!-- Footer Toolbar -->
+	<div class="prompt-editor-footer">
+		<div class="footer-left">
+			<button type="button" class="btn-toolbar btn-reset-prompt" id="btn-reset-prompt" aria-label="Reset all fields to defaults">
+				<svg class="toolbar-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+					<path d="M3 3v5h5"></path>
+				</svg>
+				<span>Reset to Defaults</span>
+			</button>
+			<button type="button" class="btn-toolbar btn-copy-raw" id="btn-copy-raw" aria-label="Copy raw template with placeholders">
+				<svg class="toolbar-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+					<polyline points="14 2 14 8 20 8"></polyline>
+					<line x1="16" y1="13" x2="8" y2="13"></line>
+					<line x1="16" y1="17" x2="8" y2="17"></line>
+					<polyline points="10 9 9 9 8 9"></polyline>
+				</svg>
+				<span class="btn-copy-raw-text">Copy Raw Template</span>
+			</button>
+		</div>
+		<div class="footer-right">
+			<button type="button" class="btn-primary-copy" id="btn-copy-bottom" aria-label="Copy customized prompt to clipboard">
+				<svg class="action-svg-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+					<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+				</svg>
+				<span class="btn-copy-bottom-text">Copy Customized Prompt</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- Custom Reset Dialog -->
+	<dialog class="prompt-reset-dialog" id="prompt-reset-dialog" aria-labelledby="prompt-reset-dialog-title" aria-describedby="prompt-reset-dialog-desc">
+		<div class="prompt-reset-dialog-card">
+			<div class="prompt-reset-dialog-icon">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+					<path d="M3 3v5h5"></path>
+				</svg>
+			</div>
+			<div class="prompt-reset-dialog-body">
+				<h4 class="prompt-reset-dialog-title" id="prompt-reset-dialog-title">Reset Prompt Fields?</h4>
+				<p class="prompt-reset-dialog-desc" id="prompt-reset-dialog-desc">
+					This will reset all customized values back to their default starter template.
+				</p>
+			</div>
+			<div class="prompt-reset-dialog-actions">
+				<button type="button" class="btn-reset-cancel" id="btn-prompt-reset-cancel">
+					Cancel
+				</button>
+				<button type="button" class="btn-reset-confirm" id="btn-prompt-reset-confirm">
+					Reset to Defaults
+				</button>
+			</div>
+		</div>
+	</dialog>
+</div>
+
+<script is:inline define:vars={{ defaultTemplate }}>
+	(function () {
+		const rawTemplate = defaultTemplate;
+
+		const inputName = document.getElementById('input-name');
+		const inputTitle = document.getElementById('input-title');
+		const inputBio = document.getElementById('input-bio');
+		const inputEmail = document.getElementById('input-email');
+		const inputLinkedin = document.getElementById('input-linkedin');
+		const inputGithub = document.getElementById('input-github');
+		const inputResume = document.getElementById('input-resume');
+		const inputSkills = document.getElementById('input-skills');
+
+		const previewCode = document.getElementById('live-prompt-preview');
+		const rawTextarea = document.getElementById('prompt-raw-textarea');
+
+		const tabCustomizer = document.getElementById('tab-btn-customizer');
+		const tabEditor = document.getElementById('tab-btn-editor');
+		const panelCustomizer = document.getElementById('tab-customizer');
+		const panelEditor = document.getElementById('tab-editor');
+
+		const btnCopyTop = document.getElementById('btn-copy-prompt-main');
+		const btnCopyBottom = document.getElementById('btn-copy-bottom');
+		const btnCopyRaw = document.getElementById('btn-copy-raw');
+		const btnReset = document.getElementById('btn-reset-prompt');
+
+		const resetDialog = document.getElementById('prompt-reset-dialog');
+		const btnResetCancel = document.getElementById('btn-prompt-reset-cancel');
+		const btnResetConfirm = document.getElementById('btn-prompt-reset-confirm');
+
+		function generateCustomizedPrompt() {
+			const name = inputName ? inputName.value.trim() || '[YOUR NAME]' : '[YOUR NAME]';
+			const title = inputTitle ? inputTitle.value.trim() || '[YOUR PROFESSIONAL TITLE]' : '[YOUR PROFESSIONAL TITLE]';
+			const bio = inputBio ? inputBio.value.trim() || '[YOUR BIO]' : '[YOUR BIO]';
+			const email = inputEmail ? inputEmail.value.trim() || '[YOUR EMAIL]' : '[YOUR EMAIL]';
+			const linkedin = inputLinkedin ? inputLinkedin.value.trim() || '[YOUR LINKEDIN URL]' : '[YOUR LINKEDIN URL]';
+			const github = inputGithub ? inputGithub.value.trim() || '[YOUR GITHUB URL]' : '[YOUR GITHUB URL]';
+			const resume = inputResume ? inputResume.value.trim() || '[YOUR RESUME PDF URL]' : '[YOUR RESUME PDF URL]';
+			const skills = inputSkills ? inputSkills.value.trim() || '[YOUR SKILLS]' : '[YOUR SKILLS]';
+
+			let text = rawTemplate;
+			text = text.replaceAll('[YOUR NAME]', name);
+			text = text.replaceAll('[YOUR PROFESSIONAL TITLE]', title);
+			text = text.replaceAll('[YOUR BIO]', bio);
+			text = text.replaceAll('[YOUR EMAIL]', email);
+			text = text.replaceAll('[YOUR LINKEDIN URL]', linkedin);
+			text = text.replaceAll('[YOUR GITHUB URL]', github);
+			text = text.replaceAll('[YOUR RESUME PDF URL]', resume);
+			text = text.replaceAll('[YOUR SKILLS]', skills);
+			text = text.replaceAll('[YOUR PROFILE IMAGE]', '/profile.jpg');
+			text = text.replaceAll('[YOUR EXPERIENCE]', 'Full-Stack Developer at Tech Innovators (2023–Present), Junior Web Developer at NextWave (2021–2023)');
+			text = text.replaceAll('[YOUR PROJECTS]', '1. AI Content Studio (Next.js, OpenAI, Tailwind), 2. Freelance Invoice Engine (React, TypeScript), 3. DevPulse Analytics (Next.js, Vercel Edge)');
+
+			return text;
+		}
+
+		function syncCustomizerToPreview() {
+			const customized = generateCustomizedPrompt();
+			if (previewCode) previewCode.textContent = customized;
+			if (rawTextarea && document.activeElement !== rawTextarea) {
+				rawTextarea.value = customized;
+			}
+		}
+
+		// Attach input listeners
+		const formInputs = [inputName, inputTitle, inputBio, inputEmail, inputLinkedin, inputGithub, inputResume, inputSkills];
+		formInputs.forEach(input => {
+			if (input) {
+				input.addEventListener('input', syncCustomizerToPreview);
+			}
+		});
+
+		// If user types directly in textarea, sync preview
+		if (rawTextarea) {
+			rawTextarea.addEventListener('input', () => {
+				if (previewCode) previewCode.textContent = rawTextarea.value;
+			});
+		}
+
+		// Tab switching with ARIA support
+		function selectTab(activeTab, activePanel, inactiveTab, inactivePanel) {
+			activeTab.classList.add('active');
+			activeTab.setAttribute('aria-selected', 'true');
+			activePanel.classList.add('active');
+
+			inactiveTab.classList.remove('active');
+			inactiveTab.setAttribute('aria-selected', 'false');
+			inactivePanel.classList.remove('active');
+		}
+
+		if (tabCustomizer && tabEditor && panelCustomizer && panelEditor) {
+			tabCustomizer.addEventListener('click', () => {
+				selectTab(tabCustomizer, panelCustomizer, tabEditor, panelEditor);
+			});
+			tabEditor.addEventListener('click', () => {
+				selectTab(tabEditor, panelEditor, tabCustomizer, panelCustomizer);
+			});
+
+			tabCustomizer.addEventListener('keydown', (e) => {
+				if (e.key === 'ArrowRight') {
+					tabEditor.focus();
+					selectTab(tabEditor, panelEditor, tabCustomizer, panelCustomizer);
+				}
+			});
+			tabEditor.addEventListener('keydown', (e) => {
+				if (e.key === 'ArrowLeft') {
+					tabCustomizer.focus();
+					selectTab(tabCustomizer, panelCustomizer, tabEditor, panelEditor);
+				}
+			});
+		}
+
+		// Copy Helper
+		async function copyContent(text, button, labelSelector, successText) {
+			const label = button.querySelector(labelSelector);
+			const originalText = label ? label.textContent : 'Copy';
+
+			try {
+				await navigator.clipboard.writeText(text);
+			} catch (err) {
+				const ta = document.createElement('textarea');
+				ta.value = text;
+				ta.style.position = 'fixed';
+				ta.style.opacity = '0';
+				document.body.appendChild(ta);
+				ta.select();
+				document.execCommand('copy');
+				document.body.removeChild(ta);
+			}
+
+			button.classList.add('copied');
+			if (label) label.textContent = successText || 'Copied!';
+
+			setTimeout(() => {
+				button.classList.remove('copied');
+				if (label) label.textContent = originalText;
+			}, 2000);
+		}
+
+		function getCurrentPromptText() {
+			if (panelEditor && panelEditor.classList.contains('active') && rawTextarea) {
+				return rawTextarea.value;
+			}
+			return generateCustomizedPrompt();
+		}
+
+		if (btnCopyTop) {
+			btnCopyTop.addEventListener('click', () => {
+				copyContent(getCurrentPromptText(), btnCopyTop, '.btn-text', 'Copied!');
+			});
+		}
+
+		if (btnCopyBottom) {
+			btnCopyBottom.addEventListener('click', () => {
+				copyContent(getCurrentPromptText(), btnCopyBottom, '.btn-copy-bottom-text', 'Copied Customized Prompt!');
+			});
+		}
+
+		if (btnCopyRaw) {
+			btnCopyRaw.addEventListener('click', () => {
+				copyContent(rawTemplate, btnCopyRaw, '.btn-copy-raw-text', 'Copied Raw Template!');
+			});
+		}
+
+		// Reset dialog handlers
+		if (btnReset && resetDialog) {
+			btnReset.addEventListener('click', () => {
+				resetDialog.showModal();
+			});
+
+			if (btnResetCancel) {
+				btnResetCancel.addEventListener('click', () => {
+					resetDialog.close();
+				});
+			}
+
+			resetDialog.addEventListener('click', (e) => {
+				const rect = resetDialog.getBoundingClientRect();
+				const isInDialog =
+					rect.top <= e.clientY &&
+					e.clientY <= rect.top + rect.height &&
+					rect.left <= e.clientX &&
+					e.clientX <= rect.left + rect.width;
+				if (!isInDialog) {
+					resetDialog.close();
+				}
+			});
+
+			if (btnResetConfirm) {
+				btnResetConfirm.addEventListener('click', () => {
+					if (inputName) inputName.value = 'Alex Morgan';
+					if (inputTitle) inputTitle.value = 'Full-Stack Developer & Cloud Engineer';
+					if (inputBio) inputBio.value = 'Crafting fast, responsive web applications with Next.js, React, and TypeScript.';
+					if (inputEmail) inputEmail.value = 'alex.morgan.dev@example.com';
+					if (inputLinkedin) inputLinkedin.value = 'https://linkedin.com/in/alexmorgan-dev';
+					if (inputGithub) inputGithub.value = 'https://github.com/alexmorgandev';
+					if (inputResume) inputResume.value = '/resume.pdf';
+					if (inputSkills) inputSkills.value = 'Next.js 15, React 19, TypeScript, Tailwind CSS, Node.js, REST APIs, Vercel, Git';
+
+					syncCustomizerToPreview();
+					resetDialog.close();
+				});
+			}
+		}
+
+		// Initial sync
+		syncCustomizerToPreview();
+	})();
+</script>
+
+<style>
+	/* Container: Clean White in Light Mode, Sleek Black in Dark Mode */
+	.prompt-editor-container {
+		margin: 2.25rem 0;
+		border: 1px solid var(--border);
+		border-radius: 14px;
+		background: #ffffff;
+		color: rgb(var(--black));
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+		transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.prompt-editor-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 1.25rem;
+		background: #f8fafc;
+		border-bottom: 1px solid var(--border);
+		flex-wrap: wrap;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
+	}
+
+	.prompt-editor-badge {
+		font-size: 0.72rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 0.22rem 0.55rem;
+		background: rgba(37, 99, 235, 0.08);
+		color: var(--accent);
+		border-radius: 6px;
+		border: 1px solid rgba(37, 99, 235, 0.2);
+		flex-shrink: 0;
+	}
+
+	.prompt-editor-title {
+		font-size: 1.02rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-wrap: balance;
+	}
+
+	.btn-editor-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.45rem 0.9rem;
+		background: var(--accent);
+		color: #ffffff;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+		box-shadow: 0 1px 4px rgba(37, 99, 235, 0.2);
+	}
+
+	.btn-editor-action:hover {
+		background: var(--accent-dark);
+		transform: translateY(-1px);
+		box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+	}
+
+	.btn-editor-action:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.btn-editor-action.copied {
+		background: #059669;
+		color: #ffffff;
+	}
+
+	.action-svg-icon {
+		display: block;
+		flex-shrink: 0;
+	}
+
+	/* Notice banner */
+	.prompt-editor-notice {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		padding: 0.85rem 1.25rem;
+		background: #f0f7ff;
+		border-bottom: 1px solid #e0effe;
+		font-size: 0.88rem;
+		line-height: 1.45;
+		color: #1e3a8a;
+	}
+
+	.notice-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--accent);
+		flex-shrink: 0;
+		margin-top: 0.15rem;
+	}
+
+	.notice-text strong {
+		color: #1e293b;
+		font-weight: 600;
+	}
+
+	/* Tab bar */
+	.prompt-tab-bar {
+		display: flex;
+		background: #f8fafc;
+		border-bottom: 1px solid var(--border);
+		padding: 0.35rem 0.85rem 0;
+		gap: 0.4rem;
+	}
+
+	.tab-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.55rem 0.95rem;
+		background: transparent;
+		color: var(--text-muted);
+		border: 1px solid transparent;
+		border-bottom: none;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.tab-btn:hover {
+		color: rgb(var(--black));
+		background: rgba(0, 0, 0, 0.03);
+	}
+
+	.tab-btn.active {
+		color: var(--accent);
+		background: #ffffff;
+		border-color: var(--border);
+		border-bottom-color: #ffffff;
+		margin-bottom: -1px;
+	}
+
+	.tab-btn:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+
+	.tab-svg-icon {
+		display: block;
+		flex-shrink: 0;
+	}
+
+	/* Panels */
+	.tab-panel {
+		display: none;
+		padding: 1.35rem;
+		background: #ffffff;
+	}
+
+	.tab-panel.active {
+		display: block;
+	}
+
+	/* Form Grid */
+	.form-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.1rem;
+		margin-bottom: 1.35rem;
+	}
+
+	.form-field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.form-field.full-width {
+		grid-column: 1 / -1;
+	}
+
+	.form-field label {
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--text);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		cursor: pointer;
+	}
+
+	.placeholder-tag {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.72rem;
+		font-weight: normal;
+		background: var(--bg-code);
+		color: var(--text-muted);
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+		border: 1px solid var(--border);
+	}
+
+	.placeholder-tag.highlight {
+		background: rgba(37, 99, 235, 0.08);
+		color: var(--accent);
+		border-color: rgba(37, 99, 235, 0.25);
+	}
+
+	.form-input {
+		width: 100%;
+		background: #ffffff;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		color: rgb(var(--black));
+		padding: 0.55rem 0.85rem;
+		font-size: 0.9rem;
+		transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.form-input::placeholder {
+		color: #94a3b8;
+		opacity: 0.8;
+	}
+
+	.form-input:focus-visible,
+	.form-input:focus {
+		outline: none;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+	}
+
+	/* Preview */
+	.preview-wrapper {
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+		background: #f8fafc;
+	}
+
+	.preview-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.55rem 0.95rem;
+		background: #f1f5f9;
+		border-bottom: 1px solid var(--border);
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+
+	.preview-label {
+		font-weight: 700;
+		color: var(--text);
+	}
+
+	.prompt-preview-box {
+		padding: 1.1rem;
+		max-height: 380px;
+		overflow-y: auto;
+		overflow-x: auto;
+	}
+
+	.prompt-preview-box pre {
+		margin: 0;
+		padding: 0;
+		background: transparent;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.84rem;
+		line-height: 1.6;
+		color: #1e293b;
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+	.prompt-preview-box code {
+		background: transparent;
+		padding: 0;
+		color: inherit;
+		font-family: inherit;
+	}
+
+	/* Raw Textarea */
+	.textarea-wrapper {
+		width: 100%;
+	}
+
+	.prompt-raw-textarea {
+		width: 100%;
+		background: #f8fafc;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		color: #0f172a;
+		padding: 1.1rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		resize: vertical;
+		min-height: 360px;
+		max-height: 600px;
+		transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.prompt-raw-textarea:focus-visible,
+	.prompt-raw-textarea:focus {
+		outline: none;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+	}
+
+	/* Footer Toolbar */
+	.prompt-editor-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.85rem 1.25rem;
+		background: #f8fafc;
+		border-top: 1px solid var(--border);
+		flex-wrap: wrap;
+	}
+
+	.footer-left {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.btn-toolbar {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem 0.8rem;
+		background: #ffffff;
+		color: var(--text);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		font-size: 0.82rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.btn-toolbar:hover {
+		background: #f1f5f9;
+		color: rgb(var(--black));
+		border-color: #cbd5e1;
+	}
+
+	.btn-toolbar:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.btn-toolbar.copied {
+		background: #065f46;
+		color: #34d399;
+		border-color: #059669;
+	}
+
+	.toolbar-svg-icon {
+		display: block;
+		flex-shrink: 0;
+	}
+
+	.btn-primary-copy {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.55rem 1.15rem;
+		background: var(--accent);
+		color: #ffffff;
+		border: none;
+		border-radius: 8px;
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+		box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+	}
+
+	.btn-primary-copy:hover {
+		background: var(--accent-dark);
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+	}
+
+	.btn-primary-copy:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.btn-primary-copy.copied {
+		background: #059669;
+		color: #ffffff;
+	}
+
+	/* Custom Reset Modal Dialog */
+	.prompt-reset-dialog {
+		padding: 0;
+		border: none;
+		border-radius: 16px;
+		background: transparent;
+		max-width: 400px;
+		width: calc(100% - 2rem);
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+		margin: auto;
+		overflow: hidden;
+	}
+
+	.prompt-reset-dialog::backdrop {
+		background: rgba(15, 23, 42, 0.6);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+	}
+
+	.prompt-reset-dialog-card {
+		background: #ffffff;
+		border: 1px solid var(--border);
+		border-radius: 16px;
+		padding: 1.5rem;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.prompt-reset-dialog-icon {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: rgba(239, 68, 68, 0.1);
+		color: #ef4444;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid rgba(239, 68, 68, 0.2);
+	}
+
+	.prompt-reset-dialog-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.prompt-reset-dialog-title {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0;
+	}
+
+	.prompt-reset-dialog-desc {
+		font-size: 0.88rem;
+		color: var(--text-muted);
+		line-height: 1.45;
+		margin: 0;
+	}
+
+	.prompt-reset-dialog-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		width: 100%;
+		margin-top: 0.25rem;
+	}
+
+	.btn-reset-cancel {
+		flex: 1;
+		padding: 0.65rem 1rem;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		background: var(--bg-code);
+		color: var(--text);
+		border: 1px solid var(--border);
+		cursor: pointer;
+		transition: background-color 0.15s ease;
+	}
+
+	.btn-reset-cancel:hover {
+		background: rgba(156, 163, 175, 0.2);
+	}
+
+	.btn-reset-confirm {
+		flex: 1.25;
+		padding: 0.65rem 1rem;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		background: #ef4444;
+		color: #ffffff;
+		border: 1px solid #dc2626;
+		cursor: pointer;
+		transition: background-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.btn-reset-confirm:hover {
+		background: #dc2626;
+		box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+	}
+
+	.btn-reset-cancel:focus-visible,
+	.btn-reset-confirm:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	/* ── Dark Mode Overrides (Deep Black Theme) ── */
+	:global([data-theme='dark']) .prompt-editor-container {
+		background: #000000;
+		border-color: #262626;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+	}
+
+	:global([data-theme='dark']) .prompt-editor-header {
+		background: #0a0a0a;
+		border-bottom-color: #222222;
+	}
+
+	:global([data-theme='dark']) .prompt-editor-title {
+		color: #f9fafb;
+	}
+
+	:global([data-theme='dark']) .prompt-editor-badge {
+		background: rgba(96, 165, 250, 0.12);
+		color: #93c5fd;
+		border-color: rgba(96, 165, 250, 0.25);
+	}
+
+	:global([data-theme='dark']) .prompt-editor-notice {
+		background: rgba(37, 99, 235, 0.1);
+		border-bottom-color: rgba(37, 99, 235, 0.2);
+		color: #bfdbfe;
+	}
+
+	:global([data-theme='dark']) .notice-text strong {
+		color: #f1f5f9;
+	}
+
+	:global([data-theme='dark']) .prompt-tab-bar {
+		background: #0a0a0a;
+		border-bottom-color: #222222;
+	}
+
+	:global([data-theme='dark']) .tab-btn {
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .tab-btn:hover {
+		color: #f9fafb;
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	:global([data-theme='dark']) .tab-btn.active {
+		color: #ffffff;
+		background: #000000;
+		border-color: #262626;
+		border-bottom-color: #000000;
+	}
+
+	:global([data-theme='dark']) .tab-panel {
+		background: #000000;
+	}
+
+	:global([data-theme='dark']) .form-field label {
+		color: #d1d5db;
+	}
+
+	:global([data-theme='dark']) .placeholder-tag {
+		background: #141414;
+		color: #9ca3af;
+		border-color: #262626;
+	}
+
+	:global([data-theme='dark']) .placeholder-tag.highlight {
+		background: rgba(37, 99, 235, 0.2);
+		color: #93c5fd;
+		border-color: rgba(96, 165, 250, 0.35);
+	}
+
+	:global([data-theme='dark']) .form-input {
+		background: #0a0a0a;
+		border-color: #262626;
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .form-input::placeholder {
+		color: #6b7280;
+	}
+
+	:global([data-theme='dark']) .form-input:focus-visible,
+	:global([data-theme='dark']) .form-input:focus {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+	}
+
+	:global([data-theme='dark']) .preview-wrapper {
+		background: #050505;
+		border-color: #222222;
+	}
+
+	:global([data-theme='dark']) .preview-header {
+		background: #0f0f0f;
+		border-bottom-color: #222222;
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .preview-label {
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .prompt-preview-box pre {
+		color: #e5e7eb;
+	}
+
+	:global([data-theme='dark']) .prompt-raw-textarea {
+		background: #050505;
+		border-color: #262626;
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .prompt-raw-textarea:focus-visible,
+	:global([data-theme='dark']) .prompt-raw-textarea:focus {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+	}
+
+	:global([data-theme='dark']) .prompt-editor-footer {
+		background: #0a0a0a;
+		border-top-color: #222222;
+	}
+
+	:global([data-theme='dark']) .btn-toolbar {
+		background: #141414;
+		border-color: #262626;
+		color: #d1d5db;
+	}
+
+	:global([data-theme='dark']) .btn-toolbar:hover {
+		background: #1f1f1f;
+		color: #ffffff;
+		border-color: #374151;
+	}
+
+	:global([data-theme='dark']) .prompt-reset-dialog-card {
+		background: #121212;
+		border-color: #262626;
+		box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+	}
+
+	:global([data-theme='dark']) .btn-reset-cancel {
+		background: #1a1a1a;
+		border-color: #2e2e2e;
+		color: #e5e7eb;
+	}
+
+	:global([data-theme='dark']) .btn-reset-cancel:hover {
+		background: #262626;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-editor-action,
+		.tab-btn,
+		.btn-toolbar,
+		.btn-primary-copy,
+		.form-input,
+		.prompt-raw-textarea {
+			transition: none !important;
+			transform: none !important;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.form-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.prompt-editor-header,
+		.prompt-editor-footer {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.header-actions,
+		.footer-right,
+		.footer-left {
+			width: 100%;
+		}
+
+		.btn-editor-action,
+		.btn-primary-copy {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>

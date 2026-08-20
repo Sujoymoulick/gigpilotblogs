@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Privacy Policy | GigPilot AI"
+			description="Redirecting to the GigPilot AI Privacy Policy..."
+			canonical="https://gigpilotai.com/privacy"
+			noindex={true}
+		/>
+		<meta http-equiv="refresh" content="0;url=/privacy" />
+		<script is:inline>
+			window.location.replace('/privacy');
+		</script>
+	</head>
+	<body>
+		<p>Redirecting to <a href="/privacy">/privacy</a>...</p>
+	</body>
+</html>

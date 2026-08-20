@@ -2,11 +2,17 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	article?: boolean;
+	breadcrumbs?: Array<{ name: string; item: string }>;
+	canonical?: string;
+	noindex?: boolean;
+};
 
 const {
 	title,
@@ -17,72 +23,351 @@ const {
 	category = 'Freelancing',
 	author = 'GigPilot AI Editorial',
 	readingTime = '8 min read',
+	article = true,
+	breadcrumbs: customBreadcrumbs,
+	canonical,
+	noindex = false,
 } = Astro.props;
+
+const defaultBreadcrumbs = [
+	{ name: 'Blog', item: '/blog' },
+	{ name: title, item: Astro.url.pathname },
+];
+
+const breadcrumbs = customBreadcrumbs || defaultBreadcrumbs;
+const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot AI`;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead
-			title={`${title} | GigPilot AI`}
+			title={fullTitle}
 			description={description}
 			image={heroImage}
-			article={true}
+			article={article}
 			pubDate={pubDate}
 			updatedDate={updatedDate}
 			author={author}
+			category={category}
+			breadcrumbs={breadcrumbs}
+			canonical={canonical}
+			noindex={noindex}
 		/>
 	</head>
 
 	<body>
+		<!-- Reading Progress Bar -->
+		<div class="reading-progress-track" aria-hidden="true">
+			<div class="reading-progress-fill" id="reading-progress-fill"></div>
+		</div>
+
 		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt={`${title} - illustration`} loading="eager" />}
-				</div>
+		<main class="blog-main">
+			<div class="blog-layout-container">
+				<aside class="sidebar-slot" id="blog-sidebar-slot" aria-label="Article Checklist Sidebar">
+					<!-- ChecklistTracker or Reading widget will mount here if present -->
+				</aside>
 
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<p class="description">{description}</p>
-						<hr />
+				<article class="article-content">
+					<Breadcrumbs items={breadcrumbs} />
+
+					<div class="hero-image">
+						{heroImage && <Image width={1020} height={510} src={heroImage} alt={`${title} - Guide illustration`} loading="eager" />}
 					</div>
-					<slot />
-				</div>
 
-				<div class="article-footer">
-					<p>
-						Written by <strong>{author}</strong> &mdash; {category} &mdash; {readingTime}
-					</p>
-					<p>
-						<a href="/blog">&larr; Back to all guides</a>
-						&nbsp;|&nbsp;
-						<a href="/tools/freelance-rate-calculator">Free Rate Calculator</a>
-					</p>
-				</div>
-			</article>
+					<div class="prose">
+						<header class="title">
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<span class="last-updated-on">
+											• Last updated on <FormattedDate date={updatedDate} />
+										</span>
+									)
+								}
+							</div>
+							<h1>{title}</h1>
+							<p class="description">{description}</p>
+							<hr />
+						</header>
+						<slot />
+					</div>
+
+					<footer class="article-footer">
+						<p>
+							Written by <strong>{author}</strong> &mdash; {category} &mdash; {readingTime}
+						</p>
+						<p>
+							<a href="/blog">&larr; Back to all guides</a>
+							&nbsp;|&nbsp;
+							<a href="/tools/freelance-rate-calculator">Free Rate Calculator</a>
+						</p>
+					</footer>
+				</article>
+			</div>
 		</main>
 		<Footer />
+
+		<script is:inline>
+			(function () {
+				// 1. Reading Progress Calculation
+				function updateReadingProgress() {
+					const article = document.querySelector('.article-content');
+					const fill = document.getElementById('reading-progress-fill');
+					const sidebarFill = document.getElementById('sidebar-reading-fill');
+					const progressLabels = document.querySelectorAll('.reading-progress-value');
+					if (!article) return;
+
+					const rect = article.getBoundingClientRect();
+					const articleTop = rect.top + window.scrollY;
+					const articleHeight = article.offsetHeight;
+					const windowHeight = window.innerHeight;
+					const scrollY = window.scrollY;
+
+					const start = articleTop;
+					const end = articleTop + articleHeight - windowHeight;
+
+					let progress = 0;
+					if (end > start) {
+						progress = ((scrollY - start) / (end - start)) * 100;
+					} else {
+						progress = scrollY >= start ? 100 : 0;
+					}
+
+					progress = Math.max(0, Math.min(100, Math.round(progress)));
+
+					if (fill) {
+						fill.style.width = progress + '%';
+					}
+					if (sidebarFill) {
+						sidebarFill.style.width = progress + '%';
+					}
+
+					progressLabels.forEach((el) => {
+						el.textContent = progress + '%';
+					});
+				}
+
+				window.addEventListener('scroll', updateReadingProgress, { passive: true });
+				window.addEventListener('resize', updateReadingProgress, { passive: true });
+				updateReadingProgress();
+
+				// 2. Attach Copy Buttons to Markdown Code Blocks
+				function initCodeCopyButtons() {
+					const codeBlocks = document.querySelectorAll('.prose pre');
+					codeBlocks.forEach((pre) => {
+						if (pre.closest('.prompt-card') || pre.closest('.prompt-editor-container') || pre.dataset.hasCopyButton) {
+							return;
+						}
+						pre.dataset.hasCopyButton = 'true';
+
+						const wrapper = document.createElement('div');
+						wrapper.className = 'code-block-wrapper';
+						pre.parentNode.insertBefore(wrapper, pre);
+						wrapper.appendChild(pre);
+
+						const btn = document.createElement('button');
+						btn.type = 'button';
+						btn.className = 'btn-copy-code';
+						btn.setAttribute('aria-label', 'Copy code to clipboard');
+						btn.innerHTML = `<svg class="copy-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span class="btn-copy-text">Copy</span>`;
+
+						btn.addEventListener('click', async () => {
+							const codeEl = pre.querySelector('code');
+							const codeText = codeEl ? codeEl.innerText : pre.innerText;
+							const textSpan = btn.querySelector('.btn-copy-text');
+							const originalText = textSpan ? textSpan.textContent : 'Copy';
+
+							try {
+								await navigator.clipboard.writeText(codeText);
+							} catch (e) {
+								const ta = document.createElement('textarea');
+								ta.value = codeText;
+								ta.style.position = 'fixed';
+								ta.style.opacity = '0';
+								document.body.appendChild(ta);
+								ta.select();
+								document.execCommand('copy');
+								document.body.removeChild(ta);
+							}
+
+							btn.classList.add('copied');
+							if (textSpan) textSpan.textContent = 'Copied!';
+							setTimeout(() => {
+								btn.classList.remove('copied');
+								if (textSpan) textSpan.textContent = originalText;
+							}, 2000);
+						});
+
+						wrapper.appendChild(btn);
+					});
+				}
+
+				// 3. Ensure all content links open in a new blank tab
+				function initProseExternalLinks() {
+					const updateLinks = () => {
+						const links = document.querySelectorAll('.article-content .prose a');
+						links.forEach((a) => {
+							const href = a.getAttribute('href');
+							if (href && !href.startsWith('#')) {
+								a.setAttribute('target', '_blank');
+								a.setAttribute('rel', 'noopener noreferrer');
+							}
+						});
+					};
+
+					updateLinks();
+
+					// Capture clicks on any link in prose to ensure new tab target
+					document.addEventListener('click', (e) => {
+						const link = e.target && e.target.closest('.article-content .prose a');
+						if (link) {
+							const href = link.getAttribute('href');
+							if (href && !href.startsWith('#')) {
+								link.setAttribute('target', '_blank');
+								link.setAttribute('rel', 'noopener noreferrer');
+							}
+						}
+					}, true);
+				}
+
+				// 4. Enhance Markdown FAQ Sections to Interactive Accordions
+				function initFaqAccordions() {
+					const prose = document.querySelector('.article-content .prose');
+					if (!prose) return;
+
+					const headings = prose.querySelectorAll('h2');
+					headings.forEach((h2) => {
+						const title = h2.textContent || '';
+						if (!/frequently asked questions|faq/i.test(title)) return;
+
+						const accordionList = document.createElement('div');
+						accordionList.className = 'faq-accordion-list not-prose';
+
+						let curr = h2.nextElementSibling;
+						const nodesToRemove = [];
+
+						while (curr && curr.tagName !== 'H2' && curr.tagName !== 'HR') {
+							if (curr.tagName === 'H3') {
+								const question = curr.textContent || '';
+								const details = document.createElement('details');
+								details.className = 'faq-item';
+
+								const summary = document.createElement('summary');
+								summary.className = 'faq-summary';
+								summary.innerHTML = `<span class="faq-question-text">${question}</span><span class="faq-icon-wrap" aria-hidden="true"><svg class="faq-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>`;
+
+								const contentDiv = document.createElement('div');
+								contentDiv.className = 'faq-content';
+
+								let answerNode = curr.nextElementSibling;
+								const answerNodesToMove = [];
+
+								while (answerNode && answerNode.tagName !== 'H3' && answerNode.tagName !== 'H2' && answerNode.tagName !== 'HR') {
+									answerNodesToMove.push(answerNode);
+									answerNode = answerNode.nextElementSibling;
+								}
+
+								answerNodesToMove.forEach((node) => {
+									const pClone = node.cloneNode(true);
+									if (pClone.tagName === 'P') pClone.className = 'faq-answer-text';
+									contentDiv.appendChild(pClone);
+									nodesToRemove.push(node);
+								});
+
+								details.appendChild(summary);
+								details.appendChild(contentDiv);
+								accordionList.appendChild(details);
+								nodesToRemove.push(curr);
+							}
+							curr = curr.nextElementSibling;
+						}
+
+						if (accordionList.children.length > 0) {
+							h2.parentNode.insertBefore(accordionList, h2.nextSibling);
+							nodesToRemove.forEach((node) => node.parentNode && node.parentNode.removeChild(node));
+						}
+					});
+				}
+
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', () => {
+						updateReadingProgress();
+						initCodeCopyButtons();
+						initProseExternalLinks();
+						initFaqAccordions();
+					});
+				} else {
+					updateReadingProgress();
+					initCodeCopyButtons();
+					initProseExternalLinks();
+					initFaqAccordions();
+				}
+			})();
+		</script>
 	</body>
 </html>
 
 <style>
-	main {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 3em 1em;
+	/* Reading Progress Bar */
+	.reading-progress-track {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 3.5px;
+		background: transparent;
+		z-index: 9999;
+		pointer-events: none;
+	}
+
+	.reading-progress-fill {
+		height: 100%;
+		width: 0%;
+		background: var(--accent);
+		transition: width 0.08s ease-out;
+		box-shadow: 0 0 8px var(--accent);
+	}
+
+	.blog-main {
+		width: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 2.5rem 1.5rem 4rem;
+	}
+
+	.blog-layout-container {
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 2.5rem;
+		position: relative;
+	}
+
+	.sidebar-slot {
+		width: 320px;
+		flex-shrink: 0;
+		position: sticky;
+		top: 96px;
+		align-self: flex-start;
+	}
+
+	.sidebar-slot:empty {
+		display: none;
+	}
+
+	.article-content {
+		flex: 1;
+		min-width: 0;
+		max-width: 760px;
+	}
+
+	/* Center article when no sidebar is present */
+	.blog-layout-container:not(:has(.sidebar-slot:not(:empty))) .article-content {
+		max-width: 720px;
+		margin: 0 auto;
 	}
 
 	.hero-image {
@@ -146,5 +431,73 @@ const {
 
 	.article-footer p {
 		margin: 0.25em 0;
+	}
+
+	/* Dynamic Code Block Copy Button Styling */
+	:global(.code-block-wrapper) {
+		position: relative;
+		margin: 1.5em 0;
+	}
+
+	:global(.code-block-wrapper pre) {
+		margin: 0 !important;
+		padding-top: 2.2rem !important;
+	}
+
+	:global(.btn-copy-code) {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.6rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.25rem 0.6rem;
+		background: rgba(30, 41, 59, 0.85);
+		color: #e2e8f0;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: 6px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		cursor: pointer;
+		backdrop-filter: blur(4px);
+		transition: all 0.15s ease;
+		z-index: 5;
+	}
+
+	:global(.btn-copy-code:hover) {
+		background: rgba(51, 65, 85, 0.95);
+		color: #ffffff;
+		border-color: rgba(255, 255, 255, 0.3);
+	}
+
+	:global(.btn-copy-code:focus-visible) {
+		outline: 2px solid #60a5fa;
+		outline-offset: 1px;
+	}
+
+	:global(.btn-copy-code.copied) {
+		background: #065f46;
+		color: #34d399;
+		border-color: #059669;
+	}
+
+	@media (max-width: 1024px) {
+		.blog-main {
+			padding: 1.5rem 1rem 3rem;
+		}
+
+		.blog-layout-container {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.sidebar-slot {
+			width: 100%;
+			position: static;
+		}
+
+		.article-content {
+			max-width: 100%;
+		}
 	}
 </style>

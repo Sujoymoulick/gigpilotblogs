@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Terms and Conditions | GigPilot AI"
+			description="Redirecting to the GigPilot AI Terms and Conditions..."
+			canonical="https://gigpilotai.com/terms"
+			noindex={true}
+		/>
+		<meta http-equiv="refresh" content="0;url=/terms" />
+		<script is:inline>
+			window.location.replace('/terms');
+		</script>
+	</head>
+	<body>
+		<p>Redirecting to <a href="/terms">/terms</a>...</p>
+	</body>
+</html>

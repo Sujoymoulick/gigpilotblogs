@@ -1,0 +1,221 @@
+---
+interface ChecklistItem {
+	id: string;
+	label: string;
+	description?: string;
+}
+
+interface Props {
+	id?: string;
+	title?: string;
+	items: ChecklistItem[];
+	storageKey?: string;
+}
+
+const {
+	id = 'checklist',
+	title,
+	items,
+	storageKey = 'gigpilotai-checklist-build-astro-cloudflare',
+} = Astro.props;
+---
+
+<div class="interactive-checklist-container" data-checklist-id={id} data-storage-key={storageKey}>
+	{title && <h3 class="checklist-section-title">{title}</h3>}
+	<ul class="checklist-list" role="list">
+		{
+			items.map((item) => (
+				<li class="checklist-item">
+					<div class="checkbox-wrapper">
+						<input
+							type="checkbox"
+							id={item.id}
+							name={item.id}
+							data-storage-key={storageKey}
+							class="checklist-checkbox"
+						/>
+						<label for={item.id} class="checklist-label">
+							<span class="custom-check" aria-hidden="true">
+								<svg class="check-svg" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</span>
+							<span class="label-text">
+								<strong>{item.label}</strong>
+								{item.description && <span class="item-description">{item.description}</span>}
+							</span>
+						</label>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<style>
+	.interactive-checklist-container {
+		margin: 1.75rem 0;
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 10px;
+		padding: 1.25rem 1.5rem;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+	}
+
+	.checklist-section-title {
+		font-size: 1.35rem;
+		margin: 0 0 1rem 0;
+		color: rgb(var(--black));
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.checklist-list {
+		list-style: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.checklist-item {
+		list-style-type: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.checkbox-wrapper {
+		display: flex;
+		align-items: flex-start;
+		position: relative;
+	}
+
+	.checklist-checkbox {
+		position: absolute;
+		opacity: 0;
+		width: 1.35rem;
+		height: 1.35rem;
+		cursor: pointer;
+		margin: 0;
+		z-index: 2;
+		top: 0.2rem;
+		left: 0;
+	}
+
+	.checklist-label {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.85rem;
+		cursor: pointer;
+		user-select: none;
+		width: 100%;
+		font-size: 1rem;
+		line-height: 1.5;
+		color: var(--text);
+		transition: color 0.15s ease;
+	}
+
+	.custom-check {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.35rem;
+		height: 1.35rem;
+		border: 2px solid rgb(var(--gray));
+		border-radius: 5px;
+		background-color: var(--bg);
+		flex-shrink: 0;
+		margin-top: 0.15rem;
+		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+		color: #ffffff;
+	}
+
+	.check-svg {
+		width: 0.75rem;
+		height: 0.75rem;
+		min-width: 0.75rem;
+		max-width: 0.75rem;
+		display: block;
+		stroke-dasharray: 16;
+		stroke-dashoffset: 16;
+		transition: stroke-dashoffset 0.2s ease-in-out;
+	}
+
+	.label-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.label-text strong {
+		font-weight: 600;
+		color: var(--text);
+		transition: all 0.15s ease;
+	}
+
+	.item-description {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		line-height: 1.4;
+	}
+
+	/* Checked state */
+	.checklist-checkbox:checked + .checklist-label .custom-check {
+		background-color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.checklist-checkbox:checked + .checklist-label .check-svg {
+		stroke-dashoffset: 0;
+	}
+
+	.checklist-checkbox:checked + .checklist-label .label-text strong {
+		color: var(--text-muted);
+		text-decoration: line-through;
+	}
+
+	.checklist-checkbox:checked + .checklist-label .item-description {
+		opacity: 0.7;
+	}
+
+	/* Focus state */
+	.checklist-checkbox:focus-visible + .checklist-label .custom-check {
+		outline: 3px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	/* Hover state */
+	.checklist-label:hover .custom-check {
+		border-color: var(--accent);
+	}
+
+	/* Dark mode styling adjustments */
+	:global([data-theme='dark']) .interactive-checklist-container {
+		background: #0d0d0d;
+		border-color: #262626;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	}
+
+	:global([data-theme='dark']) .custom-check {
+		background-color: #141414;
+		border-color: #4b5563;
+	}
+
+	:global([data-theme='dark']) .checklist-checkbox:checked + .checklist-label .custom-check {
+		background-color: var(--accent);
+		border-color: var(--accent);
+		color: #000000;
+	}
+
+	@media (max-width: 640px) {
+		.interactive-checklist-container {
+			padding: 1rem;
+		}
+
+		.checklist-label {
+			font-size: 0.95rem;
+		}
+	}
+</style>

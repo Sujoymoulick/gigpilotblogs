@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
@@ -11,14 +12,83 @@ const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const latestPosts = allPosts.slice(0, 6);
+
+const pageTitle = 'AI Tools for Fiverr Freelancers & Rate Calculator | GigPilot AI';
+const pageDescription =
+	'GigPilot AI helps Fiverr freelancers optimize gigs, calculate rates, quote projects, find keywords, and grow their freelance business with AI.';
+
+const homeFaqs = [
+	{
+		question: 'How do I build an application or software tool with AI?',
+		answer:
+			'To build an app with AI, start by generating your data models, database schemas, and architectural outlines using an LLM. Next, assemble your front-end components and connect them to serverless backends like Supabase or Firebase using AI coding assistants. Finally, generate automated unit tests, refine business logic iteratively, and deploy your production build to modern cloud platforms like Vercel or Cloudflare.',
+	},
+	{
+		question: 'What is the easiest way to build a website with AI?',
+		answer:
+			'The easiest way to build a website with AI is using visual generative builders like Framer or v0 to convert natural language prompts into responsive layouts. For custom web development, you can use AI code generation within static frameworks like Astro or Next.js to rapidly scaffold accessible components and markdown content collections. Once generated, these sites can be deployed globally with a single click to platforms like Cloudflare Pages.',
+	},
+	{
+		question: 'How do you build an autonomous AI agent using DeepSeek V3?',
+		answer:
+			'Building an AI agent with DeepSeek V3 begins with crafting a specialized system prompt that defines the agent’s persona, operating constraints, and available tool schemas. You connect the DeepSeek API to an execution loop that parses user inputs, calls external APIs via function calling or MCP protocols, and synthesizes intermediate results. Frameworks like LangChain or lightweight Python runtimes handle conversation memory, state management, and error recovery throughout the task.',
+	},
+	{
+		question: 'How can freelancers build a profitable business using AI tools?',
+		answer:
+			'Freelancers build sustainable businesses with AI by productizing their skills into high-value, outcome-oriented packages rather than billing strictly by the hour. Leveraging AI tools for wireframing, code drafting, content research, and proposal writing enables you to deliver projects 3x to 5x faster without sacrificing quality. Combining this increased efficiency with value-based pricing and client revision buffers maximizes your net profit margins.',
+	},
+	{
+		question: 'What are Google Build with AI events and how do they benefit developers?',
+		answer:
+			'Google Build with AI events and hackathons are developer-focused workshops designed to teach practical application development using Gemini models and Vertex AI. Attendees learn hands-on patterns for building multimodal features, setting up Retrieval-Augmented Generation (RAG) pipelines, and deploying production-ready AI agents. The architectures taught in these sessions provide reliable blueprints that freelancers and consultants can adapt for client deliverables.',
+	},
+	{
+		question: 'How does the GigPilot AI freelance rate calculator compute hourly and daily rates?',
+		answer:
+			'The calculator sums your essential monthly living expenses and target business profit to determine your required annual gross income. It then divides this total by your annual billable working hours, calculated from your weekly hours and working weeks per year. This math accounts for unpaid administrative tasks, marketing overhead, and tax reserves to ensure your minimum rates remain economically viable.',
+	},
+	{
+		question: 'How do I calculate fixed-price project quotes and scope protection buffers?',
+		answer:
+			'A fixed-price quote is computed by multiplying your estimated production hours by your target hourly rate, then adding a 10% to 20% revision buffer fee. You also itemize direct pass-through expenses such as stock photography, paid font licenses, domain hosting, or API usage credits. This structured formula guarantees that routine client feedback and unexpected asset costs never erode your baseline profits.',
+	},
+	{
+		question: 'Are GigPilot AI calculators and tools completely free to use?',
+		answer:
+			'Yes. All GigPilot AI calculators, prompt generators, and educational guides are 100% free with no account registration, subscriptions, or paywalls. There are no daily usage limits or locked features on any of our interactive tools. You can run unlimited calculations and use our career resources whenever you need them.',
+	},
+	{
+		question: 'Is my personal financial data or client information stored on external servers?',
+		answer:
+			'No. All GigPilot AI calculators execute entirely on your local web browser using client-side JavaScript. None of your entered expenses, income goals, hourly rates, or project details are transmitted across the internet or stored in remote databases. Your financial numbers and business planning data remain strictly private on your device.',
+	},
+	{
+		question: 'What are the key limitations of the rate calculator, and does it replace a client contract?',
+		answer:
+			'The GigPilot AI calculator provides mathematical baseline recommendations and pricing benchmarks, not legal or commercial guarantees. Real-world client quotes may fluctuate based on market demand, technical complexity, geographic factors, and specific project timelines. We strongly recommend pairing every quote with a written Statement of Work (SOW) and an independent contractor agreement.',
+	},
+];
+
+const homeToolSchema = {
+	name: 'GigPilot AI Freelance Rate Calculator',
+	description:
+		'Free browser-based rate and pricing calculator helping freelancers calculate sustainable hourly, daily, and project rates.',
+	applicationCategory: 'BusinessApplication',
+	operatingSystem: 'All Modern Web Browsers',
+	price: '0',
+	currency: 'USD',
+};
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead
-			title={`${SITE_TITLE} | Freelancing Guides, Jobs, Skills & AI Tools`}
-			description={SITE_DESCRIPTION}
+			title={pageTitle}
+			description={pageDescription}
+			faqs={homeFaqs}
+			toolSchema={homeToolSchema}
 		/>
 	</head>
 	<body>
@@ -26,11 +96,16 @@ const latestPosts = allPosts.slice(0, 6);
 		<main>
 
 			<!-- HERO: Inline Freelance Rate Calculator -->
-			<section class="hero">
-				<h1>Freelance Rate Calculator</h1>
-				<p>Enter your monthly expenses, income goal, and working hours — get your ideal hourly rate, daily rate, and project price instantly. Free &amp; 100% browser-only.</p>
+			<section class="hero" aria-labelledby="main-heading">
+				<div class="hero-badge-wrap">
+					<span class="badge">Freelance Pricing &amp; AI Intelligence</span>
+				</div>
+				<h1 id="main-heading">GigPilot AI: Freelance Rate Calculator &amp; Build with AI Hub</h1>
+				<p class="hero-subtitle">
+					Enter your monthly expenses, income target, and billable working hours to calculate your ideal hourly rate, daily rate, and fixed project pricing instantly. 100% free, private, and browser-based.
+				</p>
 
-				<div class="calc-box" id="rateCalc">
+				<div class="calc-box" id="rateCalc" aria-label="Freelance Rate Calculator Tool">
 					<div class="currency-row">
 						<label for="hCurrency">Currency</label>
 						<select id="hCurrency">
@@ -55,21 +130,21 @@ const latestPosts = allPosts.slice(0, 6);
 					<div class="grid4">
 						<div class="field">
 							<span class="sym" id="sym1">$</span>
-							<input type="number" id="hExpenses" value="2500" min="0" step="50" />
+							<input type="number" id="hExpenses" value="2500" min="0" step="50" aria-label="Monthly Expenses" />
 						</div>
 						<div class="field">
 							<span class="sym" id="sym2">$</span>
-							<input type="number" id="hProfit" value="2000" min="0" step="100" />
+							<input type="number" id="hProfit" value="2000" min="0" step="100" aria-label="Income Goal" />
 						</div>
 						<div class="field plain">
-							<input type="number" id="hHours" value="40" min="1" max="80" />
+							<input type="number" id="hHours" value="40" min="1" max="80" aria-label="Working Hours Per Week" />
 						</div>
 						<div class="field plain">
-							<input type="number" id="hWeeks" value="48" min="1" max="52" />
+							<input type="number" id="hWeeks" value="48" min="1" max="52" aria-label="Working Weeks Per Year" />
 						</div>
 					</div>
 
-					<div class="equals">=</div>
+					<div class="equals" aria-hidden="true">=</div>
 
 					<!-- Results -->
 					<div class="grid4 results" id="hResults">
@@ -94,22 +169,23 @@ const latestPosts = allPosts.slice(0, 6);
 					<!-- Buttons -->
 					<div class="btn-row">
 						<button id="hCalcBtn" type="button">
-							Calculate
+							Calculate Rates
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
 						</button>
 						<button id="hClearBtn" type="button" class="secondary">Reset</button>
-						<a href="/tools/freelance-rate-calculator">Project Quote Calculator &rarr;</a>
+						<a href="/tools/freelance-rate-calculator" class="calc-sub-link">Need detailed project quotes? Try our Fixed Project Calculator &rarr;</a>
 					</div>
 
-					<p class="note">🔒 All calculations run in your browser. No data is sent to any server.</p>
+					<p class="note">🔒 All computations execute locally on your browser. Zero data is sent to external servers.</p>
 				</div>
 			</section>
 
-			<hr />
-
 			<!-- Latest Blog Posts -->
-			<section>
-				<h2>Latest Freelancing Guides</h2>
+			<section class="latest-guides-section" aria-labelledby="guides-heading">
+				<div class="section-title-row">
+					<h2 id="guides-heading">Latest Freelancing &amp; AI Guides</h2>
+					<a href="/blog" class="all-guides-link">View all {allPosts.length} guides &rarr;</a>
+				</div>
 				<ul class="post-list">
 					{
 						latestPosts.map((post) => (
@@ -123,8 +199,157 @@ const latestPosts = allPosts.slice(0, 6);
 						))
 					}
 				</ul>
-				<p><a href="/blog">View all {allPosts.length} guides &rarr;</a></p>
+				<div class="browse-all-wrap">
+					<a href="/blog" class="btn btn-secondary">Explore Knowledge Hub &rarr;</a>
+				</div>
 			</section>
+
+			<!-- EDITORIAL CONTENT: Comprehensive 800-1200 word Guide & SaaS Specs -->
+			<article class="home-guide-content prose">
+				<hr />
+
+				<section class="content-block">
+					<h2>What Is GigPilot AI and How Does the Platform Work?</h2>
+					<p>
+						<strong>GigPilot AI</strong> is a dedicated knowledge hub and suite of free tools engineered for independent professionals, digital creators, developers, and remote consultants. In the modern gig economy, underpricing services and overestimating unbillable capacity are the leading causes of freelancer burnout and business failure. GigPilot AI bridges the gap between raw talent and sustainable commercial pricing by combining mathematical billing frameworks with modern AI-assisted execution strategies.
+					</p>
+					<p>
+						Whether you are navigating major freelance marketplaces like Upwork and Fiverr or closing private clients through direct outreach, GigPilot AI gives you the actionable frameworks to determine what to charge, how to protect your margins with revision buffers, and <strong>how to build with AI</strong> to accelerate your deliverable timelines.
+					</p>
+				</section>
+
+				<section class="content-block">
+					<h2>Who GigPilot AI Is Built For</h2>
+					<p>
+						Our tools and tutorials are tailored to the practical needs of four core independent groups:
+					</p>
+					<div class="audience-grid not-prose">
+						<div class="audience-card">
+							<div class="aud-icon">💼</div>
+							<h3>Freelancers &amp; Solopreneurs</h3>
+							<p>Copywriters, graphic designers, digital marketers, and virtual assistants looking for reliable <strong>AI freelancer tools</strong> and pricing clarity.</p>
+						</div>
+						<div class="audience-card">
+							<div class="aud-icon">💻</div>
+							<h3>Developers &amp; Technical Builders</h3>
+							<p>Software engineers, web developers, and technical contractors interested in <strong>what to build with AI</strong>, modern frameworks, and rapid client delivery.</p>
+						</div>
+						<div class="audience-card">
+							<div class="aud-icon">📈</div>
+							<h3>Fiverr &amp; Upwork Sellers</h3>
+							<p>Marketplace specialists seeking high-converting <strong>Fiverr seller tools</strong>, <strong>Fiverr freelancer tools</strong>, and proposal optimization methods.</p>
+						</div>
+						<div class="audience-card">
+							<div class="aud-icon">🚀</div>
+							<h3>Agencies &amp; Consultants</h3>
+							<p>Boutique agency owners and consultants pricing multi-stakeholder fixed deliverables without falling prey to unbilled scope creep.</p>
+						</div>
+					</div>
+				</section>
+
+				<section class="content-block">
+					<h2>Step-by-Step Instructions: How to Calculate Your Rates &amp; Price Projects</h2>
+					<p>
+						Setting sustainable freelance rates requires moving past arbitrary guesswork. Follow this 4-step framework using the GigPilot AI calculator:
+					</p>
+					<ol>
+						<li>
+							<strong>Define Baseline Living &amp; Operating Expenses:</strong> Input your non-negotiable monthly personal living costs along with software subscriptions, hardware depreciation, health insurance, and tax reserves.
+						</li>
+						<li>
+							<strong>Set Realistic Annual Billable Capacity:</strong> Standard full-time employment assumes 2,080 hours per year, but solo professionals typically spend 25% to 35% of their working time on administrative tasks, invoicing, marketing, and client meetings. Setting 48 working weeks at 30 to 40 hours protects you from unbillable overhead.
+						</li>
+						<li>
+							<strong>Calculate Minimum Hourly and Daily Thresholds:</strong> Click calculate to generate your required baseline rate. This is the minimum rate below which accepting client work creates an economic loss.
+						</li>
+						<li>
+							<strong>Package Fixed-Price Project Deliverables:</strong> Use our companion <a href="/tools/freelance-rate-calculator">Freelance Project Quote Calculator</a> to bundle execution hours with a 10% to 20% revision buffer and direct asset expenses.
+						</li>
+					</ol>
+				</section>
+
+				<section class="content-block">
+					<h2>Core Features &amp; Technical Specifications</h2>
+					<p>
+						The GigPilot AI toolset is built with high standards of privacy, performance, and user utility:
+					</p>
+					<ul>
+						<li>
+							<strong>100% Client-Side Privacy:</strong> All calculations run directly within your browser’s V8/JavaScript engine. No personal financial targets, expenses, or client data are sent across the network or logged in remote databases.
+						</li>
+						<li>
+							<strong>Multi-Currency Precision:</strong> Seamless real-time currency switching across USD ($), INR (₹), GBP (£), EUR (€), CAD (C$), and AUD (A$) with formatted decimal output.
+						</li>
+						<li>
+							<strong>Scope Creep Protection Buffer:</strong> Integrated algorithms that isolate base production labor from feedback cycles and client change requests.
+						</li>
+						<li>
+							<strong>Zero Signup Barriers:</strong> Instant open access without mandatory registration forms, paywalls, or third-party trackers.
+						</li>
+					</ul>
+				</section>
+
+				<section class="content-block">
+					<h2>Practical Real-World Use Cases: How Modern Freelancers Build with AI</h2>
+					<p>
+						<strong>What does it mean to build with AI in 2026?</strong> It means shifting your role from manual repetitive production to strategic orchestration. Leading freelancers leverage specialized <strong>freelancing AI tools</strong> across diverse client workflows:
+					</p>
+
+					<h3>1. Rapid Visual &amp; UI Prototyping (Framer &amp; DeepSite)</h3>
+					<p>
+						Designers and frontend developers utilize <strong>Framer build with AI</strong> and <strong>DeepSite build with AI</strong> workflows to transform wireframe concepts and user flows into interactive, fully responsive landing pages in hours instead of weeks. This allows you to quote fixed-price web builds with higher profit margins while delivering faster client turnarounds. Learn how to launch modern stacks in our guides on <a href="/blog/build-portfolio-website-nextjs-vercel/">building Next.js portfolios</a> and <a href="/blog/build-seo-friendly-astrojs-website-cloudflare/">SEO-friendly Astro websites</a>.
+					</p>
+
+					<h3>2. The 5-Day Sprint Build with AI Workflow</h3>
+					<p>
+						The <strong>5 day sprint build with ai</strong> methodology is an agile sprint framework used by modern solo consultants:
+					</p>
+					<ul>
+						<li><em>Day 1 (Scoping &amp; Discovery):</em> Define client objectives, deliverables, and technical boundaries.</li>
+						<li><em>Day 2 (Architecture &amp; AI Prompt Engineering):</em> Generate foundational codebases, schemas, and structural outlines.</li>
+						<li><em>Day 3 (Core Implementation):</em> Assemble custom business logic, UI components, and API integrations.</li>
+						<li><em>Day 4 (Refinement &amp; Quality Audit):</em> Conduct manual code reviews, accessibility audits, and security testing.</li>
+						<li><em>Day 5 (Deployment &amp; Client Handoff):</em> Launch the production build, set up client analytics, and deliver project documentation.</li>
+					</ul>
+
+					<h3>3. Audio, Media &amp; Content Intelligence</h3>
+					<p>
+						Content strategists and audio producers utilize tools like <strong>build with ai listennotes</strong> to search podcast indexes, identify target interview appearances for clients, extract audio transcripts, and repurpose high-performing episodes into multi-channel thought-leadership articles. Explore our in-depth roadmaps for <a href="/blog/freelance-writing/">freelance writing</a> and <a href="/blog/video-editing-freelance/">video editing careers</a>.
+					</p>
+
+					<h3>4. Technical Innovations &amp; Hackathon Frameworks</h3>
+					<p>
+						Insights derived from industry initiatives like the <strong>Google Build with AI Hackathon</strong> demonstrate that developers who integrate AI agentic workflows and automated test generation deliver higher software reliability. Freelancers who understand <strong>what can you build with AI</strong> can offer advanced services such as custom internal dashboards, automated customer onboarding flows, and intelligent document processing.
+					</p>
+				</section>
+
+				<section class="content-block">
+					<h2>Important Boundaries &amp; Scoping Limitations</h2>
+					<p>
+						While AI tools and pricing calculators dramatically elevate freelance productivity, maintaining clear professional boundaries is essential:
+					</p>
+					<ul>
+						<li>
+							<strong>Calculators Provide Economic Baselines, Not Legal Contracts:</strong> Our pricing calculations represent financial models. Always pair your project quotes with signed independent contractor agreements and written Statements of Work (SOW).
+						</li>
+						<li>
+							<strong>AI Is an Accelerator, Not a Substitute for Craft:</strong> AI outputs must always undergo rigorous human verification, fact-checking, and code auditing. Clients hire you for your editorial judgment, problem-solving skills, and accountability.
+						</li>
+						<li>
+							<strong>Scope Disclosures &amp; Confidentiality:</strong> When using AI freelancer tools for client deliverables, ensure compliance with client non-disclosure agreements (NDAs) and platform terms of service.
+						</li>
+					</ul>
+				</section>
+
+				<!-- FAQ ACCORDION SECTION -->
+				<FAQAccordion
+					items={homeFaqs}
+					title="Frequently Asked Questions"
+					subtitle="Find answers to common questions about GigPilot AI, rate calculations, security, limits, and building with AI."
+				/>
+
+				<hr />
+			</article>
 
 		</main>
 		<Footer />
@@ -156,8 +381,8 @@ const latestPosts = allPosts.slice(0, 6);
 
 				function updateSymbols() {
 					const s = getSymbol();
-					sym1.textContent = s;
-					sym2.textContent = s;
+					if (sym1) sym1.textContent = s;
+					if (sym2) sym2.textContent = s;
 				}
 
 				function calculate() {
@@ -172,34 +397,42 @@ const latestPosts = allPosts.slice(0, 6);
 					const monthly     = expenses + profit;
 					const project10hr = hourlyRate * 10;
 
-					elHourly.textContent  = fmt(hourlyRate);
-					elDaily.textContent   = fmt(dailyRate);
-					elMonthly.textContent = fmt(monthly);
-					elProject.textContent = fmt(project10hr);
-					resultsEl.classList.add('filled');
+					if (elHourly) elHourly.textContent  = fmt(hourlyRate);
+					if (elDaily) elDaily.textContent   = fmt(dailyRate);
+					if (elMonthly) elMonthly.textContent = fmt(monthly);
+					if (elProject) elProject.textContent = fmt(project10hr);
+					if (resultsEl) resultsEl.classList.add('filled');
 				}
 
 				function reset() {
-					expensesInput.value = '2500';
-					profitInput.value   = '2000';
-					hoursInput.value    = '40';
-					weeksInput.value    = '48';
-					elHourly.textContent = elDaily.textContent = elMonthly.textContent = elProject.textContent = '—';
-					resultsEl.classList.remove('filled');
+					if (expensesInput) expensesInput.value = '2500';
+					if (profitInput) profitInput.value   = '2000';
+					if (hoursInput) hoursInput.value    = '40';
+					if (weeksInput) weeksInput.value    = '48';
+					if (elHourly) elHourly.textContent = '—';
+					if (elDaily) elDaily.textContent = '—';
+					if (elMonthly) elMonthly.textContent = '—';
+					if (elProject) elProject.textContent = '—';
+					if (resultsEl) resultsEl.classList.remove('filled');
+					calculate();
 				}
 
-				calcBtn.addEventListener('click', calculate);
-				clearBtn.addEventListener('click', reset);
-				currencySelect.addEventListener('change', () => {
-					updateSymbols();
-					if (resultsEl.classList.contains('filled')) calculate();
-				});
+				if (calcBtn) calcBtn.addEventListener('click', calculate);
+				if (clearBtn) clearBtn.addEventListener('click', reset);
+				if (currencySelect) {
+					currencySelect.addEventListener('change', () => {
+						updateSymbols();
+						calculate();
+					});
+				}
 				[expensesInput, profitInput, hoursInput, weeksInput].forEach((el) => {
+					if (!el) return;
 					el.addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); });
-					el.addEventListener('input', () => { if (resultsEl.classList.contains('filled')) calculate(); });
+					el.addEventListener('input', () => { calculate(); });
 				});
 
 				updateSymbols();
+				calculate();
 			})();
 		</script>
 	</body>
@@ -208,24 +441,35 @@ const latestPosts = allPosts.slice(0, 6);
 <style>
 	/* ── Hero ── */
 	.hero {
-		margin-bottom: 2em;
+		margin-bottom: 2.5em;
+	}
+
+	.hero-badge-wrap {
+		margin-bottom: 0.75rem;
 	}
 
 	.hero h1 {
-		margin-bottom: 0.25em;
+		margin-bottom: 0.4em;
+		font-size: 2.4rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
 	}
 
-	.hero > p {
+	.hero-subtitle {
 		color: rgb(var(--gray));
-		margin-bottom: 1.5em;
+		font-size: 1.15rem;
+		line-height: 1.6;
+		margin-bottom: 1.75em;
+		max-width: 820px;
 	}
 
 	/* ── Calculator Box ── */
 	.calc-box {
 		background: #f2f2f2;
 		border: 1px solid #ccc;
-		border-radius: 4px;
-		padding: 1.5em 2em;
+		border-radius: 6px;
+		padding: 1.75em 2em;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 	}
 
 	.currency-row {
@@ -238,9 +482,9 @@ const latestPosts = allPosts.slice(0, 6);
 	}
 
 	.currency-row select {
-		padding: 0.2em 0.5em;
+		padding: 0.3em 0.6em;
 		border: 1px solid #aaa;
-		border-radius: 3px;
+		border-radius: 4px;
 		font-size: inherit;
 		background: white;
 	}
@@ -266,14 +510,14 @@ const latestPosts = allPosts.slice(0, 6);
 		align-items: center;
 		background: white;
 		border: 2px solid #1a3561;
-		border-radius: 3px;
+		border-radius: 4px;
 		overflow: hidden;
 	}
 
 	.sym {
-		padding: 0 0.4em;
+		padding: 0 0.5em;
 		font-weight: bold;
-		font-size: 0.9em;
+		font-size: 0.95em;
 		background: #e8edf5;
 		border-right: 1px solid #b0bcda;
 		color: #1a3561;
@@ -286,8 +530,8 @@ const latestPosts = allPosts.slice(0, 6);
 		flex: 1;
 		border: none;
 		outline: none;
-		padding: 0.5em 0.4em;
-		font-size: 1em;
+		padding: 0.55em 0.4em;
+		font-size: 1.05em;
 		font-family: inherit;
 		text-align: center;
 		width: 100%;
@@ -309,7 +553,7 @@ const latestPosts = allPosts.slice(0, 6);
 		font-weight: bold;
 		color: #1a3561;
 		line-height: 1;
-		margin: 0.3em 0;
+		margin: 0.4em 0;
 	}
 
 	/* ── Results ── */
@@ -319,8 +563,8 @@ const latestPosts = allPosts.slice(0, 6);
 		align-items: center;
 		background: white;
 		border: 2px solid #ccc;
-		border-radius: 3px;
-		padding: 0.5em 0.25em;
+		border-radius: 4px;
+		padding: 0.6em 0.3em;
 		gap: 0.15em;
 	}
 
@@ -329,15 +573,15 @@ const latestPosts = allPosts.slice(0, 6);
 	}
 
 	.rlabel {
-		font-size: 0.7em;
+		font-size: 0.72em;
 		font-weight: bold;
 		text-transform: uppercase;
-		letter-spacing: 0.04em;
+		letter-spacing: 0.05em;
 		color: rgb(var(--gray));
 	}
 
 	.rval {
-		font-size: 1em;
+		font-size: 1.1em;
 		font-weight: bold;
 		color: rgb(var(--black));
 	}
@@ -350,8 +594,8 @@ const latestPosts = allPosts.slice(0, 6);
 	.btn-row {
 		display: flex;
 		align-items: center;
-		gap: 0.6em;
-		margin-top: 1em;
+		gap: 0.75em;
+		margin-top: 1.25em;
 		flex-wrap: wrap;
 	}
 
@@ -359,15 +603,16 @@ const latestPosts = allPosts.slice(0, 6);
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4em;
-		padding: 0.5em 1.25em;
+		padding: 0.6em 1.35em;
 		font-size: 0.95em;
 		font-family: inherit;
 		font-weight: bold;
-		border-radius: 3px;
+		border-radius: 4px;
 		cursor: pointer;
 		border: 1px solid transparent;
 		background: #4a7840;
 		color: white;
+		transition: background 0.15s ease;
 	}
 
 	.btn-row button:hover {
@@ -375,37 +620,202 @@ const latestPosts = allPosts.slice(0, 6);
 	}
 
 	.btn-row button.secondary {
-		background: #cccccc;
+		background: #dcdcdc;
 		color: #333;
 	}
 
 	.btn-row button.secondary:hover {
-		background: #b3b3b3;
+		background: #cecece;
 	}
 
-	.btn-row a {
+	.calc-sub-link {
 		font-size: 0.9em;
 		color: var(--accent);
 		text-decoration: none;
+		font-weight: 600;
+		margin-left: auto;
 	}
 
-	.btn-row a:hover {
+	.calc-sub-link:hover {
 		text-decoration: underline;
 	}
 
 	.note {
-		margin-top: 0.85em;
+		margin-top: 1em;
 		margin-bottom: 0;
-		font-size: 0.78em;
+		font-size: 0.8em;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+
+	/* ── Audience Grid ── */
+	.audience-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+		margin: 1.5rem 0;
+	}
+
+	.audience-card {
+		background: white;
+		border: 1px solid #ddd;
+		border-radius: 6px;
+		padding: 1.25rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	}
+
+	.aud-icon {
+		font-size: 1.8rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.audience-card h3 {
+		font-size: 1.15rem;
+		margin: 0 0 0.4rem 0;
+		color: rgb(var(--black));
+	}
+
+	.audience-card p {
+		font-size: 0.92rem;
+		color: rgb(var(--gray));
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	/* ── Content Block & Prose ── */
+	.home-guide-content {
+		margin: 3rem 0;
+	}
+
+	.home-guide-content hr {
+		margin: 3rem 0;
+		border: none;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.content-block {
+		margin-bottom: 2.75rem;
+	}
+
+	.content-block h2 {
+		font-size: 1.85rem;
+		margin-bottom: 0.75rem;
+		line-height: 1.3;
+		color: rgb(var(--black));
+	}
+
+	.content-block h3 {
+		font-size: 1.35rem;
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+		color: rgb(var(--black));
+	}
+
+	.content-block p {
+		margin-bottom: 1rem;
+		line-height: 1.7;
+		font-size: 1.05rem;
+	}
+
+	.content-block ol,
+	.content-block ul {
+		margin: 1rem 0 1.5rem 1.5rem;
+		padding: 0;
+	}
+
+	.content-block li {
+		margin-bottom: 0.6rem;
+		line-height: 1.6;
+	}
+
+	/* ── FAQ Section ── */
+	.faq-section {
+		margin-top: 3rem;
+	}
+
+	.faq-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-top: 1.5rem;
+	}
+
+	.faq-item {
+		background: white;
+		border: 1px solid #ddd;
+		border-radius: 6px;
+		padding: 1.25rem 1.5rem;
+	}
+
+	.faq-question {
+		font-size: 1.15rem;
+		margin: 0 0 0.5rem 0;
+		color: rgb(var(--black));
+	}
+
+	.faq-answer {
+		margin: 0;
+		font-size: 0.95rem;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+	}
+
+	/* ── Latest Blog Section ── */
+	.latest-guides-section {
+		margin: 3rem 0;
+	}
+
+	.section-title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.section-title-row h2 {
+		font-size: 1.75rem;
+		margin: 0;
+	}
+
+	.all-guides-link {
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.all-guides-link:hover {
+		text-decoration: underline;
+	}
+
+	.browse-all-wrap {
+		margin-top: 2rem;
+		text-align: center;
+	}
+
+	.btn-secondary {
+		display: inline-block;
+		padding: 0.65rem 1.5rem;
+		background: var(--accent);
+		color: white;
+		text-decoration: none;
+		border-radius: 4px;
+		font-weight: 600;
+		font-size: 0.95rem;
+		transition: opacity 0.15s ease;
+	}
+
+	.btn-secondary:hover {
+		opacity: 0.9;
 	}
 
 	/* ── Blog List ── */
 	.post-list {
 		list-style: none;
 		padding: 0;
-		margin: 0 0 1.5em 0;
+		margin: 0;
 	}
 
 	.post-list li {
@@ -428,7 +838,7 @@ const latestPosts = allPosts.slice(0, 6);
 	}
 
 	.post-list h3 {
-		margin: 0 0 0.2em 0;
+		margin: 0 0 0.25em 0;
 		font-size: 1.25em;
 		color: rgb(var(--black));
 	}
@@ -453,7 +863,22 @@ const latestPosts = allPosts.slice(0, 6);
 		}
 
 		.calc-box {
-			padding: 1em;
+			padding: 1.2em 1em;
+		}
+
+		.audience-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.hero h1 {
+			font-size: 1.85rem;
+		}
+
+		.calc-sub-link {
+			margin-left: 0;
+			width: 100%;
+			text-align: center;
+			margin-top: 0.5rem;
 		}
 	}
 
@@ -534,11 +959,29 @@ const latestPosts = allPosts.slice(0, 6);
 		background: #333333;
 	}
 
-	:global([data-theme='dark']) .btn-row a {
+	:global([data-theme='dark']) .calc-sub-link {
 		color: #60a5fa;
 	}
 
 	:global([data-theme='dark']) .note {
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .audience-card {
+		background: #111111;
+		border-color: #262626;
+	}
+
+	:global([data-theme='dark']) .faq-item {
+		background: #111111;
+		border-color: #262626;
+	}
+
+	:global([data-theme='dark']) .faq-question {
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .faq-answer {
 		color: #9ca3af;
 	}
 </style>

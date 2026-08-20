@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Contact Us | GigPilot AI"
+			description="Redirecting to the GigPilot AI Contact page..."
+			canonical="https://gigpilotai.com/contact"
+			noindex={true}
+		/>
+		<meta http-equiv="refresh" content="0;url=/contact" />
+		<script is:inline>
+			window.location.replace('/contact');
+		</script>
+	</head>
+	<body>
+		<p>Redirecting to <a href="/contact">/contact</a>...</p>
+	</body>
+</html>

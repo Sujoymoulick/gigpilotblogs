@@ -1,13 +1,47 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import { SITE_TITLE } from '../../consts';
 
-const pageTitle = 'Freelance Project Quote Calculator: Estimate Fixed-Price Project Rates';
+const pageTitle = 'Freelance Project Quote Calculator | GigPilot AI';
 const pageDescription =
-	'Use this free freelance project quote calculator to calculate accurate, profitable fixed-price quotes based on hours, hourly rate, revision buffer, and expenses.';
-const canonicalURL = new URL('/tools/freelance-rate-calculator', Astro.site || 'https://gigpilot.ai');
+	'Calculate profitable fixed-price project quotes, revision buffers, and labor costs with GigPilot AI. Free, browser-only freelance rate calculator.';
+
+const breadcrumbs = [
+	{ name: 'Tools', item: '/tools/freelance-rate-calculator/' },
+	{ name: 'Freelance Project Quote Calculator', item: '/tools/freelance-rate-calculator/' },
+];
+
+const faqs = [
+	{
+		question: 'How is a fixed-price freelance quote calculated?',
+		answer:
+			'A fixed-price quote is calculated using Base Labor (Estimated Hours × Hourly Rate) plus a Revision Buffer fee (typically 10-20% of base labor) plus direct pass-through expenses (software, plugins, stock assets).',
+	},
+	{
+		question: 'Why should I include a revision buffer in my project quote?',
+		answer:
+			'A revision buffer protects your baseline hourly rate by accounting for 1 to 2 rounds of standard feedback without requiring out-of-pocket unpaid hours or awkward mid-project renegotiations.',
+	},
+	{
+		question: 'Is my data secure when using the GigPilot AI calculator?',
+		answer:
+			'Yes. All calculations are executed entirely on your local browser in JavaScript. No numbers or project details are transmitted to or stored on any server.',
+	},
+];
+
+const toolSchema = {
+	name: 'GigPilot AI Freelance Project Quote Calculator',
+	description:
+		'Free client-side tool for freelancers to calculate fixed-price project quotes with revision buffers and expense allocations.',
+	applicationCategory: 'BusinessApplication',
+	operatingSystem: 'All Modern Web Browsers',
+	price: '0',
+	currency: 'USD',
+};
 
 const relatedGuides = [
 	{
@@ -40,30 +74,20 @@ const relatedGuides = [
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`${pageTitle} | ${SITE_TITLE}`} description={pageDescription} />
-		<link rel="canonical" href={canonicalURL} />
-		<script type="application/ld+json">
-			{
-				"@context": "https://schema.org",
-				"@type": "WebApplication",
-				"name": "GigPilot AI Freelance Project Quote Calculator",
-				"url": "https://gigpilot.ai/tools/freelance-rate-calculator",
-				"description": "Free client-side tool for freelancers to calculate fixed-price project quotes with revision buffers and expense allocations.",
-				"applicationCategory": "BusinessApplication",
-				"operatingSystem": "All",
-				"offers": {
-					"@type": "Offer",
-					"price": "0",
-					"priceCurrency": "USD"
-				}
-			}
-		</script>
+		<BaseHead
+			title={pageTitle}
+			description={pageDescription}
+			breadcrumbs={breadcrumbs}
+			faqs={faqs}
+			toolSchema={toolSchema}
+		/>
 	</head>
 
 	<body>
 		<Header />
 
 		<main>
+			<Breadcrumbs items={breadcrumbs} />
 			<!-- HERO: Project Quote Calculator -->
 			<section class="hero">
 				<h1>Project Quote Calculator</h1>
@@ -238,12 +262,17 @@ const relatedGuides = [
 						<strong>Charge for Out-of-Scope Requests:</strong> If a client requests features beyond the agreed scope, politely provide a secondary estimate using this calculator.
 					</li>
 					<li>
-						<strong>Quote Outcomes Instead of Inputs:</strong> Emphasize the business result (more leads, faster site, higher conversions) rather than the raw number of hours spent.
-					</li>
-					<li>
 						<strong>Include Asset Pass-Throughs:</strong> Never pay out-of-pocket for project assets; always itemize them in your direct expenses line.
 					</li>
 				</ol>
+
+				<hr />
+
+				<FAQAccordion
+					items={faqs}
+					title="Frequently Asked Questions"
+					subtitle="Common questions about calculating fixed-price project quotes, revision buffers, and client pricing."
+				/>
 
 				<hr />
 
@@ -337,7 +366,7 @@ const relatedGuides = [
 - Extra Expenses: ${pqExpensesFeeEl.textContent}
 - Total Project Quote: ${pqTotalQuoteEl.textContent}
 
-Calculated with GigPilot AI: https://gigpilot.ai/tools/freelance-rate-calculator`;
+Calculated with GigPilot AI: https://gigpilotai.com/tools/freelance-rate-calculator`;
 
 					try {
 						await navigator.clipboard.writeText(text);
