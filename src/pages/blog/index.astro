@@ -5,110 +5,498 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const featuredPost = posts[0];
+const remainingPosts = posts.slice(1);
+
+const categories = [
+	'All',
+	'Freelancing',
+	'Freelance Jobs',
+	'Platforms',
+	'Work From Home',
+	'Freelance Skills',
+	'Career',
+];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead
+			title="Freelancing Guides & Insights | GigPilot AI"
+			description="Practical guides covering freelancing, freelance jobs, online work, platforms, skills, and AI productivity."
+		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section>
-				<ul>
+			<header class="blog-header">
+				<span class="badge">Knowledge Hub</span>
+				<h1>Freelancing Guides & Insights</h1>
+				<p class="subtitle">
+					Practical guides covering freelancing, freelance jobs, online work, platforms, skills, and AI productivity to help you succeed independently.
+				</p>
+
+				<!-- Category Filters -->
+				<div class="category-pills" id="categoryFilter">
 					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
+						categories.map((cat, idx) => (
+							<button
+								type="button"
+								class={`pill-btn ${idx === 0 ? 'active' : ''}`}
+								data-category={cat}
+							>
+								{cat}
+							</button>
 						))
 					}
-				</ul>
+				</div>
+			</header>
+
+			<!-- Featured Post Hero Card -->
+			{
+				featuredPost && (
+					<section class="featured-section" data-post-category={featuredPost.data.category || 'Freelancing'}>
+						<a href={`/blog/${featuredPost.id}/`} class="featured-card">
+							<div class="featured-img-container">
+								{featuredPost.data.heroImage && (
+									<Image
+										width={800}
+										height={450}
+										src={featuredPost.data.heroImage}
+										alt={featuredPost.data.title}
+										class="featured-img"
+									/>
+								)}
+							</div>
+							<div class="featured-content">
+								<div class="card-meta">
+									<span class="badge">{featuredPost.data.category || 'Featured'}</span>
+									<span class="read-time">{featuredPost.data.readingTime || '8 min read'}</span>
+								</div>
+								<h2>{featuredPost.data.title}</h2>
+								<p class="excerpt">{featuredPost.data.description}</p>
+								<div class="card-footer">
+									<span class="date">
+										<FormattedDate date={featuredPost.data.pubDate} />
+									</span>
+									<span class="read-more">Read Full Guide &rarr;</span>
+								</div>
+							</div>
+						</a>
+					</section>
+				)
+			}
+
+			<!-- Blog Post Grid -->
+			<section class="posts-grid-section">
+				<h2 class="grid-heading">All Articles ({posts.length})</h2>
+				<div class="posts-grid" id="postsGrid">
+					{
+						posts.map((post) => (
+							<article class="post-card" data-category={post.data.category || 'Freelancing'}>
+								<a href={`/blog/${post.id}/`} class="post-card-inner">
+									<div class="post-img-wrapper">
+										{post.data.heroImage && (
+											<Image
+												width={600}
+												height={340}
+												src={post.data.heroImage}
+												alt={post.data.title}
+												class="post-img"
+											/>
+										)}
+									</div>
+									<div class="post-card-body">
+										<div class="card-meta">
+											<span class="badge">{post.data.category || 'Freelancing'}</span>
+											<span class="read-time">{post.data.readingTime || '8 min read'}</span>
+										</div>
+										<h3 class="post-title">{post.data.title}</h3>
+										<p class="post-excerpt">{post.data.description}</p>
+										<div class="post-card-footer">
+											<span class="post-date">
+												<FormattedDate date={post.data.pubDate} />
+											</span>
+											<span class="read-link">Read Guide &rarr;</span>
+										</div>
+									</div>
+								</a>
+							</article>
+						))
+					}
+				</div>
 			</section>
 		</main>
 		<Footer />
+
+		<script>
+			// Client-side category filtering
+			const filterButtons = document.querySelectorAll('.pill-btn');
+			const postCards = document.querySelectorAll('.post-card');
+			const featuredSection = document.querySelector('.featured-section') as HTMLElement;
+
+			filterButtons.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					filterButtons.forEach((b) => b.classList.remove('active'));
+					btn.classList.add('active');
+
+					const category = btn.getAttribute('data-category');
+
+					// Filter cards
+					postCards.forEach((card) => {
+						const cardCategory = card.getAttribute('data-category');
+						if (category === 'All' || cardCategory === category) {
+							(card as HTMLElement).style.display = 'block';
+						} else {
+							(card as HTMLElement).style.display = 'none';
+						}
+					});
+
+					// Handle featured card visibility
+					if (featuredSection) {
+						const featCategory = featuredSection.getAttribute('data-post-category');
+						if (category === 'All' || featCategory === category) {
+							featuredSection.style.display = 'block';
+						} else {
+							featuredSection.style.display = 'none';
+						}
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
+
+<style>
+	/* ── Local variables (shared light/dark) ── */
+	:root,
+	[data-theme='light'] {
+		--gray-border: 215, 220, 230;
+		--radius-lg: 1rem;
+		--radius-md: 0.6rem;
+		--accent-border: #93c5fd;
+		--box-shadow-hover:
+			0 4px 12px rgba(var(--gray), 35%), 0 12px 32px rgba(var(--gray), 40%),
+			0 20px 40px rgba(var(--gray), 35%);
+		--card-bg: #ffffff;
+	}
+
+	[data-theme='dark'] {
+		--gray-border: 45, 45, 55;
+		--accent-border: #1d4ed8;
+		--box-shadow-hover:
+			0 4px 12px rgba(0, 0, 0, 0.9), 0 12px 32px rgba(0, 0, 0, 0.9),
+			0 20px 40px rgba(0, 0, 0, 0.9);
+		--card-bg: #111111;
+	}
+
+	/* Wider layout for the 3-column grid */
+	main {
+		width: var(--max-width);
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 3em 1em;
+	}
+
+	/* Badge */
+	.badge {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		background: #e8edf5;
+		color: #1a3561;
+		padding: 0.25em 0.65em;
+		border-radius: 4px;
+	}
+
+	[data-theme='dark'] .badge {
+		background: #1e2d4a;
+		color: #93c5fd;
+	}
+
+	.blog-header {
+		text-align: center;
+		max-width: 760px;
+		margin: 0 auto 3rem auto;
+	}
+
+	.blog-header .badge {
+		margin-bottom: 1rem;
+	}
+
+	.blog-header h1 {
+		font-size: 2.75rem;
+		margin-bottom: 1rem;
+		letter-spacing: -0.03em;
+		color: rgb(var(--black));
+	}
+
+	.subtitle {
+		font-size: 1.2rem;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+		margin-bottom: 2rem;
+	}
+
+	.category-pills {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 1.5rem;
+	}
+
+	.pill-btn {
+		background: var(--card-bg);
+		border: 1px solid rgb(var(--gray-border));
+		color: rgb(var(--gray-dark));
+		padding: 0.45rem 1rem;
+		border-radius: 9999px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		font-family: inherit;
+	}
+
+	.pill-btn:hover {
+		background: rgb(var(--gray-light));
+		border-color: rgb(var(--gray-border));
+	}
+
+	.pill-btn.active {
+		background: var(--accent);
+		color: #ffffff;
+		border-color: var(--accent);
+	}
+
+	/* Featured Card */
+	.featured-section {
+		margin-bottom: 4rem;
+	}
+
+	.featured-card {
+		display: grid;
+		grid-template-columns: 1.2fr 1fr;
+		gap: 2.5rem;
+		background: var(--card-bg);
+		border: 1px solid rgb(var(--gray-border));
+		border-radius: var(--radius-lg);
+		padding: 1.75rem;
+		box-shadow: var(--box-shadow);
+		text-decoration: none;
+		transition: all 0.25s ease;
+		align-items: center;
+	}
+
+	.featured-card:hover {
+		box-shadow: var(--box-shadow-hover);
+		transform: translateY(-2px);
+		border-color: var(--accent-border);
+	}
+
+	.featured-img-container {
+		width: 100%;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+
+	.featured-img {
+		width: 100%;
+		height: 320px;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.3s ease;
+	}
+
+	.featured-card:hover .featured-img {
+		transform: scale(1.02);
+	}
+
+	.featured-content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.card-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.85rem;
+	}
+
+	.read-time {
+		font-size: 0.8rem;
+		color: rgb(var(--gray));
+		font-weight: 500;
+	}
+
+	.featured-content h2 {
+		font-size: 1.75rem;
+		line-height: 1.3;
+		margin-bottom: 0.75rem;
+		color: rgb(var(--black));
+	}
+
+	.featured-content .excerpt {
+		color: rgb(var(--gray));
+		font-size: 1rem;
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+
+	.card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: auto;
+		padding-top: 1rem;
+		border-top: 1px solid rgb(var(--gray-border));
+	}
+
+	.date {
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+	}
+
+	.read-more {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--accent);
+	}
+
+	/* Posts Grid */
+	.posts-grid-section {
+		margin-top: 2rem;
+	}
+
+	.grid-heading {
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem;
+		color: rgb(var(--black));
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.75rem;
+	}
+
+	.post-card {
+		background: var(--card-bg);
+		border: 1px solid rgb(var(--gray-border));
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+		transition: all 0.2s ease;
+	}
+
+	.post-card:hover {
+		box-shadow: var(--box-shadow-hover);
+		transform: translateY(-2px);
+		border-color: var(--accent-border);
+	}
+
+	.post-card-inner {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		text-decoration: none;
+	}
+
+	.post-img-wrapper {
+		width: 100%;
+		height: 190px;
+		overflow: hidden;
+		background: rgb(var(--gray-light));
+	}
+
+	.post-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.25s ease;
+	}
+
+	.post-card:hover .post-img {
+		transform: scale(1.03);
+	}
+
+	.post-card-body {
+		padding: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+	}
+
+	.post-title {
+		font-size: 1.15rem;
+		line-height: 1.4;
+		margin: 0 0 0.5rem 0;
+		color: rgb(var(--black));
+	}
+
+	.post-excerpt {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		line-height: 1.5;
+		margin-bottom: 1.25rem;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.post-card-footer {
+		margin-top: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 0.75rem;
+		border-top: 1px solid rgb(var(--gray-border));
+		font-size: 0.8rem;
+	}
+
+	.post-date {
+		color: rgb(var(--gray));
+	}
+
+	.read-link {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	@media (max-width: 960px) {
+		.posts-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.featured-card {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.featured-img {
+			height: 240px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.posts-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.blog-header h1 {
+			font-size: 2rem;
+		}
+	}
+</style>

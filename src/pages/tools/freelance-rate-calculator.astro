@@ -1,0 +1,888 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const pageTitle = 'Freelance Project Quote Calculator: Estimate Fixed-Price Project Rates';
+const pageDescription =
+	'Use this free freelance project quote calculator to calculate accurate, profitable fixed-price quotes based on hours, hourly rate, revision buffer, and expenses.';
+const canonicalURL = new URL('/tools/freelance-rate-calculator', Astro.site || 'https://gigpilot.ai');
+
+const relatedGuides = [
+	{
+		title: 'How to Become a Freelancer: Step-by-Step Guide',
+		url: '/blog/how-to-become-a-freelancer/',
+		category: 'Career',
+		desc: 'Learn how to set up your freelance business, choose your niche, build a portfolio, and find your first paying clients.',
+	},
+	{
+		title: 'Upwork for Freelancers: How to Land Jobs & Set Rates',
+		url: '/blog/upwork-for-freelancers/',
+		category: 'Platforms',
+		desc: 'Master profile optimization, rate positioning, and proposal pitching on the largest freelance marketplace.',
+	},
+	{
+		title: 'Best Freelancing Sites in 2026',
+		url: '/blog/best-freelancing-sites/',
+		category: 'Platforms',
+		desc: 'Discover vetted marketplaces and job boards for writers, designers, developers, and marketers.',
+	},
+	{
+		title: 'Freelancing Work From Home: Ultimate Setup & Productivity Guide',
+		url: '/blog/freelancing-work-from-home/',
+		category: 'Work From Home',
+		desc: 'Optimize your home office, protect your working hours, and manage client expectations effectively.',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${pageTitle} | ${SITE_TITLE}`} description={pageDescription} />
+		<link rel="canonical" href={canonicalURL} />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "GigPilot AI Freelance Project Quote Calculator",
+				"url": "https://gigpilot.ai/tools/freelance-rate-calculator",
+				"description": "Free client-side tool for freelancers to calculate fixed-price project quotes with revision buffers and expense allocations.",
+				"applicationCategory": "BusinessApplication",
+				"operatingSystem": "All",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "USD"
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<!-- HERO: Project Quote Calculator -->
+			<section class="hero">
+				<h1>Project Quote Calculator</h1>
+				<p>Enter your estimated project hours, hourly rate, direct expenses, and revision buffer — get a profitable fixed-price project quote instantly. Free &amp; 100% browser-only.</p>
+
+				<div class="calc-box" id="quoteCalc">
+					<div class="currency-row">
+						<label for="currencySelect">Currency</label>
+						<select id="currencySelect">
+							<option value="USD" data-sym="$">USD $</option>
+							<option value="INR" data-sym="₹">INR ₹</option>
+							<option value="GBP" data-sym="£">GBP £</option>
+							<option value="EUR" data-sym="€">EUR €</option>
+							<option value="CAD" data-sym="C$">CAD C$</option>
+							<option value="AUD" data-sym="A$">AUD A$</option>
+						</select>
+					</div>
+
+					<!-- Column headers -->
+					<div class="grid4 col-headers">
+						<span>Project Hours</span>
+						<span>Hourly Rate</span>
+						<span>Extra Expenses</span>
+						<span>Revision Buffer</span>
+					</div>
+
+					<!-- Inputs -->
+					<div class="grid4">
+						<div class="field plain">
+							<input type="number" id="pqHours" value="20" min="1" max="1000" step="1" aria-label="Project Hours" />
+						</div>
+						<div class="field">
+							<span class="sym" id="pqSym1">$</span>
+							<input type="number" id="pqRate" value="50" min="1" max="5000" step="1" aria-label="Hourly Rate" />
+						</div>
+						<div class="field">
+							<span class="sym" id="pqSym2">$</span>
+							<input type="number" id="pqExpenses" value="50" min="0" max="50000" step="10" aria-label="Extra Expenses" />
+						</div>
+						<div class="field suffix-field">
+							<input type="number" id="pqBuffer" value="10" min="0" max="50" step="5" aria-label="Revision Buffer Percentage" />
+							<span class="sym suffix">%</span>
+						</div>
+					</div>
+
+					<div class="equals">=</div>
+
+					<!-- Results -->
+					<div class="grid4 results" id="pqResults">
+						<div class="result-cell">
+							<span class="rlabel">Base Labor</span>
+							<span class="rval" id="pqBaseLabor">—</span>
+						</div>
+						<div class="result-cell">
+							<span class="rlabel">Revision Buffer</span>
+							<span class="rval" id="pqBufferFee">—</span>
+						</div>
+						<div class="result-cell">
+							<span class="rlabel">Expenses</span>
+							<span class="rval" id="pqExpensesFee">—</span>
+						</div>
+						<div class="result-cell highlight">
+							<span class="rlabel">Total Quote</span>
+							<span class="rval" id="pqTotalQuote">—</span>
+						</div>
+					</div>
+
+					<!-- Buttons -->
+					<div class="btn-row">
+						<button id="pqCalcBtn" type="button">
+							Calculate
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+						</button>
+						<button id="pqClearBtn" type="button" class="secondary">Reset</button>
+						<button id="pqCopyBtn" type="button" class="secondary">
+							<span id="pqCopyText">Copy Quote</span>
+						</button>
+					</div>
+
+					<p class="note">🔒 All calculations run in your browser. No data is sent to any server.</p>
+				</div>
+			</section>
+
+			<!-- Cross-Link to Freelance Rate Calculator -->
+			<div class="rate-calc-callout">
+				<span>💡 Need to calculate your target hourly rate first? Use the free <a href="/">Freelance Rate Calculator on our Home Page &rarr;</a></span>
+			</div>
+
+			<!-- EDUCATIONAL SEO & GUIDE CONTENT -->
+			<article class="tool-guide-article prose">
+				<hr />
+				<h2>How to Price Fixed-Price Freelance Projects</h2>
+				<p>
+					Transitioning from hourly billing to fixed-price project quotes is the fastest way for freelancers to increase their profit margins. When you quote a fixed price, clients get budget predictability, and you get rewarded for working faster and more efficiently.
+				</p>
+				<p>
+					However, quoting without a clear methodology is dangerous: underestimating hours, ignoring revisions, or failing to pass on software/asset expenses can turn a lucrative project into unpaid overtime.
+				</p>
+
+				<h3>The Fixed Project Quote Formula</h3>
+				<p>This calculator breaks your project price down into three core components:</p>
+
+				<ol>
+					<li>
+						<strong>Base Labor:</strong>
+						<code>Base Labor = Estimated Execution Hours × Target Hourly Rate</code>
+						<p>
+							Calculate the core hours required for drafting, design, coding, or strategy based on your required hourly rate.
+						</p>
+					</li>
+					<li>
+						<strong>Revision Buffer (Scope Protection):</strong>
+						<code>Buffer Fee = Base Labor × (Revision Buffer % ÷ 100)</code>
+						<p>
+							Every freelance deliverable requires feedback loops. Adding a 10%–20% revision buffer covers 1 to 2 standard rounds of client adjustments without eating into your hourly earnings.
+						</p>
+					</li>
+					<li>
+						<strong>Direct Project Expenses:</strong>
+						<code>Total Project Quote = Base Labor + Buffer Fee + Direct Expenses</code>
+						<p>
+							Pass through project-specific expenditures such as premium fonts, stock photography, plugin licenses, or cloud hosting.
+						</p>
+					</li>
+				</ol>
+
+				<hr />
+
+				<h2>Fixed Project Pricing vs. Hourly Billing</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Pricing Model</th>
+							<th>Best For</th>
+							<th>Pros</th>
+							<th>Cons</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>Fixed Project Fee</strong></td>
+							<td>Well-scoped deliverables (landing pages, logo packs, blog posts)</td>
+							<td>Higher profit margins as efficiency improves; clear client expectation</td>
+							<td>Requires detailed scope definition to prevent unpaid scope creep</td>
+						</tr>
+						<tr>
+							<td><strong>Hourly Billing</strong></td>
+							<td>Open-ended consulting, ongoing maintenance, undefined scope</td>
+							<td>Guaranteed payment for every minute spent; easy to track</td>
+							<td>Penalizes speed and skill; client may question logged time</td>
+						</tr>
+						<tr>
+							<td><strong>Monthly Retainer</strong></td>
+							<td>Ongoing recurring support (SEO, social media, copywriting)</td>
+							<td>Predictable recurring monthly cash flow</td>
+							<td>Requires consistent monthly value demonstration</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<hr />
+
+				<h2>5 Tips for Pitching and Closing Fixed-Price Projects</h2>
+				<ol>
+					<li>
+						<strong>Define the Scope in Writing:</strong> Clearly specify deliverables, file formats, and the exact number of revision rounds included in the quote.
+					</li>
+					<li>
+						<strong>Set Milestone Payment Terms:</strong> Always require an upfront deposit (e.g., 50% upfront, 50% upon final deliverable) before beginning work.
+					</li>
+					<li>
+						<strong>Charge for Out-of-Scope Requests:</strong> If a client requests features beyond the agreed scope, politely provide a secondary estimate using this calculator.
+					</li>
+					<li>
+						<strong>Quote Outcomes Instead of Inputs:</strong> Emphasize the business result (more leads, faster site, higher conversions) rather than the raw number of hours spent.
+					</li>
+					<li>
+						<strong>Include Asset Pass-Throughs:</strong> Never pay out-of-pocket for project assets; always itemize them in your direct expenses line.
+					</li>
+				</ol>
+
+				<hr />
+
+				<h2>Explore Related Freelancing Guides</h2>
+				<p>
+					Mastering your rate and project quotes is essential for building a scalable freelance business. Explore our library of actionable guides:
+				</p>
+
+				<div class="related-guides-grid not-prose">
+					{
+						relatedGuides.map((guide) => (
+							<a href={guide.url} class="related-guide-card">
+								<div class="guide-meta">
+									<span class="badge">{guide.category}</span>
+								</div>
+								<h3 class="guide-title">{guide.title}</h3>
+								<p class="guide-desc">{guide.desc}</p>
+								<span class="guide-link">Read guide &rarr;</span>
+							</a>
+						))
+					}
+				</div>
+			</article>
+		</main>
+
+		<Footer />
+
+		<script>
+			(function () {
+				const currencySelect = document.getElementById('currencySelect') as HTMLSelectElement;
+				const pqHoursInput = document.getElementById('pqHours') as HTMLInputElement;
+				const pqRateInput = document.getElementById('pqRate') as HTMLInputElement;
+				const pqExpensesInput = document.getElementById('pqExpenses') as HTMLInputElement;
+				const pqBufferInput = document.getElementById('pqBuffer') as HTMLInputElement;
+				const pqSym1 = document.getElementById('pqSym1') as HTMLElement;
+				const pqSym2 = document.getElementById('pqSym2') as HTMLElement;
+				const pqBaseLaborEl = document.getElementById('pqBaseLabor') as HTMLElement;
+				const pqBufferFeeEl = document.getElementById('pqBufferFee') as HTMLElement;
+				const pqExpensesFeeEl = document.getElementById('pqExpensesFee') as HTMLElement;
+				const pqTotalQuoteEl = document.getElementById('pqTotalQuote') as HTMLElement;
+				const pqResultsEl = document.getElementById('pqResults') as HTMLElement;
+				const pqCalcBtn = document.getElementById('pqCalcBtn') as HTMLButtonElement;
+				const pqClearBtn = document.getElementById('pqClearBtn') as HTMLButtonElement;
+				const pqCopyBtn = document.getElementById('pqCopyBtn') as HTMLButtonElement;
+				const pqCopyText = document.getElementById('pqCopyText') as HTMLElement;
+
+				function getSymbol(): string {
+					return (currencySelect.selectedOptions[0] as HTMLOptionElement)?.dataset?.sym ?? '$';
+				}
+
+				function fmt(value: number): string {
+					return `${getSymbol()}${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+				}
+
+				function updateSymbols() {
+					const s = getSymbol();
+					if (pqSym1) pqSym1.textContent = s;
+					if (pqSym2) pqSym2.textContent = s;
+				}
+
+				function calculateQuote() {
+					const hours = parseFloat(pqHoursInput.value) || 0;
+					const rate = parseFloat(pqRateInput.value) || 0;
+					const expenses = parseFloat(pqExpensesInput.value) || 0;
+					const bufferPercent = parseFloat(pqBufferInput.value) || 0;
+
+					const baseLabor = hours * rate;
+					const bufferFee = baseLabor * (bufferPercent / 100);
+					const totalQuote = baseLabor + bufferFee + expenses;
+
+					pqBaseLaborEl.textContent = fmt(baseLabor);
+					pqBufferFeeEl.textContent = fmt(bufferFee);
+					pqExpensesFeeEl.textContent = fmt(expenses);
+					pqTotalQuoteEl.textContent = fmt(totalQuote);
+					pqResultsEl.classList.add('filled');
+				}
+
+				function resetQuote() {
+					pqHoursInput.value = '20';
+					pqRateInput.value = '50';
+					pqExpensesInput.value = '50';
+					pqBufferInput.value = '10';
+					calculateQuote();
+				}
+
+				async function copyQuoteResults() {
+					const text = `Freelance Project Quote (${currencySelect.value}):
+- Project Hours: ${pqHoursInput.value} hrs @ ${pqSym1.textContent}${pqRateInput.value}/hr
+- Base Labor: ${pqBaseLaborEl.textContent}
+- Revision Buffer: ${pqBufferFeeEl.textContent} (${pqBufferInput.value}%)
+- Extra Expenses: ${pqExpensesFeeEl.textContent}
+- Total Project Quote: ${pqTotalQuoteEl.textContent}
+
+Calculated with GigPilot AI: https://gigpilot.ai/tools/freelance-rate-calculator`;
+
+					try {
+						await navigator.clipboard.writeText(text);
+						if (pqCopyText) pqCopyText.textContent = 'Copied!';
+						setTimeout(() => {
+							if (pqCopyText) pqCopyText.textContent = 'Copy Quote';
+						}, 2000);
+					} catch (e) {
+						console.error('Copy quote failed', e);
+					}
+				}
+
+				pqCalcBtn.addEventListener('click', calculateQuote);
+				pqClearBtn.addEventListener('click', resetQuote);
+				pqCopyBtn.addEventListener('click', copyQuoteResults);
+
+				currencySelect.addEventListener('change', () => {
+					updateSymbols();
+					calculateQuote();
+				});
+
+				[pqHoursInput, pqRateInput, pqExpensesInput, pqBufferInput].forEach((el) => {
+					el.addEventListener('keydown', (e) => {
+						if (e.key === 'Enter') calculateQuote();
+					});
+					el.addEventListener('input', () => {
+						if (pqResultsEl.classList.contains('filled')) calculateQuote();
+					});
+				});
+
+				updateSymbols();
+				calculateQuote();
+			})();
+		</script>
+	</body>
+</html>
+
+<style>
+	/* ── Hero & Layout ── */
+	.hero {
+		margin-bottom: 2em;
+	}
+
+	.hero h1 {
+		margin-bottom: 0.25em;
+	}
+
+	.hero > p {
+		color: rgb(var(--gray));
+		margin-bottom: 1.5em;
+	}
+
+	/* ── Calculator Box ── */
+	.calc-box {
+		background: #f2f2f2;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 1.5em 2em;
+	}
+
+	.currency-row {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.5em;
+		margin-bottom: 1.25em;
+		font-size: 0.9em;
+	}
+
+	.currency-row select {
+		padding: 0.2em 0.5em;
+		border: 1px solid #aaa;
+		border-radius: 3px;
+		font-size: inherit;
+		background: white;
+	}
+
+	/* ── Grid ── */
+	.grid4 {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.6em;
+		margin-bottom: 0.4em;
+	}
+
+	.col-headers span {
+		font-weight: bold;
+		font-size: 0.85em;
+		text-align: center;
+		color: rgb(var(--black));
+	}
+
+	/* ── Input Fields ── */
+	.field {
+		display: flex;
+		align-items: center;
+		background: white;
+		border: 2px solid #1a3561;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.sym {
+		padding: 0 0.4em;
+		font-weight: bold;
+		font-size: 0.9em;
+		background: #e8edf5;
+		border-right: 1px solid #b0bcda;
+		color: #1a3561;
+		align-self: stretch;
+		display: flex;
+		align-items: center;
+	}
+
+	.sym.suffix {
+		border-right: none;
+		border-left: 1px solid #b0bcda;
+	}
+
+	.field input {
+		flex: 1;
+		border: none;
+		outline: none;
+		padding: 0.5em 0.4em;
+		font-size: 1em;
+		font-family: inherit;
+		text-align: center;
+		width: 100%;
+		background: transparent;
+	}
+
+	.field.plain {
+		border-color: #1a3561;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
+
+	/* ── Equals ── */
+	.equals {
+		text-align: center;
+		font-size: 1.5em;
+		font-weight: bold;
+		color: #1a3561;
+		line-height: 1;
+		margin: 0.3em 0;
+	}
+
+	/* ── Results ── */
+	.results .result-cell {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: white;
+		border: 2px solid #ccc;
+		border-radius: 3px;
+		padding: 0.5em 0.25em;
+		gap: 0.15em;
+	}
+
+	.results.filled .result-cell {
+		border-color: #1a3561;
+	}
+
+	.results.filled .result-cell.highlight {
+		border-color: #4a7840;
+		background: #f4faf2;
+	}
+
+	.results.filled .result-cell.highlight .rval {
+		color: #3d6535;
+	}
+
+	.rlabel {
+		font-size: 0.7em;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: rgb(var(--gray));
+	}
+
+	.rval {
+		font-size: 1em;
+		font-weight: bold;
+		color: rgb(var(--black));
+	}
+
+	.results.filled .rval {
+		color: #1a3561;
+	}
+
+	/* ── Buttons ── */
+	.btn-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6em;
+		margin-top: 1em;
+		flex-wrap: wrap;
+	}
+
+	.btn-row button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4em;
+		padding: 0.5em 1.25em;
+		font-size: 0.95em;
+		font-family: inherit;
+		font-weight: bold;
+		border-radius: 3px;
+		cursor: pointer;
+		border: 1px solid transparent;
+		background: #4a7840;
+		color: white;
+	}
+
+	.btn-row button:hover {
+		background: #3d6535;
+	}
+
+	.btn-row button.secondary {
+		background: #cccccc;
+		color: #333;
+	}
+
+	.btn-row button.secondary:hover {
+		background: #b3b3b3;
+	}
+
+	.note {
+		margin-top: 0.85em;
+		margin-bottom: 0;
+		font-size: 0.78em;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+
+	/* ── Rate Calc Callout ── */
+	.rate-calc-callout {
+		background: #e8edf5;
+		border: 1px solid #b0bcda;
+		border-radius: 4px;
+		padding: 0.85em 1.2em;
+		margin-top: 1.5em;
+		margin-bottom: 2em;
+		font-size: 0.9em;
+		color: #1a3561;
+	}
+
+	.rate-calc-callout a {
+		color: #1a3561;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+
+	.rate-calc-callout a:hover {
+		color: var(--accent);
+	}
+
+	/* ── Guide Article ── */
+	.tool-guide-article {
+		margin-top: 2em;
+	}
+
+	.tool-guide-article hr {
+		margin: 2.5em 0;
+		border: none;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.tool-guide-article h2 {
+		font-size: 1.8em;
+		margin-top: 1.2em;
+		margin-bottom: 0.6em;
+	}
+
+	.tool-guide-article h3 {
+		font-size: 1.4em;
+		margin-top: 1em;
+		margin-bottom: 0.4em;
+	}
+
+	.tool-guide-article p {
+		margin-bottom: 1em;
+		line-height: 1.7;
+	}
+
+	.tool-guide-article code {
+		display: block;
+		background: rgb(var(--bg-code));
+		padding: 0.6em 0.8em;
+		border-radius: 4px;
+		font-size: 0.9em;
+		margin: 0.5em 0 1em 0;
+		overflow-x: auto;
+	}
+
+	.tool-guide-article table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 1.5em 0;
+		font-size: 0.9em;
+	}
+
+	.tool-guide-article th,
+	.tool-guide-article td {
+		border: 1px solid #ddd;
+		padding: 0.75em;
+		text-align: left;
+	}
+
+	.tool-guide-article th {
+		background: #f2f2f2;
+		font-weight: bold;
+	}
+
+	.tool-guide-article ol,
+	.tool-guide-article ul {
+		margin: 1em 0 1.5em 1.5em;
+		padding: 0;
+	}
+
+	.tool-guide-article li {
+		margin-bottom: 0.5em;
+	}
+
+	/* ── Related Guides ── */
+	.related-guides-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25em;
+		margin-top: 1.5em;
+	}
+
+	.related-guide-card {
+		display: flex;
+		flex-direction: column;
+		background: white;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 1.25em;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.related-guide-card:hover {
+		border-color: #1a3561;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	}
+
+	.guide-meta {
+		margin-bottom: 0.5em;
+	}
+
+	.badge {
+		font-size: 0.75em;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		background: #e8edf5;
+		color: #1a3561;
+		padding: 0.2em 0.5em;
+		border-radius: 3px;
+	}
+
+	.guide-title {
+		font-size: 1.15em;
+		margin: 0 0 0.4em 0;
+		color: rgb(var(--black));
+	}
+
+	.related-guide-card:hover .guide-title {
+		color: var(--accent);
+	}
+
+	.guide-desc {
+		font-size: 0.88em;
+		color: rgb(var(--gray));
+		margin: 0 0 0.75em 0;
+		line-height: 1.5;
+		flex-grow: 1;
+	}
+
+	.guide-link {
+		font-size: 0.85em;
+		font-weight: bold;
+		color: var(--accent);
+	}
+
+	/* ── Responsive ── */
+	@media (max-width: 640px) {
+		.grid4 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.equals {
+			display: none;
+		}
+
+		.calc-box {
+			padding: 1em;
+		}
+
+		.related-guides-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* ── Dark Mode ── */
+	:global([data-theme='dark']) .calc-box {
+		background: #0d0d0d;
+		border-color: #262626;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+	}
+
+	:global([data-theme='dark']) .currency-row select {
+		background: #171717;
+		border-color: #333333;
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .col-headers span {
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .field {
+		background: #171717;
+		border-color: #3b82f6;
+	}
+
+	:global([data-theme='dark']) .sym {
+		background: #1e293b;
+		border-right-color: #334155;
+		color: #93c5fd;
+	}
+
+	:global([data-theme='dark']) .sym.suffix {
+		border-left-color: #334155;
+	}
+
+	:global([data-theme='dark']) .field input {
+		color: #ffffff;
+		background: transparent;
+	}
+
+	:global([data-theme='dark']) .equals {
+		color: #60a5fa;
+	}
+
+	:global([data-theme='dark']) .results .result-cell {
+		background: #171717;
+		border-color: #333333;
+	}
+
+	:global([data-theme='dark']) .results.filled .result-cell {
+		border-color: #3b82f6;
+	}
+
+	:global([data-theme='dark']) .results.filled .result-cell.highlight {
+		border-color: #22c55e;
+		background: rgba(34, 197, 94, 0.12);
+	}
+
+	:global([data-theme='dark']) .rlabel {
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .rval {
+		color: #ffffff;
+	}
+
+	:global([data-theme='dark']) .results.filled .rval {
+		color: #93c5fd;
+	}
+
+	:global([data-theme='dark']) .results.filled .result-cell.highlight .rval {
+		color: #4ade80;
+	}
+
+	:global([data-theme='dark']) .btn-row button {
+		background: #22c55e;
+		color: #000000;
+	}
+
+	:global([data-theme='dark']) .btn-row button:hover {
+		background: #16a34a;
+	}
+
+	:global([data-theme='dark']) .btn-row button.secondary {
+		background: #262626;
+		color: #e5e7eb;
+		border: 1px solid #333333;
+	}
+
+	:global([data-theme='dark']) .btn-row button.secondary:hover {
+		background: #333333;
+	}
+
+	:global([data-theme='dark']) .note {
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .rate-calc-callout {
+		background: #0d1527;
+		border-color: #1e3a8a;
+		color: #93c5fd;
+	}
+
+	:global([data-theme='dark']) .rate-calc-callout a {
+		color: #60a5fa;
+	}
+
+	:global([data-theme='dark']) .tool-guide-article th {
+		background: #171717;
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .tool-guide-article th,
+	:global([data-theme='dark']) .tool-guide-article td {
+		border-color: #262626;
+	}
+
+	:global([data-theme='dark']) .tool-guide-article blockquote {
+		background: #0d1527;
+		border-left-color: #3b82f6;
+		color: #e5e7eb;
+	}
+
+	:global([data-theme='dark']) .related-guide-card {
+		background: #111111;
+		border-color: #262626;
+	}
+
+	:global([data-theme='dark']) .related-guide-card:hover {
+		border-color: #3b82f6;
+	}
+
+	:global([data-theme='dark']) .related-guide-card .badge {
+		background: #1e293b;
+		color: #93c5fd;
+	}
+</style>

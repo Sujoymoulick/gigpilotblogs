@@ -3,7 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
+import FallbackImage from '../assets/about us.png';
 import { SITE_TITLE } from '../consts';
 import { Font } from 'astro:assets';
 
@@ -11,18 +11,77 @@ interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	article?: boolean;
+	pubDate?: Date;
+	updatedDate?: Date;
+	author?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const {
+	title,
+	description,
+	image = FallbackImage,
+	article = false,
+	pubDate,
+	updatedDate,
+	author = 'GigPilot AI Editorial',
+} = Astro.props;
+
+const imageURL = new URL(image.src, Astro.url);
+
+const schemaOrg = article
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'Article',
+			headline: title,
+			description: description,
+			image: imageURL.toString(),
+			datePublished: pubDate?.toISOString(),
+			dateModified: (updatedDate || pubDate)?.toISOString(),
+			author: {
+				'@type': 'Organization',
+				name: author,
+				url: Astro.site?.toString(),
+			},
+			publisher: {
+				'@type': 'Organization',
+				name: SITE_TITLE,
+				url: Astro.site?.toString(),
+			},
+			mainEntityOfPage: {
+				'@type': 'WebPage',
+				'@id': canonicalURL.toString(),
+			},
+		}
+	: {
+			'@context': 'https://schema.org',
+			'@type': 'WebSite',
+			name: SITE_TITLE,
+			url: Astro.site?.toString(),
+			description: description,
+		};
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
+<!-- Prevent flash of wrong theme: set data-theme before first paint -->
+<script is:inline>
+	(function () {
+		var stored;
+		try { stored = localStorage.getItem('theme'); } catch (_) {}
+		var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		var theme = stored || (prefersDark ? 'dark' : 'light');
+		document.documentElement.setAttribute('data-theme', theme);
+	})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
@@ -39,14 +98,23 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
+<meta name="title" content={title} />
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:site_name" content={SITE_TITLE} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />

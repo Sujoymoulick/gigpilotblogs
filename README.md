@@ -1,63 +1,66 @@
-# Astro Starter Kit: Blog
+# GigPilot AI Blog & Knowledge Platform
 
-```sh
-npm create astro@latest -- --template blog
-```
+GigPilot AI is a modern freelancing platform and knowledge hub built with [Astro](https://astro.build). It provides comprehensive guides, career roadmaps, platform reviews, and AI-powered productivity strategies for independent professionals, remote workers, and freelancers.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 Features
 
-Features:
+- ⚡ **Blazing Fast Performance**: Static site generation powered by Astro
+- 📱 **Fully Responsive**: Optimized for desktop, tablet, and mobile viewing
+- 🔍 **Technical SEO Optimized**: Canonical links, Open Graph metadata, Sitemap, and Schema.org Article / WebSite JSON-LD
+- 📑 **Content Collections**: Type-safe frontmatter schema with Astro Content Collections
+- 🗂 **Category Filtering**: Dynamic filtering for Freelancing, Jobs, Platforms, Work From Home, and Skills
+- 📡 **RSS & Sitemap**: Auto-generated RSS feed (`/rss.xml`) and XML sitemap (`/sitemap-index.xml`)
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## 📁 Project Structure
 
 ```text
 ├── public/
+│   ├── favicon.svg
+│   └── robots.txt
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── assets/
+│   ├── components/
+│   │   ├── BaseHead.astro
+│   │   ├── Footer.astro
+│   │   ├── FormattedDate.astro
+│   │   ├── Header.astro
+│   │   └── HeaderLink.astro
+│   ├── content/
+│   │   └── blog/
+│   ├── layouts/
+│   │   └── BlogPost.astro
+│   ├── pages/
+│   │   ├── about.astro
+│   │   ├── blog/
+│   │   │   ├── [...slug].astro
+│   │   │   └── index.astro
+│   │   ├── index.astro
+│   │   └── rss.xml.js
+│   ├── styles/
+│   │   └── global.css
+│   ├── consts.ts
+│   └── content.config.ts
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🧞 Available Scripts
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` | Starts local dev server at `localhost:4321` |
+| `npm run build` | Builds the production site to `./dist/` |
+| `npm run preview` | Previews the production build locally |
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+## 📝 Included Articles
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+1. What Is Freelancing? Meaning, How It Works, and How to Start
+2. How to Become a Freelancer: A Beginner's Step-by-Step Guide
+3. Best Freelancing Sites in 2026: Where to Find Freelance Jobs Online
+4. Freelancing Work in India: How to Start and Find Online Jobs
+5. Freelancing Work From Home: Best Jobs, Skills, and Tips for Beginners
+6. Upwork for Freelancers: How to Find Your First Freelance Job
+7. Digital Marketing Freelancer: Skills, Services, Jobs, and How to Start
+8. Video Editing Freelance Jobs: How to Start a Career as a Freelance Video Editor
+9. Freelance Writing: How to Start, Find Clients, and Make Money Online
+10. Data Entry Jobs Work From Home: How to Find Legitimate Freelance Work

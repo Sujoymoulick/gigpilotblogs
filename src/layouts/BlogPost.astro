@@ -8,51 +8,30 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	category = 'Freelancing',
+	author = 'GigPilot AI Editorial',
+	readingTime = '8 min read',
+} = Astro.props;
 ---
 
+<!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
+		<BaseHead
+			title={`${title} | GigPilot AI`}
+			description={description}
+			image={heroImage}
+			article={true}
+			pubDate={pubDate}
+			updatedDate={updatedDate}
+			author={author}
+		/>
 	</head>
 
 	<body>
@@ -60,8 +39,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt={`${title} - illustration`} loading="eager" />}
 				</div>
+
 				<div class="prose">
 					<div class="title">
 						<div class="date">
@@ -75,12 +55,96 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							}
 						</div>
 						<h1>{title}</h1>
+						<p class="description">{description}</p>
 						<hr />
 					</div>
 					<slot />
+				</div>
+
+				<div class="article-footer">
+					<p>
+						Written by <strong>{author}</strong> &mdash; {category} &mdash; {readingTime}
+					</p>
+					<p>
+						<a href="/blog">&larr; Back to all guides</a>
+						&nbsp;|&nbsp;
+						<a href="/tools/freelance-rate-calculator">Free Rate Calculator</a>
+					</p>
 				</div>
 			</article>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 3em 1em;
+	}
+
+	.hero-image {
+		width: 100%;
+		margin-bottom: 2em;
+	}
+
+	.hero-image img {
+		display: block;
+		margin: 0 auto;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.prose {
+		color: rgb(var(--gray-dark));
+	}
+
+	.title {
+		margin-bottom: 1em;
+		line-height: 1;
+	}
+
+	.title h1 {
+		margin: 0.25em 0 0.5em 0;
+	}
+
+	.date {
+		margin-bottom: 0.5em;
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+	}
+
+	.last-updated-on {
+		font-style: italic;
+		font-size: 0.85em;
+	}
+
+	.description {
+		font-size: 1.15em;
+		color: rgb(var(--gray));
+		margin-bottom: 1em;
+	}
+
+	.article-footer {
+		margin-top: 3em;
+		padding-top: 1.5em;
+		border-top: 1px solid rgb(var(--gray-light));
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+	}
+
+	.article-footer a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.article-footer a:hover {
+		text-decoration: underline;
+	}
+
+	.article-footer p {
+		margin: 0.25em 0;
+	}
+</style>

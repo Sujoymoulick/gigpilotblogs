@@ -1,49 +1,544 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latestPosts = allPosts.slice(0, 6);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={`${SITE_TITLE} | Freelancing Guides, Jobs, Skills & AI Tools`}
+			description={SITE_DESCRIPTION}
+		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+
+			<!-- HERO: Inline Freelance Rate Calculator -->
+			<section class="hero">
+				<h1>Freelance Rate Calculator</h1>
+				<p>Enter your monthly expenses, income goal, and working hours — get your ideal hourly rate, daily rate, and project price instantly. Free &amp; 100% browser-only.</p>
+
+				<div class="calc-box" id="rateCalc">
+					<div class="currency-row">
+						<label for="hCurrency">Currency</label>
+						<select id="hCurrency">
+							<option value="USD" data-sym="$">USD $</option>
+							<option value="INR" data-sym="₹">INR ₹</option>
+							<option value="GBP" data-sym="£">GBP £</option>
+							<option value="EUR" data-sym="€">EUR €</option>
+							<option value="CAD" data-sym="C$">CAD C$</option>
+							<option value="AUD" data-sym="A$">AUD A$</option>
+						</select>
+					</div>
+
+					<!-- Column headers -->
+					<div class="grid4 col-headers">
+						<span>Monthly Expenses</span>
+						<span>Income Goal</span>
+						<span>Hours / Week</span>
+						<span>Weeks / Year</span>
+					</div>
+
+					<!-- Inputs -->
+					<div class="grid4">
+						<div class="field">
+							<span class="sym" id="sym1">$</span>
+							<input type="number" id="hExpenses" value="2500" min="0" step="50" />
+						</div>
+						<div class="field">
+							<span class="sym" id="sym2">$</span>
+							<input type="number" id="hProfit" value="2000" min="0" step="100" />
+						</div>
+						<div class="field plain">
+							<input type="number" id="hHours" value="40" min="1" max="80" />
+						</div>
+						<div class="field plain">
+							<input type="number" id="hWeeks" value="48" min="1" max="52" />
+						</div>
+					</div>
+
+					<div class="equals">=</div>
+
+					<!-- Results -->
+					<div class="grid4 results" id="hResults">
+						<div class="result-cell">
+							<span class="rlabel">Hourly Rate</span>
+							<span class="rval" id="hHourly">—</span>
+						</div>
+						<div class="result-cell">
+							<span class="rlabel">Daily Rate</span>
+							<span class="rval" id="hDaily">—</span>
+						</div>
+						<div class="result-cell">
+							<span class="rlabel">Monthly Target</span>
+							<span class="rval" id="hMonthly">—</span>
+						</div>
+						<div class="result-cell">
+							<span class="rlabel">10hr Project</span>
+							<span class="rval" id="hProject">—</span>
+						</div>
+					</div>
+
+					<!-- Buttons -->
+					<div class="btn-row">
+						<button id="hCalcBtn" type="button">
+							Calculate
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+						</button>
+						<button id="hClearBtn" type="button" class="secondary">Reset</button>
+						<a href="/tools/freelance-rate-calculator">Project Quote Calculator &rarr;</a>
+					</div>
+
+					<p class="note">🔒 All calculations run in your browser. No data is sent to any server.</p>
+				</div>
+			</section>
+
+			<hr />
+
+			<!-- Latest Blog Posts -->
+			<section>
+				<h2>Latest Freelancing Guides</h2>
+				<ul class="post-list">
+					{
+						latestPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									<h3>{post.data.title}</h3>
+									<p class="post-date"><FormattedDate date={post.data.pubDate} /></p>
+									<p>{post.data.description}</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<p><a href="/blog">View all {allPosts.length} guides &rarr;</a></p>
+			</section>
+
 		</main>
 		<Footer />
+
+		<script>
+			(function () {
+				const currencySelect = document.getElementById('hCurrency') as HTMLSelectElement;
+				const expensesInput  = document.getElementById('hExpenses') as HTMLInputElement;
+				const profitInput    = document.getElementById('hProfit') as HTMLInputElement;
+				const hoursInput     = document.getElementById('hHours') as HTMLInputElement;
+				const weeksInput     = document.getElementById('hWeeks') as HTMLInputElement;
+				const sym1           = document.getElementById('sym1') as HTMLElement;
+				const sym2           = document.getElementById('sym2') as HTMLElement;
+				const elHourly       = document.getElementById('hHourly') as HTMLElement;
+				const elDaily        = document.getElementById('hDaily') as HTMLElement;
+				const elMonthly      = document.getElementById('hMonthly') as HTMLElement;
+				const elProject      = document.getElementById('hProject') as HTMLElement;
+				const resultsEl      = document.getElementById('hResults') as HTMLElement;
+				const calcBtn        = document.getElementById('hCalcBtn') as HTMLButtonElement;
+				const clearBtn       = document.getElementById('hClearBtn') as HTMLButtonElement;
+
+				function getSymbol(): string {
+					return (currencySelect.selectedOptions[0] as HTMLOptionElement)?.dataset?.sym ?? '$';
+				}
+
+				function fmt(value: number): string {
+					return `${getSymbol()}${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+				}
+
+				function updateSymbols() {
+					const s = getSymbol();
+					sym1.textContent = s;
+					sym2.textContent = s;
+				}
+
+				function calculate() {
+					const expenses = parseFloat(expensesInput.value) || 0;
+					const profit   = parseFloat(profitInput.value) || 0;
+					const hours    = parseFloat(hoursInput.value) || 40;
+					const weeks    = parseFloat(weeksInput.value) || 48;
+					if (hours <= 0 || weeks <= 0) return;
+
+					const hourlyRate  = ((expenses + profit) * 12) / (hours * weeks);
+					const dailyRate   = hourlyRate * (hours / 5);
+					const monthly     = expenses + profit;
+					const project10hr = hourlyRate * 10;
+
+					elHourly.textContent  = fmt(hourlyRate);
+					elDaily.textContent   = fmt(dailyRate);
+					elMonthly.textContent = fmt(monthly);
+					elProject.textContent = fmt(project10hr);
+					resultsEl.classList.add('filled');
+				}
+
+				function reset() {
+					expensesInput.value = '2500';
+					profitInput.value   = '2000';
+					hoursInput.value    = '40';
+					weeksInput.value    = '48';
+					elHourly.textContent = elDaily.textContent = elMonthly.textContent = elProject.textContent = '—';
+					resultsEl.classList.remove('filled');
+				}
+
+				calcBtn.addEventListener('click', calculate);
+				clearBtn.addEventListener('click', reset);
+				currencySelect.addEventListener('change', () => {
+					updateSymbols();
+					if (resultsEl.classList.contains('filled')) calculate();
+				});
+				[expensesInput, profitInput, hoursInput, weeksInput].forEach((el) => {
+					el.addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); });
+					el.addEventListener('input', () => { if (resultsEl.classList.contains('filled')) calculate(); });
+				});
+
+				updateSymbols();
+			})();
+		</script>
 	</body>
 </html>
+
+<style>
+	/* ── Hero ── */
+	.hero {
+		margin-bottom: 2em;
+	}
+
+	.hero h1 {
+		margin-bottom: 0.25em;
+	}
+
+	.hero > p {
+		color: rgb(var(--gray));
+		margin-bottom: 1.5em;
+	}
+
+	/* ── Calculator Box ── */
+	.calc-box {
+		background: #f2f2f2;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 1.5em 2em;
+	}
+
+	.currency-row {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.5em;
+		margin-bottom: 1.25em;
+		font-size: 0.9em;
+	}
+
+	.currency-row select {
+		padding: 0.2em 0.5em;
+		border: 1px solid #aaa;
+		border-radius: 3px;
+		font-size: inherit;
+		background: white;
+	}
+
+	/* ── Grid ── */
+	.grid4 {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.6em;
+		margin-bottom: 0.4em;
+	}
+
+	.col-headers span {
+		font-weight: bold;
+		font-size: 0.85em;
+		text-align: center;
+		color: rgb(var(--black));
+	}
+
+	/* ── Input Fields ── */
+	.field {
+		display: flex;
+		align-items: center;
+		background: white;
+		border: 2px solid #1a3561;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.sym {
+		padding: 0 0.4em;
+		font-weight: bold;
+		font-size: 0.9em;
+		background: #e8edf5;
+		border-right: 1px solid #b0bcda;
+		color: #1a3561;
+		align-self: stretch;
+		display: flex;
+		align-items: center;
+	}
+
+	.field input {
+		flex: 1;
+		border: none;
+		outline: none;
+		padding: 0.5em 0.4em;
+		font-size: 1em;
+		font-family: inherit;
+		text-align: center;
+		width: 100%;
+		background: transparent;
+	}
+
+	.field.plain {
+		border-color: #1a3561;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+	input[type='number'] { -moz-appearance: textfield; }
+
+	/* ── Equals ── */
+	.equals {
+		text-align: center;
+		font-size: 1.5em;
+		font-weight: bold;
+		color: #1a3561;
+		line-height: 1;
+		margin: 0.3em 0;
+	}
+
+	/* ── Results ── */
+	.results .result-cell {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: white;
+		border: 2px solid #ccc;
+		border-radius: 3px;
+		padding: 0.5em 0.25em;
+		gap: 0.15em;
+	}
+
+	.results.filled .result-cell {
+		border-color: #1a3561;
+	}
+
+	.rlabel {
+		font-size: 0.7em;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: rgb(var(--gray));
+	}
+
+	.rval {
+		font-size: 1em;
+		font-weight: bold;
+		color: rgb(var(--black));
+	}
+
+	.results.filled .rval {
+		color: #1a3561;
+	}
+
+	/* ── Buttons ── */
+	.btn-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6em;
+		margin-top: 1em;
+		flex-wrap: wrap;
+	}
+
+	.btn-row button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4em;
+		padding: 0.5em 1.25em;
+		font-size: 0.95em;
+		font-family: inherit;
+		font-weight: bold;
+		border-radius: 3px;
+		cursor: pointer;
+		border: 1px solid transparent;
+		background: #4a7840;
+		color: white;
+	}
+
+	.btn-row button:hover {
+		background: #3d6535;
+	}
+
+	.btn-row button.secondary {
+		background: #cccccc;
+		color: #333;
+	}
+
+	.btn-row button.secondary:hover {
+		background: #b3b3b3;
+	}
+
+	.btn-row a {
+		font-size: 0.9em;
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.btn-row a:hover {
+		text-decoration: underline;
+	}
+
+	.note {
+		margin-top: 0.85em;
+		margin-bottom: 0;
+		font-size: 0.78em;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+
+	/* ── Blog List ── */
+	.post-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 1.5em 0;
+	}
+
+	.post-list li {
+		margin-bottom: 1.75em;
+		padding-bottom: 1.75em;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+
+	.post-list li:last-child {
+		border-bottom: none;
+	}
+
+	.post-list a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.post-list a:hover h3 {
+		color: var(--accent);
+	}
+
+	.post-list h3 {
+		margin: 0 0 0.2em 0;
+		font-size: 1.25em;
+		color: rgb(var(--black));
+	}
+
+	.post-list p {
+		margin: 0 0 0.35em 0;
+		color: rgb(var(--gray));
+	}
+
+	.post-date {
+		font-size: 0.85em;
+	}
+
+	/* ── Responsive ── */
+	@media (max-width: 640px) {
+		.grid4 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.equals {
+			display: none;
+		}
+
+		.calc-box {
+			padding: 1em;
+		}
+	}
+
+	/* ── Dark Mode ── */
+	:global([data-theme='dark']) .calc-box {
+		background: #0d0d0d;
+		border-color: #262626;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+	}
+
+	:global([data-theme='dark']) .currency-row select {
+		background: #171717;
+		border-color: #333333;
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .col-headers span {
+		color: #f3f4f6;
+	}
+
+	:global([data-theme='dark']) .field {
+		background: #171717;
+		border-color: #3b82f6;
+	}
+
+	:global([data-theme='dark']) .sym {
+		background: #1e293b;
+		border-right-color: #334155;
+		color: #93c5fd;
+	}
+
+	:global([data-theme='dark']) .field input {
+		color: #ffffff;
+		background: transparent;
+	}
+
+	:global([data-theme='dark']) .equals {
+		color: #60a5fa;
+	}
+
+	:global([data-theme='dark']) .results .result-cell {
+		background: #171717;
+		border-color: #333333;
+	}
+
+	:global([data-theme='dark']) .results.filled .result-cell {
+		border-color: #3b82f6;
+	}
+
+	:global([data-theme='dark']) .rlabel {
+		color: #9ca3af;
+	}
+
+	:global([data-theme='dark']) .rval {
+		color: #ffffff;
+	}
+
+	:global([data-theme='dark']) .results.filled .rval {
+		color: #93c5fd;
+	}
+
+	:global([data-theme='dark']) .btn-row button {
+		background: #22c55e;
+		color: #000000;
+	}
+
+	:global([data-theme='dark']) .btn-row button:hover {
+		background: #16a34a;
+	}
+
+	:global([data-theme='dark']) .btn-row button.secondary {
+		background: #262626;
+		color: #e5e7eb;
+		border: 1px solid #333333;
+	}
+
+	:global([data-theme='dark']) .btn-row button.secondary:hover {
+		background: #333333;
+	}
+
+	:global([data-theme='dark']) .btn-row a {
+		color: #60a5fa;
+	}
+
+	:global([data-theme='dark']) .note {
+		color: #9ca3af;
+	}
+</style>
