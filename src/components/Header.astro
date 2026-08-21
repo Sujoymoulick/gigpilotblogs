@@ -12,12 +12,6 @@ import logoSrc from '../assets/gigpilot logo.png';
 			<span class="site-name">GigPilot AI</span>
 		</a>
 
-		<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
-
 		<div class="nav-links" id="navLinks">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
@@ -26,7 +20,14 @@ import logoSrc from '../assets/gigpilot logo.png';
 			<HeaderLink href="/contact">Contact</HeaderLink>
 		</div>
 
-		<ThemeToggle />
+		<div class="nav-actions">
+			<ThemeToggle />
+			<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</div>
 	</nav>
 </header>
 
@@ -66,7 +67,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 		height: 60px;
 		max-width: 1080px;
 		margin: 0 auto;
-		gap: 0.5em;
+		gap: 1em;
 	}
 
 	.site-title {
@@ -74,7 +75,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 		align-items: center;
 		text-decoration: none;
 		flex-shrink: 0;
-		gap: 0.4rem;
+		gap: 0.5rem;
 	}
 
 	.site-logo {
@@ -99,6 +100,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 		display: flex;
 		align-items: center;
 		gap: 0.25em;
+		margin-left: auto;
 	}
 
 	.nav-links :global(a) {
@@ -123,34 +125,40 @@ import logoSrc from '../assets/gigpilot logo.png';
 		border-bottom-color: var(--accent);
 	}
 
+	/* ── Right side actions ── */
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+	}
+
 	/* ── Hamburger ── */
 	.menu-toggle {
 		display: none;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		gap: 5px;
+		gap: 4px;
+		width: 36px;
+		height: 36px;
 		background: none;
-		border: 1px solid transparent;
+		border: 1px solid var(--border);
 		cursor: pointer;
-		padding: 8px;
-		min-width: 44px;
-		min-height: 44px;
+		padding: 0;
 		border-radius: 6px;
-		transition: background-color 0.15s ease;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+		flex-shrink: 0;
 	}
 
 	.menu-toggle:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-	}
-
-	[data-theme='dark'] .menu-toggle:hover {
-		background-color: rgba(255, 255, 255, 0.1);
+		border-color: var(--accent);
+		background: rgba(96, 165, 250, 0.08);
 	}
 
 	.menu-toggle span {
 		display: block;
-		width: 22px;
+		width: 18px;
 		height: 2px;
 		background: rgb(var(--black));
 		border-radius: 2px;
@@ -160,7 +168,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 
 	/* Hamburger Open animation */
 	.menu-toggle[aria-expanded='true'] span:nth-child(1) {
-		transform: translateY(7px) rotate(45deg);
+		transform: translateY(6px) rotate(45deg);
 	}
 
 	.menu-toggle[aria-expanded='true'] span:nth-child(2) {
@@ -169,7 +177,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 	}
 
 	.menu-toggle[aria-expanded='true'] span:nth-child(3) {
-		transform: translateY(-7px) rotate(-45deg);
+		transform: translateY(-6px) rotate(-45deg);
 	}
 
 	/* ── Mobile ── */
@@ -208,6 +216,7 @@ import logoSrc from '../assets/gigpilot logo.png';
 			z-index: 1000;
 			box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 			animation: navSlideDown 0.2s ease-out forwards;
+			margin-left: 0;
 		}
 
 		.nav-links.open {
