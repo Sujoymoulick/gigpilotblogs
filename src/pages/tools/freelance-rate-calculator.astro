@@ -763,9 +763,36 @@ Calculated with GigPilot AI: https://gigpilotai.com/tools/freelance-rate-calcula
 	}
 
 	/* ── Responsive ── */
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2.1rem;
+		}
+
+		.hero > p {
+			font-size: 1.05rem;
+		}
+
+		.calc-box {
+			padding: 1.25rem 1rem;
+		}
+
+		.tool-guide-article h2 {
+			font-size: 1.6rem;
+		}
+
+		.tool-guide-article h3 {
+			font-size: 1.25rem;
+		}
+	}
+
 	@media (max-width: 640px) {
 		.grid4 {
 			grid-template-columns: repeat(2, 1fr);
+			gap: 0.5rem;
+		}
+
+		.col-headers span {
+			font-size: 0.78rem;
 		}
 
 		.equals {
@@ -773,11 +800,78 @@ Calculated with GigPilot AI: https://gigpilotai.com/tools/freelance-rate-calcula
 		}
 
 		.calc-box {
-			padding: 1em;
+			padding: 1.15rem 0.85rem;
+		}
+
+		.field input {
+			font-size: 16px;
+			padding: 0.5em 0.3em;
+		}
+
+		.sym {
+			padding: 0 0.35em;
+			font-size: 0.85em;
+		}
+
+		.results .result-cell {
+			padding: 0.5rem 0.25rem;
+		}
+
+		.rlabel {
+			font-size: 0.68rem;
+		}
+
+		.rval {
+			font-size: 1rem;
+		}
+
+		.btn-row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0.65rem;
+		}
+
+		.btn-row button {
+			width: 100%;
+			justify-content: center;
+			padding: 0.75rem 1rem;
+			font-size: 1rem;
+			min-height: 46px;
 		}
 
 		.related-guides-grid {
 			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.rate-calc-callout {
+			padding: 0.75rem 1rem;
+			font-size: 0.85rem;
+		}
+
+		.tool-guide-article table {
+			display: block;
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 380px) {
+		.hero h1 {
+			font-size: 1.6rem;
+		}
+
+		.grid4 {
+			grid-template-columns: 1fr;
+		}
+
+		.col-headers {
+			display: none;
+		}
+
+		.results.grid4 {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 

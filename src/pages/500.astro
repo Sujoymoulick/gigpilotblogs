@@ -378,22 +378,55 @@ const breadcrumbs = [
 	}
 
 	@media (max-width: 640px) {
+		.error-main {
+			padding: 1.5rem 1rem 3rem;
+		}
+
 		.error-title {
-			font-size: 2rem;
+			font-size: 1.85rem;
+		}
+
+		.error-subtitle {
+			font-size: 1rem;
+			margin-bottom: 1.5rem;
 		}
 
 		.error-hero {
-			padding: 2rem 0.5rem;
+			padding: 1.5rem 0.25rem 2.5rem;
+		}
+
+		.status-card {
+			padding: 1rem;
+			margin-bottom: 2rem;
 		}
 
 		.hero-actions {
 			flex-direction: column;
 			width: 100%;
+			gap: 0.65rem;
 		}
 
 		.hero-actions .btn {
 			width: 100%;
 			justify-content: center;
+			padding: 0.8rem 1rem;
+		}
+
+		.troubleshooting-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+			margin-top: 2rem;
+			padding-top: 2rem;
+		}
+
+		.trouble-card {
+			padding: 1.25rem 1rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.error-title {
+			font-size: 1.6rem;
 		}
 	}
 </style>

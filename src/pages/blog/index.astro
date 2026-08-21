@@ -488,6 +488,7 @@ const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 	@media (max-width: 960px) {
 		.posts-grid {
 			grid-template-columns: repeat(2, 1fr);
+			gap: 1.5rem;
 		}
 
 		.featured-card {
@@ -496,17 +497,89 @@ const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 		}
 
 		.featured-img {
-			height: 240px;
+			height: 260px;
 		}
 	}
 
 	@media (max-width: 640px) {
-		.posts-grid {
-			grid-template-columns: 1fr;
+		main {
+			padding: 1.75rem 1rem 3rem;
+		}
+
+		.blog-header {
+			margin-bottom: 2rem;
 		}
 
 		.blog-header h1 {
 			font-size: 2rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.subtitle {
+			font-size: 1rem;
+			margin-bottom: 1.25rem;
+		}
+
+		.category-pills {
+			gap: 0.4rem;
+		}
+
+		.pill-btn {
+			padding: 0.4rem 0.8rem;
+			font-size: 0.82rem;
+		}
+
+		.featured-section {
+			margin-bottom: 2.5rem;
+		}
+
+		.featured-card {
+			padding: 1.25rem 1rem;
+		}
+
+		.featured-img {
+			height: 200px;
+		}
+
+		.featured-content h2 {
+			font-size: 1.35rem;
+		}
+
+		.featured-content .excerpt {
+			font-size: 0.92rem;
+			margin-bottom: 1rem;
+		}
+
+		.posts-grid {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+		}
+
+		.post-img-wrapper {
+			height: 180px;
+		}
+
+		.post-card-body {
+			padding: 1rem;
+		}
+
+		.post-title {
+			font-size: 1.1rem;
+		}
+
+		.grid-heading {
+			font-size: 1.35rem;
+			margin-bottom: 1rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.blog-header h1 {
+			font-size: 1.75rem;
+		}
+
+		.featured-img {
+			height: 170px;
 		}
 	}
 </style>

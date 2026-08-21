@@ -452,16 +452,41 @@ const {
 
 	@media (max-width: 640px) {
 		.prompt-header {
-			padding: 0.6rem 0.85rem;
+			padding: 0.65rem 0.85rem;
+			gap: 0.5rem;
+		}
+
+		.prompt-meta {
+			flex: 1 1 100%;
 		}
 
 		.prompt-title {
-			max-width: 180px;
+			max-width: 100%;
+			white-space: normal;
+			font-size: 0.85rem;
+			line-height: 1.3;
+		}
+
+		.prompt-actions {
+			width: 100%;
+			justify-content: flex-end;
+			gap: 0.4rem;
 		}
 
 		.btn-prompt-action {
-			padding: 0.3rem 0.55rem;
-			font-size: 0.74rem;
+			padding: 0.35rem 0.65rem;
+			font-size: 0.78rem;
+			min-height: 36px;
+		}
+
+		.prompt-pre {
+			padding: 0.9rem 0.85rem;
+			font-size: 0.82rem;
+		}
+
+		.prompt-textarea {
+			font-size: 16px;
+			padding: 0.9rem 0.85rem;
 		}
 	}
 </style>

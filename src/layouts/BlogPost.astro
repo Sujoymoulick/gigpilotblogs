@@ -500,4 +500,39 @@ const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot A
 			max-width: 100%;
 		}
 	}
+
+	@media (max-width: 640px) {
+		.blog-main {
+			padding: 1.25rem 0.85rem 2.5rem;
+		}
+
+		.title h1 {
+			font-size: 1.85rem;
+			line-height: 1.25;
+		}
+
+		.description {
+			font-size: 1rem;
+			line-height: 1.55;
+		}
+
+		.hero-image {
+			margin-bottom: 1.25em;
+		}
+
+		.article-footer {
+			margin-top: 2rem;
+			padding-top: 1.25rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.blog-main {
+			padding: 1rem 0.75rem 2rem;
+		}
+
+		.title h1 {
+			font-size: 1.65rem;
+		}
+	}
 </style>

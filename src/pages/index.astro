@@ -853,9 +853,45 @@ const homeToolSchema = {
 	}
 
 	/* ── Responsive ── */
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2.1rem;
+		}
+
+		.hero-subtitle {
+			font-size: 1.05rem;
+		}
+
+		.calc-box {
+			padding: 1.25rem 1rem;
+		}
+
+		.audience-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.content-block h2 {
+			font-size: 1.6rem;
+		}
+
+		.content-block h3 {
+			font-size: 1.25rem;
+		}
+
+		.content-block p {
+			font-size: 1rem;
+		}
+	}
+
 	@media (max-width: 640px) {
 		.grid4 {
 			grid-template-columns: repeat(2, 1fr);
+			gap: 0.5rem;
+		}
+
+		.col-headers span {
+			font-size: 0.78rem;
 		}
 
 		.equals {
@@ -863,11 +899,43 @@ const homeToolSchema = {
 		}
 
 		.calc-box {
-			padding: 1.2em 1em;
+			padding: 1.15rem 0.85rem;
 		}
 
-		.audience-grid {
-			grid-template-columns: 1fr;
+		.field input {
+			font-size: 16px;
+			padding: 0.55em 0.3em;
+		}
+
+		.sym {
+			padding: 0 0.4em;
+			font-size: 0.9em;
+		}
+
+		.results .result-cell {
+			padding: 0.5rem 0.25rem;
+		}
+
+		.rlabel {
+			font-size: 0.68rem;
+		}
+
+		.rval {
+			font-size: 1rem;
+		}
+
+		.btn-row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0.65rem;
+		}
+
+		.btn-row button {
+			width: 100%;
+			justify-content: center;
+			padding: 0.75rem 1rem;
+			font-size: 1rem;
+			min-height: 46px;
 		}
 
 		.hero h1 {
@@ -879,6 +947,30 @@ const homeToolSchema = {
 			width: 100%;
 			text-align: center;
 			margin-top: 0.5rem;
+			font-size: 0.85rem;
+		}
+
+		.content-block ol,
+		.content-block ul {
+			margin: 0.75rem 0 1.25rem 1.15rem;
+		}
+	}
+
+	@media (max-width: 380px) {
+		.hero h1 {
+			font-size: 1.6rem;
+		}
+
+		.grid4 {
+			grid-template-columns: 1fr;
+		}
+
+		.col-headers {
+			display: none;
+		}
+
+		.results.grid4 {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
