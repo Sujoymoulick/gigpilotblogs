@@ -1,0 +1,298 @@
+---
+// WebMCP Integration Bridge for Cloudflare WebMCP & AI Agents
+---
+
+<script is:inline>
+	(function () {
+		const staticToolsData = {
+			siteName: 'GigPilot AI',
+			siteUrl: 'https://www.gigpilotai.com/',
+			description:
+				'Free freelancer tools, project quote calculators, and actionable guides to help independent professionals build with AI.',
+			tools: [
+				{
+					id: 'freelance-rate-calculator',
+					name: 'Freelance Project Quote Calculator',
+					url: 'https://www.gigpilotai.com/tools/freelance-rate-calculator/',
+					category: 'Pricing & Income',
+					description:
+						'Calculate accurate, profitable fixed-price project quotes based on estimated hours, hourly rate, revision buffer, and direct project expenses.',
+					capabilities: [
+						'Fixed-Price Quote Breakdown',
+						'Revision Buffer & Scope Protection',
+						'Direct Expenses Pass-Through',
+						'100% Browser-Based & Private',
+					],
+					supportedInput: {
+						estimatedHours: 'number (e.g. 20)',
+						hourlyRate: 'number (e.g. 50)',
+						revisionBufferPercent: 'number (default 15%)',
+						directExpenses: 'number (e.g. 100)',
+					},
+					supportedOutput: {
+						baseLaborCost: 'number',
+						revisionBufferCost: 'number',
+						totalExpenses: 'number',
+						recommendedQuote: 'number',
+					},
+				},
+			],
+		};
+
+		let cacheData = null;
+		async function fetchSiteData() {
+			if (cacheData) return cacheData;
+			try {
+				const res = await fetch('/webmcp-data.json');
+				if (res.ok) {
+					cacheData = await res.json();
+					return cacheData;
+				}
+			} catch (e) {}
+			return staticToolsData;
+		}
+
+		const registeredTools = [
+			{
+				name: 'getSiteInfo',
+				description:
+					'Get structured overview of GigPilot AI, including available tools, blog categories, and core routes.',
+				inputSchema: { type: 'object', properties: {} },
+				execute: async () => {
+					const data = await fetchSiteData();
+					return {
+						siteName: data.siteName,
+						siteUrl: data.siteUrl,
+						description: data.description,
+						availableToolsCount: (data.tools || []).length,
+						availableArticlesCount: (data.articles || []).length,
+						tools: (data.tools || []).map((t) => ({
+							name: t.title || t.name,
+							id: t.id,
+							url: t.url,
+							category: t.category,
+						})),
+						mainPages: [
+							{ name: 'Home', url: 'https://www.gigpilotai.com/' },
+							{ name: 'Blog Hub', url: 'https://www.gigpilotai.com/blog/' },
+							{ name: 'Tools Hub', url: 'https://www.gigpilotai.com/tools/' },
+							{ name: 'About Us', url: 'https://www.gigpilotai.com/about/' },
+							{ name: 'Contact Us', url: 'https://www.gigpilotai.com/contact/' },
+							{ name: 'HTML Sitemap', url: 'https://www.gigpilotai.com/sitemap/' },
+						],
+					};
+				},
+			},
+			{
+				name: 'searchTools',
+				description:
+					'Search GigPilot AI tools by keyword (e.g. "rate calculator", "pricing", "quote", "PDF").',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						query: {
+							type: 'string',
+							description: 'Search keyword (e.g. "rate calculator", "quote")',
+						},
+					},
+					required: ['query'],
+				},
+				execute: async (args) => {
+					const q = (args && args.query ? String(args.query) : '').toLowerCase();
+					const data = await fetchSiteData();
+					const tools = data.tools || staticToolsData.tools;
+					const matches = tools.filter(
+						(t) =>
+							(t.title || t.name || '').toLowerCase().includes(q) ||
+							(t.description || '').toLowerCase().includes(q) ||
+							(t.category || '').toLowerCase().includes(q),
+					);
+					return {
+						query: args ? args.query : '',
+						count: matches.length,
+						results: matches.map((t) => ({
+							id: t.id,
+							name: t.title || t.name,
+							url: t.url,
+							description: t.description,
+							category: t.category,
+							features: t.features || t.capabilities || [],
+						})),
+					};
+				},
+			},
+			{
+				name: 'getTool',
+				description:
+					'Return detailed specifications, input/output capabilities, and instructions for a GigPilot AI tool.',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						tool: {
+							type: 'string',
+							description: 'Tool name or ID (e.g. "freelance-rate-calculator", "quote calculator")',
+						},
+					},
+					required: ['tool'],
+				},
+				execute: async (args) => {
+					const target = (args && args.tool ? String(args.tool) : '').toLowerCase();
+					const data = await fetchSiteData();
+					const tools = data.tools || staticToolsData.tools;
+					const found = tools.find(
+						(t) =>
+							(t.id || '').toLowerCase() === target ||
+							(t.title || t.name || '').toLowerCase().includes(target),
+					);
+					if (!found) {
+						return {
+							error: `Tool '${args ? args.tool : ''}' not found.`,
+							availableTools: tools.map((t) => t.id),
+						};
+					}
+					return { tool: found };
+				},
+			},
+			{
+				name: 'searchBlog',
+				description:
+					'Search GigPilot AI published blog posts and guides by keyword (e.g. "freelancing", "upwork", "astro").',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						query: {
+							type: 'string',
+							description: 'Search keyword (e.g. "freelancing", "upwork")',
+						},
+					},
+					required: ['query'],
+				},
+				execute: async (args) => {
+					const q = (args && args.query ? String(args.query) : '').toLowerCase();
+					const data = await fetchSiteData();
+					const articles = data.articles || [];
+					const matches = articles.filter(
+						(a) =>
+							(a.title || '').toLowerCase().includes(q) ||
+							(a.description || '').toLowerCase().includes(q) ||
+							(a.category || '').toLowerCase().includes(q),
+					);
+					return {
+						query: args ? args.query : '',
+						count: matches.length,
+						results: matches.map((a) => ({
+							title: a.title,
+							url: a.url,
+							description: a.description,
+							category: a.category,
+							pubDate: a.pubDate,
+							readingTime: a.readingTime,
+						})),
+					};
+				},
+			},
+			{
+				name: 'getArticle',
+				description:
+					'Retrieve structured content summary and metadata for a specific GigPilot AI article by URL or slug.',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description:
+								'Article URL or slug (e.g. "https://www.gigpilotai.com/blog/what-is-freelancing/" or "what-is-freelancing")',
+						},
+					},
+					required: ['url'],
+				},
+				execute: async (args) => {
+					const target = (args && args.url ? String(args.url) : '')
+						.toLowerCase()
+						.replace(/^https?:\/\/[^\/]+/, '')
+						.replace(/^\/blog\//, '')
+						.replace(/\/$/, '');
+					const data = await fetchSiteData();
+					const articles = data.articles || [];
+					const article = articles.find(
+						(a) =>
+							(a.slug || '').toLowerCase() === target ||
+							(a.url || '').toLowerCase().includes(target),
+					);
+					if (!article) {
+						return {
+							error: `Article '${args ? args.url : ''}' not found.`,
+							totalArticles: articles.length,
+						};
+					}
+					return { article };
+				},
+			},
+			{
+				name: 'searchWebsite',
+				description:
+					'Search across all GigPilot AI tools, blog posts, and site pages in a single query.',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						query: {
+							type: 'string',
+							description: 'Search query for tools and articles',
+						},
+					},
+					required: ['query'],
+				},
+				execute: async (args) => {
+					const q = (args && args.query ? String(args.query) : '').toLowerCase();
+					const data = await fetchSiteData();
+					const tools = (data.tools || []).filter(
+						(t) =>
+							(t.title || t.name || '').toLowerCase().includes(q) ||
+							(t.description || '').toLowerCase().includes(q),
+					);
+					const articles = (data.articles || []).filter(
+						(a) =>
+							(a.title || '').toLowerCase().includes(q) ||
+							(a.description || '').toLowerCase().includes(q),
+					);
+					return {
+						query: args ? args.query : '',
+						totalMatches: tools.length + articles.length,
+						tools: tools.map((t) => ({ name: t.title || t.name, url: t.url, description: t.description })),
+						articles: articles.map((a) => ({ title: a.title, url: a.url, description: a.description })),
+					};
+				},
+			},
+		];
+
+		function registerWebMCP() {
+			window.__WEBMCP__ = {
+				version: '1.0.0',
+				enabled: true,
+				provider: 'Cloudflare WebMCP / GigPilot AI',
+				tools: registeredTools,
+			};
+
+			const targets = [
+				window.navigator && window.navigator.modelContext,
+				window.navigator && window.navigator.modelContextTesting,
+			].filter(Boolean);
+
+			registeredTools.forEach((tool) => {
+				targets.forEach((target) => {
+					if (typeof target.registerTool === 'function') {
+						try {
+							target.registerTool(tool);
+						} catch (e) {}
+					}
+				});
+			});
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', registerWebMCP);
+		} else {
+			registerWebMCP();
+		}
+	})();
+</script>

@@ -13,6 +13,7 @@ import {
 	DEFAULT_KEYWORDS,
 } from '../consts';
 import { Font } from 'astro:assets';
+import WebMCPBridge from './WebMCPBridge.astro';
 
 export interface BreadcrumbItemSchema {
 	name: string;
@@ -381,3 +382,6 @@ const schemaOrg = {
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+
+<!-- Cloudflare WebMCP Agent Integration -->
+<WebMCPBridge />
