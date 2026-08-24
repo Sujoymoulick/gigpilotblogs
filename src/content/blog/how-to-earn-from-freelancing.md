@@ -49,7 +49,7 @@ Pricing your services correctly is essential to avoid burnout while building sus
 1. **Hourly Rate:** Great for ongoing project scopes where tasks evolve over time.
 2. **Fixed Project Rate:** Best when project scope and deliverables are clear.
 
-> **Calculate Your Rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to determine your target hourly rate based on desired salary, business expenses, and working hours.
+> **Calculate Your Rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to determine your target hourly rate based on desired salary, business expenses, and working hours.
 
 If your financial goal is reaching a consistent daily benchmark, check out our guide on [how to earn $100 a day online](/blog/earn-money-online-100-a-day/).
 

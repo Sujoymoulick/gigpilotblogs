@@ -1,0 +1,9 @@
+# Cloudflare Pages Edge Redirect Rules
+
+# Alias Redirects (301 Permanent)
+/contact-us /contact/ 301
+/privacy-policy /privacy/ 301
+/terms-and-conditions /terms/ 301
+
+# Sitemap Alias Redirect (301 Permanent)
+/sitemap.xml /sitemap-index.xml 301

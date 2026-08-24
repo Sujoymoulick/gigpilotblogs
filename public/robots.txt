@@ -1,14 +1,12 @@
 User-agent: *
 Allow: /
 
-# Disallow error pages, redirect aliases, and private routes
+# Disallow error pages and private build files
 Disallow: /404
 Disallow: /500
 Disallow: /404.html
 Disallow: /500.html
-Disallow: /contact-us
-Disallow: /privacy-policy
-Disallow: /terms-and-conditions
 
 # XML Sitemaps
-Sitemap: https://gigpilotai.com/sitemap-index.xml
+Sitemap: https://www.gigpilotai.com/sitemap.xml
+Sitemap: https://www.gigpilotai.com/sitemap-index.xml

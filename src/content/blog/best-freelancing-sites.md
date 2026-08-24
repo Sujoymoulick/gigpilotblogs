@@ -33,7 +33,7 @@ In this comprehensive review, we analyze the top freelancing websites in 2026, c
 +-------------------+----------------------+--------------------+---------------+
 ```
 
-> **Pricing your services across platforms?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to calculate your ideal hourly rate and fixed project pricing before publishing your profile or gig listings.
+> **Pricing your services across platforms?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to calculate your ideal hourly rate and fixed project pricing before publishing your profile or gig listings.
 
 If you are just getting started, be sure to first read our guide on [how to become a freelancer](/blog/how-to-become-a-freelancer/) to ensure your profile and portfolio are fully optimized before applying.
 

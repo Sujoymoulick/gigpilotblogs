@@ -33,7 +33,7 @@ const {
 } = Astro.props;
 
 const defaultBreadcrumbs = [
-	{ name: 'Blog', item: '/blog' },
+	{ name: 'Blog', item: '/blog/' },
 	{ name: title, item: Astro.url.pathname },
 ];
 
@@ -105,9 +105,9 @@ const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot A
 							Written by <strong>{author}</strong> &mdash; {category} &mdash; {readingTime}
 						</p>
 						<p>
-							<a href="/blog">&larr; Back to all guides</a>
+							<a href="/blog/">&larr; Back to all guides</a>
 							&nbsp;|&nbsp;
-							<a href="/tools/freelance-rate-calculator">Free Rate Calculator</a>
+							<a href="/tools/freelance-rate-calculator/">Free Rate Calculator</a>
 						</p>
 					</footer>
 				</article>

@@ -73,7 +73,7 @@ Creating developer documentation, API guides, user manuals, and software release
 +-------------------+----------------------+--------------------+---------------+
 ```
 
-> **Calculate your writing rates:** Want to translate per-word or per-article rates into an annual income? Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to determine your ideal hourly rate, project quote benchmarks, and monthly revenue targets.
+> **Calculate your writing rates:** Want to translate per-word or per-article rates into an annual income? Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to determine your ideal hourly rate, project quote benchmarks, and monthly revenue targets.
 
 ---
 

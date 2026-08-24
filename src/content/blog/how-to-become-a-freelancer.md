@@ -116,7 +116,7 @@ Determining how much to charge is a frequent point of confusion for beginner fre
 1. Calculate your minimum acceptable hourly rate: Determine your monthly living expenses, divide by billable hours (aim for 20–25 billable hours per week, not 40, to account for admin time), and add 30% for taxes and savings.
 2. Start competitive, but do not race to the bottom: Underpricing hurts your credibility. Charge a fair beginner market rate, gather 3 to 5 positive client reviews, and immediately increase your rates by 20–30%.
 
-> **Not sure what to charge?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to accurately estimate your ideal hourly rate, daily rate, and fixed project quotes with built-in tax and expense buffers.
+> **Not sure what to charge?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to accurately estimate your ideal hourly rate, daily rate, and fixed project quotes with built-in tax and expense buffers.
 
 ---
 

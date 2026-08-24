@@ -86,11 +86,17 @@ const {
 // 1. Dynamic Canonical URL computation & normalization
 function resolveCanonicalURL(): URL {
 	if (canonical) {
-		if (canonical.startsWith('http://') || canonical.startsWith('https://')) {
-			return new URL(canonical);
+		let clean = canonical;
+		if (clean.startsWith('http://') || clean.startsWith('https://')) {
+			const u = new URL(clean);
+			if (u.pathname !== '/' && !u.pathname.endsWith('/')) {
+				u.pathname = `${u.pathname}/`;
+			}
+			return u;
 		}
-		const cleanPath = canonical.startsWith('/') ? canonical : `/${canonical}`;
-		return new URL(cleanPath, siteOrigin);
+		const cleanPath = clean.startsWith('/') ? clean : `/${clean}`;
+		const finalPath = cleanPath === '/' ? '/' : cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
+		return new URL(finalPath, siteOrigin);
 	}
 
 	// Clean current pathname: strip query params/hashes, normalize trailing slashes
@@ -98,8 +104,8 @@ function resolveCanonicalURL(): URL {
 	if (rawPath === '' || rawPath === '/') {
 		return new URL('/', siteOrigin);
 	}
-	// For nested routes, preserve clean path without double slashes
-	const normalizedPath = rawPath.replace(/\/+$/, '') || '/';
+	// For nested routes, preserve clean path with trailing slash matching sitemap standard
+	const normalizedPath = rawPath.endsWith('/') ? rawPath : `${rawPath}/`;
 	return new URL(normalizedPath, siteOrigin);
 }
 
@@ -304,6 +310,7 @@ const schemaOrg = {
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href="/sitemap.xml" />
 <link
 	rel="alternate"
 	type="application/rss+xml"

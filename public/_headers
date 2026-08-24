@@ -1,9 +1,12 @@
-# Block indexing on Cloudflare preview/staging subdomains
-https://*.pages.dev/*
-  X-Robots-Tag: noindex, nofollow, noarchive
+# Cloudflare Pages Custom Headers for Production & Assets
 
-https://*.workers.dev/*
-  X-Robots-Tag: noindex, nofollow, noarchive
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
 
-https://gigpilotblogs.pages.dev/*
-  X-Robots-Tag: noindex, nofollow, noarchive
+# Static Assets Caching
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

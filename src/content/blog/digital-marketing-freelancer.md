@@ -99,7 +99,7 @@ Unlike one-off projects, digital marketing lends itself naturally to recurring m
 +-------------------+------------------------------------+----------------------+
 ```
 
-> **Pricing your marketing packages?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to work out your baseline hourly requirements, tax allowances, and monthly revenue targets before locking in retainer fees.
+> **Pricing your marketing packages?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to work out your baseline hourly requirements, tax allowances, and monthly revenue targets before locking in retainer fees.
 
 ### 3. Find High-Paying Freelance Marketing Jobs
 - **Freelance Marketplaces:** Upwork is one of the richest sources for ongoing marketing contracts. Learn how to win clients in our guide on [Upwork for freelancers](/blog/upwork-for-freelancers/) or explore broader options on the [best freelancing sites](/blog/best-freelancing-sites/).

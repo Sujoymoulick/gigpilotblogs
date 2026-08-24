@@ -117,7 +117,7 @@ Your showreel is your single most important sales asset. Clients rarely watch a 
 
 *Pro Tip:* Transitioning from per-video pricing to monthly retainers provides predictable income and prevents endless revisions.
 
-> **Quoting video projects?** Use the free [GigPilot AI Freelance Rate & Project Quote Calculator](/tools/freelance-rate-calculator) to factor in rendering time, software subscriptions, and revision buffers into your project quotes.
+> **Quoting video projects?** Use the free [GigPilot AI Freelance Rate & Project Quote Calculator](/tools/freelance-rate-calculator/) to factor in rendering time, software subscriptions, and revision buffers into your project quotes.
 
 ---
 

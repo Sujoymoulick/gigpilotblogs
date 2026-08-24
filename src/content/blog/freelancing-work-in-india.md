@@ -90,7 +90,7 @@ When starting freelance jobs in India, you will encounter both local Indian clie
 
 *Tip:* While domestic clients are great for building your initial confidence and gathering early reviews, transitioning to international clients allows you to leverage currency arbitrage to dramatically increase your monthly income.
 
-> **Calculate your hourly and project rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) with multi-currency support (supporting INR ₹ and USD $) to model your income targets, tax deductions, and fixed project quotes.
+> **Calculate your hourly and project rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) with multi-currency support (supporting INR ₹ and USD $) to model your income targets, tax deductions, and fixed project quotes.
 
 ---
 

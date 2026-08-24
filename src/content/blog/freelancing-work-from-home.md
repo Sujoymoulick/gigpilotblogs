@@ -120,7 +120,7 @@ Daily Freelance Routine Example:
 05:00: Hard Stop & Disconnect
 ```
 
-> **Planning your home schedule and income goals?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to see how vacation days and non-billable admin time impact your target hourly rate and monthly revenue.
+> **Planning your home schedule and income goals?** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to see how vacation days and non-billable admin time impact your target hourly rate and monthly revenue.
 
 ---
 

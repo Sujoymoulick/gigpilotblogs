@@ -122,7 +122,7 @@ Upwork offers two primary contract types, both backed by robust payment protecti
 - **Hourly Protection:** When you use the official Upwork Desktop App to log time with active keystroke tracking and automatic desktop screenshots, Upwork guarantees payment even if the client's credit card fails.
 - **Fixed-Price Escrow:** Clients must deposit the agreed milestone funds into Upwork escrow before you begin work. Never submit completed project files until the milestone is visibly funded.
 
-> **Pricing your Upwork projects?** Use the free [GigPilot AI Freelance Rate & Project Quote Calculator](/tools/freelance-rate-calculator) to determine your ideal profile hourly rate and generate profitable fixed-price milestone bids with built-in revision buffers.
+> **Pricing your Upwork projects?** Use the free [GigPilot AI Freelance Rate & Project Quote Calculator](/tools/freelance-rate-calculator/) to determine your ideal profile hourly rate and generate profitable fixed-price milestone bids with built-in revision buffers.
 
 ---
 

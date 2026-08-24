@@ -120,9 +120,9 @@ Step 1: Choose Your Core Skill -> Step 2: Build a 3-Piece Portfolio -> Step 3: S
 
 1. **Select a focused niche:** Focus on a specific service where you already possess intermediate or advanced skills.
 2. **Build a tangible portfolio:** Create 3 to 5 strong samples demonstrating real problem-solving capabilities.
-3. **Calculate sustainable rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to estimate your required hourly rate, tax obligations, and monthly revenue targets.
+3. **Calculate sustainable rates:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to estimate your required hourly rate, tax obligations, and monthly revenue targets.
 4. **Register on vetted platforms:** Set up your profile on top marketplaces. If you are starting on Upwork, check out our guide on [Upwork for freelancers](/blog/upwork-for-freelancers/).
-5. **Follow a step-by-step roadmap:** For a complete walkthrough from zero to your first paying client, read our in-depth tutorial on [how to become a freelancer](/blog/how-to-become-a-freelancer/).
+5. **Follow a step-by-step roadmap:** For a complete walkthrough from zero to your first paying client, read our in-depth tutorial on [how to become a freelancer](/blog/how-to-become-a-freelancer/) or explore regional opportunities in [freelancing work in India](/blog/freelancing-work-in-india/).
 
 ---
 

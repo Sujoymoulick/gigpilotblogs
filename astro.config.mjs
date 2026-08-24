@@ -6,7 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://gigpilotai.com',
+	site: 'https://www.gigpilotai.com',
 	integrations: [
 		mdx(),
 		sitemap({
@@ -18,10 +18,10 @@ export default defineConfig({
 				!page.includes('/terms-and-conditions'),
 			serialize(item) {
 				const url = item.url;
-				if (url === 'https://gigpilotai.com/' || url === 'https://gigpilotai.com') {
+				if (url === 'https://www.gigpilotai.com/' || url === 'https://www.gigpilotai.com') {
 					item.priority = 1.0;
 					item.changefreq = ChangeFreqEnum.DAILY;
-				} else if (url === 'https://gigpilotai.com/blog/' || url === 'https://gigpilotai.com/blog') {
+				} else if (url === 'https://www.gigpilotai.com/blog/' || url === 'https://www.gigpilotai.com/blog') {
 					item.priority = 0.9;
 					item.changefreq = ChangeFreqEnum.DAILY;
 				} else if (url.includes('/tools')) {

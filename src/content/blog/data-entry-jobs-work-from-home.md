@@ -102,7 +102,7 @@ Upwork is one of the most reliable marketplaces for data entry projects because 
 - **FlexJobs:** A subscription-based job board that manually vets every single listing to guarantee 100% scam-free postings.
 - **Indeed & LinkedIn Jobs:** Filter by "Remote" and set the job type to "Contract" or "Part-time."
 
-> **Calculate your hourly earning potential:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator) to estimate your billable capacity and see how transitioning into specialized skills increases your monthly take-home pay.
+> **Calculate your hourly earning potential:** Use the free [GigPilot AI Freelance Rate Calculator](/tools/freelance-rate-calculator/) to estimate your billable capacity and see how transitioning into specialized skills increases your monthly take-home pay.
 
 ---
 
