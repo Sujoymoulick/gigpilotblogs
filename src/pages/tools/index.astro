@@ -1,0 +1,54 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FreelancerTools from '../../components/FreelancerTools.astro';
+
+const title = 'Free Freelancer Tools & Rate Calculators | GigPilot AI';
+const description =
+	'Explore free online tools and calculators for freelancers. Calculate project quotes, hourly rates, and pricing strategies. 100% free, browser-based, with zero signup required.';
+
+const breadcrumbs = [{ name: 'Tools', item: '/tools/' }];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			canonical="https://gigpilotai.com/tools"
+			breadcrumbs={breadcrumbs}
+			toolSchema={{
+				name: 'GigPilot AI Freelancer Tools',
+				description: description,
+				applicationCategory: 'BusinessApplication',
+				price: '0',
+				currency: 'USD',
+			}}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="main-container">
+			<Breadcrumbs items={breadcrumbs} />
+			<FreelancerTools />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.main-container {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem;
+	}
+
+	@media (max-width: 640px) {
+		.main-container {
+			padding: 1rem;
+		}
+	}
+</style>

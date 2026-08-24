@@ -21,13 +21,16 @@ export default defineConfig({
 				if (url === 'https://gigpilotai.com/' || url === 'https://gigpilotai.com') {
 					item.priority = 1.0;
 					item.changefreq = ChangeFreqEnum.DAILY;
+				} else if (url === 'https://gigpilotai.com/blog/' || url === 'https://gigpilotai.com/blog') {
+					item.priority = 0.9;
+					item.changefreq = ChangeFreqEnum.DAILY;
 				} else if (url.includes('/tools')) {
 					item.priority = 0.9;
 					item.changefreq = ChangeFreqEnum.WEEKLY;
-				} else if (url.includes('/blog')) {
-					item.priority = 0.85;
+				} else if (url.includes('/blog/')) {
+					item.priority = 0.8;
 					item.changefreq = ChangeFreqEnum.WEEKLY;
-				} else if (url.includes('/about') || url.includes('/contact')) {
+				} else if (url.includes('/about') || url.includes('/contact') || url.includes('/sitemap')) {
 					item.priority = 0.7;
 					item.changefreq = ChangeFreqEnum.MONTHLY;
 				} else if (url.includes('/privacy') || url.includes('/terms')) {

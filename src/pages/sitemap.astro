@@ -1,0 +1,326 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { freelancerTools } from '../data/freelancerTools';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Group blog posts by category
+const postsByCategory = posts.reduce(
+	(acc, post) => {
+		const cat = post.data.category || 'General';
+		if (!acc[cat]) {
+			acc[cat] = [];
+		}
+		acc[cat].push(post);
+		return acc;
+	},
+	{} as Record<string, typeof posts>,
+);
+
+const categories = Object.keys(postsByCategory).sort();
+
+const title = 'HTML Sitemap | GigPilot AI';
+const description =
+	'Comprehensive sitemap of all pages, articles, tools, and guides on GigPilot AI. Easily navigate our platform resources, tools, and freelancing tutorials.';
+
+const breadcrumbs = [{ name: 'Sitemap', item: '/sitemap/' }];
+
+const mainPages = [
+	{ title: 'Home', href: '/', desc: 'GigPilot AI homepage & featured guides' },
+	{ title: 'Blog & Knowledge Hub', href: '/blog', desc: 'All freelancing & AI guides, tips, and strategies' },
+	{ title: 'Freelancer Tools', href: '/tools', desc: 'Free browser-based calculators & utilities' },
+	{ title: 'About GigPilot AI', href: '/about', desc: 'Our mission, editorial standards, and vision' },
+	{ title: 'Contact Us', href: '/contact', desc: 'Get in touch with the GigPilot AI team' },
+	{ title: 'RSS Feed', href: '/rss.xml', desc: 'Subscribe to our latest content updates' },
+	{ title: 'XML Sitemap Index', href: '/sitemap-index.xml', desc: 'Machine-readable XML sitemap for search engines' },
+];
+
+const legalPages = [
+	{ title: 'Privacy Policy', href: '/privacy', desc: 'Information on privacy, cookies, and data collection' },
+	{ title: 'Terms & Conditions', href: '/terms', desc: 'Terms of service and acceptable usage guidelines' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			canonical="https://gigpilotai.com/sitemap"
+			breadcrumbs={breadcrumbs}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="main-container">
+			<Breadcrumbs items={breadcrumbs} />
+
+			<header class="sitemap-header">
+				<h1 class="page-title">HTML Sitemap</h1>
+				<p class="page-description">
+					Overview of all pages, interactive calculators, legal documents, and published articles on <strong>GigPilot AI</strong>.
+				</p>
+			</header>
+
+			<section class="sitemap-section">
+				<h2 class="section-heading">
+					<span class="heading-icon">🌐</span> Main Pages
+				</h2>
+				<div class="card-grid">
+					{mainPages.map((page) => (
+						<a href={page.href} class="sitemap-card">
+							<div class="card-title">{page.title}</div>
+							<div class="card-desc">{page.desc}</div>
+							<span class="card-link">{page.href} &rarr;</span>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<section class="sitemap-section">
+				<h2 class="section-heading">
+					<span class="heading-icon">🧰</span> Interactive Tools & Calculators
+				</h2>
+				<div class="card-grid">
+					{freelancerTools.map((tool) => (
+						<a href={tool.href} class="sitemap-card">
+							<div class="card-badge">{tool.category}</div>
+							<div class="card-title">{tool.title}</div>
+							<div class="card-desc">{tool.description}</div>
+							<span class="card-link">{tool.href} &rarr;</span>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<section class="sitemap-section">
+				<h2 class="section-heading">
+					<span class="heading-icon">📚</span> Blog Articles & Guides ({posts.length})
+				</h2>
+
+				{categories.map((cat) => (
+					<div class="category-block">
+						<h3 class="category-title">{cat}</h3>
+						<ul class="article-list">
+							{postsByCategory[cat].map((post) => (
+								<li class="article-item">
+									<a href={`/blog/${post.id}/`} class="article-link">
+										<span class="article-title">{post.data.title}</span>
+										<span class="article-date">
+											<FormattedDate date={post.data.pubDate} />
+										</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</section>
+
+			<section class="sitemap-section">
+				<h2 class="section-heading">
+					<span class="heading-icon">⚖️</span> Legal & Compliance
+				</h2>
+				<div class="card-grid">
+					{legalPages.map((page) => (
+						<a href={page.href} class="sitemap-card">
+							<div class="card-title">{page.title}</div>
+							<div class="card-desc">{page.desc}</div>
+							<span class="card-link">{page.href} &rarr;</span>
+						</a>
+					))}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.main-container {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	.sitemap-header {
+		margin-bottom: 3rem;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 1.5rem;
+	}
+
+	.page-title {
+		font-size: 2.5rem;
+		font-weight: 800;
+		color: rgb(var(--black));
+		margin-bottom: 0.75rem;
+		letter-spacing: -0.03em;
+	}
+
+	.page-description {
+		font-size: 1.15rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.6;
+		max-width: 720px;
+	}
+
+	.sitemap-section {
+		margin-bottom: 3.5rem;
+	}
+
+	.section-heading {
+		font-size: 1.6rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin-bottom: 1.5rem;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.heading-icon {
+		font-size: 1.4rem;
+	}
+
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.sitemap-card {
+		display: flex;
+		flex-direction: column;
+		background: var(--bg-nav);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		padding: 1.25rem;
+		text-decoration: none;
+		transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.sitemap-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--accent);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+	}
+
+	.card-badge {
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: var(--accent-light);
+		color: var(--accent);
+		border-radius: 4px;
+		padding: 0.15rem 0.5rem;
+		width: fit-content;
+		margin-bottom: 0.5rem;
+	}
+
+	.card-title {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin-bottom: 0.35rem;
+	}
+
+	.card-desc {
+		font-size: 0.9rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.4;
+		margin-bottom: 0.85rem;
+		flex-grow: 1;
+	}
+
+	.card-link {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--accent);
+	}
+
+	.category-block {
+		background: var(--bg-nav);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		padding: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.category-title {
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: var(--accent);
+		margin-bottom: 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.article-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+		gap: 0.75rem 1.5rem;
+	}
+
+	.article-item {
+		margin: 0;
+	}
+
+	.article-link {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		text-decoration: none;
+		padding: 0.4rem 0;
+		border-radius: 4px;
+		transition: color 0.15s ease;
+	}
+
+	.article-title {
+		font-size: 0.95rem;
+		font-weight: 500;
+		color: rgb(var(--black));
+	}
+
+	.article-link:hover .article-title {
+		color: var(--accent);
+		text-decoration: underline;
+	}
+
+	.article-date {
+		font-size: 0.825rem;
+		color: rgb(var(--gray));
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 768px) {
+		.page-title {
+			font-size: 2rem;
+		}
+
+		.card-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.article-list {
+			grid-template-columns: 1fr;
+		}
+
+		.article-link {
+			flex-direction: column;
+			gap: 0.2rem;
+		}
+	}
+</style>
