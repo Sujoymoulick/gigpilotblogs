@@ -82,15 +82,16 @@ Sell custom planner templates, resume formats, or digital art prints. Digital fi
 ## Tips to Balance Study and Online Earning
 
 1. **Set strict study hours:** Prioritize your degree and exams first.
-2. **Block out dedicated work slots:** Treat online jobs like scheduled classes.
-3. **Keep track of earnings:** Log your project fees and deadlines using [FreeExcel](https://freexcel.freepdfly.com/spreadsheet/) to stay organized throughout the semester.
+2. **Stay informed on competitive exam dates & results:** Keep track of major student updates like the [RRB NTPC CBT 1 Result 2026](/blog/rrb-ntpc-cbt-1-result-2026/) in our [Trending Section](/trending/).
+3. **Block out dedicated work slots:** Treat online jobs like scheduled classes.
+4. **Keep track of earnings:** Log your project fees and deadlines using [FreeExcel](https://freexcel.freepdfly.com/spreadsheet/) to stay organized throughout the semester.
 
 ---
 
 ## Frequently Asked Questions
 
 ### Can students make money online without initial capital?
-Absolutely. Services like tutoring, writing, and data entry require no financial investment—just your time and skills.
+Absolutely. Services like tutoring, writing, and data entry require no financial investment—just your time and skills. For more ideas, read our guide on [earning online without investment](/blog/how-to-earn-money-online-without-investment/).
 
 ### How many hours a week should a student work online?
-Aim for 5 to 15 hours per week during active semesters to maintain high academic grades while building a steady income stream.
+Aim for 5 to 15 hours per week during active semesters to maintain high academic grades while building a steady income stream. Check our [Freelance Rate Calculator](/tools/freelance-rate-calculator/) to set realistic hourly earnings targets.

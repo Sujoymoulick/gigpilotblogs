@@ -7,9 +7,9 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog'))
+	.filter((post) => post.data.category !== 'Trending')
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const featuredPost = posts[0];
 const remainingPosts = posts.slice(1);
@@ -169,8 +169,8 @@ const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 								data-description={post.data.description}
 							>
 								<a href={`/blog/${post.id}/`} class="post-card-inner">
-									<div class="post-img-wrapper">
-										{post.data.heroImage && (
+									{post.data.heroImage && (
+										<div class="post-img-wrapper">
 											<Image
 												width={600}
 												height={340}
@@ -178,8 +178,8 @@ const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 												alt={`${post.data.title} - guide thumbnail`}
 												class="post-img"
 											/>
-										)}
-									</div>
+										</div>
+									)}
 									<div class="post-card-body">
 										<div class="card-meta">
 											<span class="badge">{post.data.category || 'Freelancing'}</span>

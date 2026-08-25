@@ -11,7 +11,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-const latestPosts = allPosts.slice(0, 6);
+const latestPosts = allPosts
+	.filter((post) => post.data.category !== 'Trending')
+	.slice(0, 6);
 
 const pageTitle = 'AI Tools for Fiverr Freelancers & Rate Calculator | GigPilot AI';
 const pageDescription =
@@ -201,6 +203,7 @@ const homeToolSchema = {
 				</ul>
 				<div class="browse-all-wrap">
 					<a href="/blog" class="btn btn-secondary">Explore Knowledge Hub &rarr;</a>
+					<a href="/trending/" class="btn btn-secondary" style="margin-left: 0.5rem;">View Trending News &rarr;</a>
 				</div>
 			</section>
 

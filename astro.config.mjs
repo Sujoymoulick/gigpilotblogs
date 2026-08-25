@@ -24,6 +24,9 @@ export default defineConfig({
 				} else if (url === 'https://www.gigpilotai.com/blog/' || url === 'https://www.gigpilotai.com/blog') {
 					item.priority = 0.9;
 					item.changefreq = ChangeFreqEnum.DAILY;
+				} else if (url === 'https://www.gigpilotai.com/trending/' || url === 'https://www.gigpilotai.com/trending') {
+					item.priority = 0.9;
+					item.changefreq = ChangeFreqEnum.DAILY;
 				} else if (url.includes('/tools')) {
 					item.priority = 0.9;
 					item.changefreq = ChangeFreqEnum.WEEKLY;

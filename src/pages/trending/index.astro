@@ -1,0 +1,471 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+
+const trendingPosts = (await getCollection('blog'))
+	.filter((post) => post.data.category === 'Trending')
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const latestNewsPost = trendingPosts[0];
+const otherTrendingPosts = trendingPosts.slice(1);
+
+const pageTitle = 'Trending News & Latest Career Updates | GigPilot AI';
+const pageDescription =
+	'Stay updated with latest news, exam results, zone-wise status, career updates, and trending online earning guides on GigPilot AI.';
+
+const breadcrumbs = [{ name: 'Trending', item: '/trending/' }];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={pageTitle}
+			description={pageDescription}
+			breadcrumbs={breadcrumbs}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<Breadcrumbs items={breadcrumbs} />
+			<header class="trending-header">
+				<span class="badge badge-trending">Trending &amp; Breaking News</span>
+				<h1>Trending News &amp; Latest Updates</h1>
+				<p class="subtitle">
+					Real-time coverage of major exam releases, result announcements, career news, and trending digital opportunities.
+				</p>
+			</header>
+
+			<!-- FEATURED LATEST NEWS SECTION -->
+			{
+				latestNewsPost && (
+					<section class="featured-news-section" aria-labelledby="featured-news-heading">
+						<div class="news-banner">
+							<div class="news-meta">
+								<span class="badge badge-news">LATEST NEWS</span>
+								<span class="news-date">
+									Published <FormattedDate date={latestNewsPost.data.pubDate} />
+								</span>
+							</div>
+							<h2 id="featured-news-heading">
+								<a href={`/blog/${latestNewsPost.id}/`}>{latestNewsPost.data.title}</a>
+							</h2>
+							<p class="news-excerpt">{latestNewsPost.data.description}</p>
+							<div class="news-action-row">
+								<a href={`/blog/${latestNewsPost.id}/`} class="btn btn-primary">
+									Read Full News Update &rarr;
+								</a>
+							</div>
+						</div>
+					</section>
+				)
+			}
+
+			<!-- TRENDING ARTICLES & GUIDES GRID -->
+			<section class="trending-grid-section">
+				<div class="section-title-row">
+					<h2>Trending Articles &amp; Insights</h2>
+					<a href="/blog/" class="all-guides-link">Browse All Knowledge Hub Articles &rarr;</a>
+				</div>
+
+				<div class="trending-grid">
+					{
+						otherTrendingPosts.map((post) => (
+							<article class="trending-card">
+								<a href={`/blog/${post.id}/`} class="card-link">
+									<div class="card-body">
+										<div class="card-meta">
+											<span class="badge">{post.data.category || 'Trending'}</span>
+											<span class="read-time">{post.data.readingTime || '5 min read'}</span>
+										</div>
+										<h3>{post.data.title}</h3>
+										<p>{post.data.description}</p>
+										<div class="card-footer">
+											<span class="date">
+												<FormattedDate date={post.data.pubDate} />
+											</span>
+											<span class="read-more">Read Guide &rarr;</span>
+										</div>
+									</div>
+								</a>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- QUICK RESOURCES & INTERLINKING HUB -->
+			<section class="resources-hub-section">
+				<hr />
+				<h2>Explore Key Resources &amp; Tools</h2>
+				<p>Looking for practical ways to generate income while awaiting exam updates?</p>
+				<div class="resources-grid">
+					<div class="resource-box">
+						<h3>Freelancing Work in India</h3>
+						<p>Discover high-paying skills, freelance platforms, and remote work strategies in India.</p>
+						<a href="/blog/freelancing-work-in-india/">Read Indian Freelancing Guide &rarr;</a>
+					</div>
+					<div class="resource-box">
+						<h3>Online Jobs for Students</h3>
+						<p>Learn flexible ways to earn online without disturbing your exam preparation schedule.</p>
+						<a href="/blog/how-to-earn-money-online-for-students/">View Student Opportunities &rarr;</a>
+					</div>
+					<div class="resource-box">
+						<h3>Earn Without Investment</h3>
+						<p>Zero-investment digital opportunities for students, graduates, and job seekers.</p>
+						<a href="/blog/how-to-earn-money-online-without-investment/">Explore Zero-Cost Income &rarr;</a>
+					</div>
+					<div class="resource-box">
+						<h3>Freelance Rate Calculator</h3>
+						<p>Calculate your target hourly and fixed project pricing with our free client-side tool.</p>
+						<a href="/tools/freelance-rate-calculator/">Try Rate Calculator &rarr;</a>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: var(--max-width);
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 2.5em 1em 4em;
+	}
+
+	.badge {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		background: #e8edf5;
+		color: #1a3561;
+		padding: 0.25em 0.65em;
+		border-radius: 4px;
+	}
+
+	.badge-trending {
+		background: #fef3c7;
+		color: #92400e;
+		border: 1px solid #fde68a;
+	}
+
+	[data-theme='dark'] .badge-trending {
+		background: #451a03;
+		color: #fcd34d;
+		border-color: #78350f;
+	}
+
+	.badge-news {
+		background: #dc2626;
+		color: #ffffff;
+	}
+
+	.trending-header {
+		text-align: center;
+		max-width: 760px;
+		margin: 0 auto 2.5rem auto;
+	}
+
+	.trending-header h1 {
+		font-size: 2.5rem;
+		margin: 0.75rem 0;
+		letter-spacing: -0.02em;
+		color: rgb(var(--black));
+	}
+
+	.subtitle {
+		font-size: 1.15rem;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+	}
+
+	/* Featured News Banner */
+	.featured-news-section {
+		margin-bottom: 3.5rem;
+	}
+
+	.news-banner {
+		background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+		color: #ffffff;
+		border-radius: 12px;
+		padding: 2.25rem;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.news-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.news-date {
+		font-size: 0.85rem;
+		color: #94a3b8;
+	}
+
+	.news-banner h2 {
+		font-size: 1.85rem;
+		margin: 0 0 1rem 0;
+		line-height: 1.35;
+	}
+
+	.news-banner h2 a {
+		color: #ffffff;
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.news-banner h2 a:hover {
+		color: #60a5fa;
+	}
+
+	.news-excerpt {
+		font-size: 1.05rem;
+		color: #cbd5e1;
+		line-height: 1.6;
+		margin-bottom: 1.75rem;
+		max-width: 850px;
+	}
+
+	.news-action-row {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.btn {
+		display: inline-block;
+		padding: 0.7rem 1.5rem;
+		font-weight: 600;
+		border-radius: 6px;
+		text-decoration: none;
+		transition: transform 0.15s ease, background 0.15s ease;
+	}
+
+	.btn-primary {
+		background: #2563eb;
+		color: #ffffff;
+	}
+
+	.btn-primary:hover {
+		background: #1d4ed8;
+		transform: translateY(-1px);
+	}
+
+	/* Trending Grid */
+	.trending-grid-section {
+		margin-bottom: 3.5rem;
+	}
+
+	.section-title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.section-title-row h2 {
+		font-size: 1.65rem;
+		margin: 0;
+		color: rgb(var(--black));
+	}
+
+	.all-guides-link {
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.all-guides-link:hover {
+		text-decoration: underline;
+	}
+
+	.trending-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.trending-card {
+		background: var(--card-bg, #ffffff);
+		border: 1px solid rgb(var(--gray-border, 220, 225, 235));
+		border-radius: 8px;
+		overflow: hidden;
+		transition: all 0.2s ease;
+	}
+
+	[data-theme='dark'] .trending-card {
+		background: #111111;
+		border-color: #2a2a2a;
+	}
+
+	.trending-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+		border-color: var(--accent);
+	}
+
+	.card-link {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+		height: 100%;
+	}
+
+	.card-body {
+		padding: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	.card-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.75rem;
+	}
+
+	.read-time {
+		font-size: 0.8rem;
+		color: rgb(var(--gray));
+	}
+
+	.trending-card h3 {
+		font-size: 1.15rem;
+		line-height: 1.4;
+		margin: 0 0 0.5rem 0;
+		color: rgb(var(--black));
+	}
+
+	.trending-card p {
+		font-size: 0.92rem;
+		color: rgb(var(--gray));
+		line-height: 1.55;
+		margin-bottom: 1.25rem;
+	}
+
+	.card-footer {
+		margin-top: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 0.75rem;
+		border-top: 1px solid rgb(var(--gray-border, 220, 225, 235));
+		font-size: 0.82rem;
+	}
+
+	.date {
+		color: rgb(var(--gray));
+	}
+
+	.read-more {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	/* Resources Hub */
+	.resources-hub-section {
+		margin-top: 3rem;
+	}
+
+	.resources-hub-section hr {
+		margin-bottom: 2.5rem;
+		border: none;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.resources-hub-section h2 {
+		font-size: 1.65rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.resources-hub-section p {
+		color: rgb(var(--gray));
+		margin-bottom: 1.5rem;
+	}
+
+	.resources-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	.resource-box {
+		background: var(--card-bg, #ffffff);
+		border: 1px solid rgb(var(--gray-border, 220, 225, 235));
+		border-radius: 8px;
+		padding: 1.25rem;
+	}
+
+	[data-theme='dark'] .resource-box {
+		background: #111111;
+		border-color: #2a2a2a;
+	}
+
+	.resource-box h3 {
+		font-size: 1.1rem;
+		margin: 0 0 0.4rem 0;
+	}
+
+	.resource-box p {
+		font-size: 0.9rem;
+		margin-bottom: 0.85rem;
+	}
+
+	.resource-box a {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.resource-box a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 960px) {
+		.trending-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.resources-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 640px) {
+		main {
+			padding: 1.5rem 1rem 3rem;
+		}
+
+		.trending-header h1 {
+			font-size: 1.85rem;
+		}
+
+		.news-banner {
+			padding: 1.5rem 1.25rem;
+		}
+
+		.news-banner h2 {
+			font-size: 1.4rem;
+		}
+
+		.trending-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

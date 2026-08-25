@@ -35,6 +35,7 @@ const breadcrumbs = [{ name: 'Sitemap', item: '/sitemap/' }];
 const mainPages = [
 	{ title: 'Home', href: '/', desc: 'GigPilot AI homepage & featured guides' },
 	{ title: 'Blog & Knowledge Hub', href: '/blog/', desc: 'All freelancing & AI guides, tips, and strategies' },
+	{ title: 'Trending & Breaking News', href: '/trending/', desc: 'Real-time coverage of exam results, news, and trending updates' },
 	{ title: 'Freelancer Tools', href: '/tools/', desc: 'Free browser-based calculators & utilities' },
 	{ title: 'About GigPilot AI', href: '/about/', desc: 'Our mission, editorial standards, and vision' },
 	{ title: 'Contact Us', href: '/contact/', desc: 'Get in touch with the GigPilot AI team' },
@@ -72,7 +73,7 @@ const legalPages = [
 
 			<section class="sitemap-section">
 				<h2 class="section-heading">
-					<span class="heading-icon">🌐</span> Main Pages
+					Main Pages
 				</h2>
 				<div class="card-grid">
 					{mainPages.map((page) => (
@@ -87,7 +88,7 @@ const legalPages = [
 
 			<section class="sitemap-section">
 				<h2 class="section-heading">
-					<span class="heading-icon">🧰</span> Interactive Tools & Calculators
+					Interactive Tools &amp; Calculators
 				</h2>
 				<div class="card-grid">
 					{freelancerTools.map((tool) => (
@@ -103,7 +104,7 @@ const legalPages = [
 
 			<section class="sitemap-section">
 				<h2 class="section-heading">
-					<span class="heading-icon">📚</span> Blog Articles & Guides ({posts.length})
+					Blog Articles &amp; Guides ({posts.length})
 				</h2>
 
 				{categories.map((cat) => (
@@ -127,7 +128,7 @@ const legalPages = [
 
 			<section class="sitemap-section">
 				<h2 class="section-heading">
-					<span class="heading-icon">⚖️</span> Legal & Compliance
+					Legal &amp; Compliance
 				</h2>
 				<div class="card-grid">
 					{legalPages.map((page) => (
