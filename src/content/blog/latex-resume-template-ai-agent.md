@@ -2,7 +2,7 @@
 title: "I Built a Reusable LaTeX Resume Template You Can Fill Out With Any AI Agent"
 description: "A clean, ATS-friendly LaTeX resume template and interactive AI agent prompt that guides you through building a professional resume step by step."
 pubDate: "2026-08-26"
-heroImage: "../../assets/latex-resume-template.webp"
+heroImage: "../../assets/resumebuilder.webp"
 category: "Career"
 author: "GigPilot AI Editorial"
 readingTime: "7 min read"
