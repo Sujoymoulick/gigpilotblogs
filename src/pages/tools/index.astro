@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FreelancerTools from '../../components/FreelancerTools.astro';
+import Banner300x250 from '../../components/Banner300x250.astro';
 
 const title = 'Free Freelancer Tools & Rate Calculators | GigPilot AI';
 const description =
@@ -34,6 +35,7 @@ const breadcrumbs = [{ name: 'Tools', item: '/tools/' }];
 		<main class="main-container">
 			<Breadcrumbs items={breadcrumbs} />
 			<FreelancerTools />
+			<Banner300x250 placement="tools-index" lazy={true} />
 		</main>
 		<Footer />
 	</body>

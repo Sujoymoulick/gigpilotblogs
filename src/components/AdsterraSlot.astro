@@ -1,0 +1,155 @@
+---
+import { REAL_AD_UNITS, ADSTERRA_CONFIG } from '../config/adsterra';
+
+export interface Props {
+	placement: string;
+	format?: '320x50' | '300x250' | 'native' | 'responsive-banner';
+	label?: string;
+	class?: string;
+	align?: 'center' | 'left' | 'right';
+	sticky?: boolean;
+}
+
+const {
+	placement,
+	format = '300x250',
+	label = 'ADVERTISEMENT',
+	class: customClass = '',
+	align = 'center',
+	sticky = false,
+} = Astro.props;
+
+const isEnabled = ADSTERRA_CONFIG.enabled;
+---
+
+{
+	isEnabled && (
+		<div
+			class={`adsterra-slot-container adsterra-align-${align} adsterra-format-${format} ${sticky ? 'sticky-ad-box' : ''} ${customClass}`.trim()}
+			data-adsterra-slot
+			data-placement={placement}
+			aria-label="Advertisement Slot"
+		>
+			<div class="adsterra-header">
+				<span class="adsterra-label">{label}</span>
+			</div>
+			{format === 'native' ? (
+				<div class="adsterra-native-wrapper">
+					<script is:inline async="async" data-cfasync="false" src="https://pl31744653.profitableratecpmnetwork.com/5f96e2de53c455f92cf1e9a783e4d097/invoke.js"></script>
+					<div id="container-5f96e2de53c455f92cf1e9a783e4d097"></div>
+				</div>
+			) : format === '320x50' ? (
+				<div class="adsterra-wrapper">
+					<script is:inline type="text/javascript">
+						atOptions = {
+							'key' : 'c2113b0e9c21f43943e1c30606a2fb2d',
+							'format' : 'iframe',
+							'height' : 50,
+							'width' : 320,
+							'params' : {}
+						};
+					</script>
+					<script is:inline type="text/javascript" src="https://www.highrevenueformat.com/c2113b0e9c21f43943e1c30606a2fb2d/invoke.js"></script>
+				</div>
+			) : (
+				<div class="adsterra-wrapper">
+					<script is:inline type="text/javascript">
+						atOptions = {
+							'key' : 'df53fa7d92073deb2e1d0c021b9b36df',
+							'format' : 'iframe',
+							'height' : 250,
+							'width' : 300,
+							'params' : {}
+						};
+					</script>
+					<script is:inline type="text/javascript" src="https://www.highrevenueformat.com/df53fa7d92073deb2e1d0c021b9b36df/invoke.js"></script>
+				</div>
+			)}
+		</div>
+	)
+}
+
+<style>
+	.adsterra-slot-container {
+		display: flex;
+		flex-direction: column;
+		margin: 1.5rem auto;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		position: relative;
+		clear: both;
+	}
+
+	.sticky-ad-box {
+		position: sticky;
+		top: 100px;
+		z-index: 10;
+	}
+
+	.adsterra-align-center {
+		align-items: center;
+		text-align: center;
+	}
+
+	.adsterra-align-left {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.adsterra-align-right {
+		align-items: flex-end;
+		text-align: right;
+	}
+
+	.adsterra-header {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		margin-bottom: 0.35rem;
+	}
+
+	.adsterra-label {
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #94a3b8;
+		padding: 0 0.5rem;
+		user-select: none;
+	}
+
+	.adsterra-wrapper,
+	.adsterra-native-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	.adsterra-format-320x50 .adsterra-wrapper,
+	.adsterra-format-responsive-banner .adsterra-wrapper {
+		min-height: 50px;
+		width: 320px;
+		max-width: 100%;
+	}
+
+	.adsterra-format-300x250 .adsterra-wrapper {
+		min-height: 250px;
+		width: 300px;
+		max-width: 100%;
+	}
+
+	.adsterra-format-native .adsterra-native-wrapper {
+		min-height: 100px;
+		width: 100%;
+		max-width: 728px;
+	}
+
+	:global([data-theme='dark']) .adsterra-label {
+		color: #64748b;
+	}
+</style>

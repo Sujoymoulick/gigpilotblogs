@@ -7,6 +7,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
+import Banner300x250 from '../components/Banner300x250.astro';
+import AdsterraContainerAd from '../components/AdsterraContainerAd.astro';
+import { ADSTERRA_CONFIG } from '../config/adsterra';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	article?: boolean;
@@ -14,6 +17,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 	canonical?: string;
 	noindex?: boolean;
 	slug?: string;
+	showAds?: boolean;
 };
 
 const {
@@ -30,6 +34,7 @@ const {
 	canonical,
 	noindex = false,
 	slug = '',
+	showAds = article === true,
 } = Astro.props;
 
 const defaultBreadcrumbs = [
@@ -68,11 +73,15 @@ const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot A
 		<Header />
 		<main class="blog-main">
 			<div class="blog-layout-container">
-				<aside class="sidebar-slot" id="blog-sidebar-slot" aria-label="Article Checklist Sidebar">
-					<!-- ChecklistTracker or Reading widget will mount here if present -->
+				<aside class="sidebar-slot" id="blog-sidebar-slot" aria-label="Article Sidebar">
+					{showAds && (
+						<div class="sticky-sidebar-ad-wrapper">
+							<Banner300x250 placement="blog-sidebar" sticky={true} />
+						</div>
+					)}
 				</aside>
 
-				<article class="article-content">
+				<article class="article-content" data-show-ads={showAds ? 'true' : 'false'}>
 					<Breadcrumbs items={breadcrumbs} />
 
 					<div class="hero-image">
@@ -97,6 +106,8 @@ const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot A
 						</header>
 						<slot />
 					</div>
+
+					{showAds && <AdsterraContainerAd placement="blog-bottom" lazy={true} />}
 
 					<RelatedPosts currentSlug={slug} category={category} />
 
@@ -549,10 +560,12 @@ const fullTitle = title.includes('GigPilot AI') ? title : `${title} | GigPilot A
 		.sidebar-slot {
 			width: 100%;
 			position: static;
+			order: 2;
 		}
 
 		.article-content {
 			max-width: 100%;
+			order: 1;
 		}
 	}
 

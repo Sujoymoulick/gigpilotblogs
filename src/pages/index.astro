@@ -6,6 +6,9 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import Banner320x50 from '../components/Banner320x50.astro';
+import Banner300x250 from '../components/Banner300x250.astro';
+import AdsterraContainerAd from '../components/AdsterraContainerAd.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const allPosts = (await getCollection('blog')).sort(
@@ -107,6 +110,8 @@ const homeToolSchema = {
 					Enter your monthly expenses, income target, and billable working hours to calculate your ideal hourly rate, daily rate, and fixed project pricing instantly. 100% free, private, and browser-based.
 				</p>
 
+				<Banner320x50 placement="home-hero" lazy={false} />
+
 				<div class="calc-box" id="rateCalc" aria-label="Freelance Rate Calculator Tool">
 					<div class="currency-row">
 						<label for="hCurrency">Currency</label>
@@ -180,6 +185,8 @@ const homeToolSchema = {
 
 					<p class="note">🔒 All computations execute locally on your browser. Zero data is sent to external servers.</p>
 				</div>
+
+				<AdsterraContainerAd placement="home-calc-results" lazy={true} />
 			</section>
 
 			<!-- Latest Blog Posts -->
@@ -291,6 +298,8 @@ const homeToolSchema = {
 						</li>
 					</ul>
 				</section>
+
+				<Banner300x250 placement="home-content" lazy={true} />
 
 				<section class="content-block">
 					<h2>Practical Real-World Use Cases: How Modern Freelancers Build with AI</h2>

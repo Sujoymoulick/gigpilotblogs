@@ -4,6 +4,8 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
+import Banner300x250 from '../../components/Banner300x250.astro';
+import AdsterraContainerAd from '../../components/AdsterraContainerAd.astro';
 import { SITE_TITLE } from '../../consts';
 
 const pageTitle = 'Freelance Project Quote Calculator | GigPilot AI';
@@ -169,6 +171,8 @@ const relatedGuides = [
 
 					<p class="note">🔒 All calculations run in your browser. No data is sent to any server.</p>
 				</div>
+
+				<AdsterraContainerAd placement="tools-calc-results" lazy={true} />
 			</section>
 
 			<!-- Cross-Link to Freelance Rate Calculator -->
@@ -265,6 +269,8 @@ const relatedGuides = [
 						<strong>Include Asset Pass-Throughs:</strong> Never pay out-of-pocket for project assets; always itemize them in your direct expenses line.
 					</li>
 				</ol>
+
+				<Banner300x250 placement="tools-guide-content" lazy={true} />
 
 				<hr />
 

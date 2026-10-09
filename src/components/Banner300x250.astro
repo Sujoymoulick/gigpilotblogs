@@ -1,0 +1,173 @@
+---
+import { REAL_AD_UNITS, ADSTERRA_CONFIG } from '../config/adsterra';
+
+export interface Props {
+	placement?: string;
+	label?: string;
+	class?: string;
+	sticky?: boolean;
+}
+
+const {
+	placement = '300x250-banner',
+	label = 'ADVERTISEMENT',
+	class: customClass = '',
+	sticky = false,
+} = Astro.props;
+
+const isEnabled = ADSTERRA_CONFIG.enabled;
+const adConfig = REAL_AD_UNITS.banner300x250;
+const uniqueId = `ad-300x250-${Math.random().toString(36).substring(2, 8)}`;
+---
+
+{
+	isEnabled && (
+		<div
+			class={`adsterra-banner-container adsterra-300x250 ${sticky ? 'sticky-ad-box' : ''} ${customClass}`.trim()}
+			data-adsterra-slot="300x250"
+			data-slot-id={uniqueId}
+			data-key={adConfig.key}
+			data-script={adConfig.scriptUrl}
+			data-width={adConfig.width}
+			data-height={adConfig.height}
+			aria-label="Advertisement 300x250"
+		>
+			<div class="adsterra-label-wrap">
+				<span class="adsterra-label">{label}</span>
+			</div>
+			<div class="adsterra-banner-slot" id={uniqueId}>
+				<!-- Dynamic isolated iframe with inherited origin rendered by client script -->
+			</div>
+		</div>
+	)
+}
+
+<script>
+	(function () {
+		function render300x250Slots() {
+			const slots = document.querySelectorAll<HTMLElement>('[data-adsterra-slot="300x250"]:not([data-rendered="true"])');
+			slots.forEach((container) => {
+				container.setAttribute('data-rendered', 'true');
+				const slotId = container.getAttribute('data-slot-id');
+				if (!slotId) return;
+				const slot = document.getElementById(slotId);
+				if (!slot || slot.querySelector('iframe')) return;
+
+				const key = container.getAttribute('data-key') || 'df53fa7d92073deb2e1d0c021b9b36df';
+				const scriptUrl = container.getAttribute('data-script') || 'https://www.highrevenueformat.com/df53fa7d92073deb2e1d0c021b9b36df/invoke.js';
+				const width = container.getAttribute('data-width') || '300';
+				const height = container.getAttribute('data-height') || '250';
+
+				const iframe = document.createElement('iframe');
+				iframe.width = width;
+				iframe.height = height;
+				iframe.style.width = width + 'px';
+				iframe.style.height = height + 'px';
+				iframe.style.border = 'none';
+				iframe.style.overflow = 'hidden';
+				iframe.scrolling = 'no';
+				iframe.setAttribute('frameborder', '0');
+				iframe.setAttribute('allowtransparency', 'true');
+				iframe.title = 'Advertisement 300x250';
+
+				slot.innerHTML = '';
+				slot.appendChild(iframe);
+
+				try {
+					const doc = iframe.contentWindow?.document;
+					if (doc) {
+						doc.open();
+						doc.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<base target="_blank">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; background:transparent; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+<script type="text/javascript">
+  atOptions = {
+    'key' : '${key}',
+    'format' : 'iframe',
+    'height' : ${height},
+    'width' : ${width},
+    'params' : {}
+  };
+<\/script>
+<script type="text/javascript" src="${scriptUrl}"><\/script>
+</body>
+</html>`);
+						doc.close();
+					}
+				} catch (e) {
+					console.error('Error writing ad frame:', e);
+				}
+			});
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', render300x250Slots);
+		} else {
+			render300x250Slots();
+		}
+
+		document.addEventListener('astro:page-load', render300x250Slots);
+	})();
+</script>
+
+<style>
+	.adsterra-banner-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin: 1.5rem auto;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		position: relative;
+		clear: both;
+	}
+
+	.sticky-ad-box {
+		position: sticky;
+		top: 100px;
+		z-index: 10;
+	}
+
+	.adsterra-label-wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 0.35rem;
+		width: 100%;
+	}
+
+	.adsterra-label {
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #94a3b8;
+		user-select: none;
+	}
+
+	.adsterra-banner-slot {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		min-height: 250px;
+		width: 300px;
+		max-width: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	:global([data-theme='dark']) .adsterra-label {
+		color: #64748b;
+	}
+</style>

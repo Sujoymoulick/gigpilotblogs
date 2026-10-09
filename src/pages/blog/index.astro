@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import Banner300x250 from '../../components/Banner300x250.astro';
 
 const posts = (await getCollection('blog'))
 	.filter((post) => post.data.category !== 'Trending')
@@ -146,6 +147,8 @@ const breadcrumbs = [{ name: 'Blog', item: '/blog/' }];
 					</section>
 				)
 			}
+
+			<Banner300x250 placement="blog-index-hero" lazy={true} />
 
 			<!-- Blog Post Grid -->
 			<section class="posts-grid-section">

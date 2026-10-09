@@ -1,0 +1,94 @@
+---
+import { REAL_AD_UNITS, ADSTERRA_CONFIG } from '../config/adsterra';
+
+export interface Props {
+	placement?: string;
+	label?: string;
+	class?: string;
+	sticky?: boolean;
+}
+
+const {
+	placement = 'native-container-ad',
+	label = 'ADVERTISEMENT',
+	class: customClass = '',
+	sticky = false,
+} = Astro.props;
+
+const isEnabled = ADSTERRA_CONFIG.enabled;
+const adConfig = REAL_AD_UNITS.nativeContainer;
+---
+
+{
+	isEnabled && (
+		<div
+			class={`adsterra-native-container ${sticky ? 'sticky-ad-box' : ''} ${customClass}`.trim()}
+			data-adsterra-native
+			data-placement={placement}
+			aria-label="Advertisement Native Container"
+		>
+			<div class="adsterra-label-wrap">
+				<span class="adsterra-label">{label}</span>
+			</div>
+			<div class="adsterra-native-slot">
+				<div id={adConfig.containerId}></div>
+				<script is:inline async="async" data-cfasync="false" src={adConfig.scriptUrl}></script>
+			</div>
+		</div>
+	)
+}
+
+<style>
+	.adsterra-native-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin: 1.5rem auto;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		position: relative;
+		clear: both;
+	}
+
+	.sticky-ad-box {
+		position: sticky;
+		top: 100px;
+		z-index: 10;
+	}
+
+	.adsterra-label-wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 0.35rem;
+		width: 100%;
+	}
+
+	.adsterra-label {
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #94a3b8;
+		user-select: none;
+	}
+
+	.adsterra-native-slot {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		min-height: 100px;
+		width: 100%;
+		max-width: 728px;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	:global([data-theme='dark']) .adsterra-label {
+		color: #64748b;
+	}
+</style>
